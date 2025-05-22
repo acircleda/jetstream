@@ -3,5 +3,10 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "node-fetch": "^3.3.2"
-  }
+  },
+"scripts": {
+  "start": "node proxy.js",
+  "frontend": "serve . -l 5000",
+  "dev": "concurrently \"npm:start\" \"npm run frontend\""
+}
 }
