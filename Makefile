@@ -6,11 +6,16 @@ proj_config:
 	@echo "const CONFIG = {" > $(CONFIG_FILE)
 	@echo "  lat: 37.77697315135698," >> $(CONFIG_FILE)
 	@echo "  lon: -122.41922177136804," >> $(CONFIG_FILE)
+	@echo "  city_name: 'my city', // your city name" >> $(CONFIG_FILE)
 	@echo "  tileLayerUrl: 'http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}'," >> $(CONFIG_FILE)
-	@echo "  maxZoom: 14," >> $(CONFIG_FILE)
+	@echo "  maxZoom: 15," >> $(CONFIG_FILE)
 	@echo "  initialZoom: 12, // Zoom level for the map" >> $(CONFIG_FILE)
-	@echo "  distance: 2, // Distance in miles" >> $(CONFIG_FILE)
+	@echo "  distance: 10, // Distance in miles" >> $(CONFIG_FILE)
 	@echo "  refreshRate: 10000 // Refresh rate in milliseconds" >> $(CONFIG_FILE)
+	@echo "  use_downtime: false, // Set to true to use downtime" >> $(CONFIG_FILE)
+	@echo "  downtime_start: 21, // Set hour downtime begins" >> $(CONFIG_FILE)
+	@echo "  downtime_end: 6, // Set hour downtime ends" >> $(CONFIG_FILE)
+	@echo "  downtime_refresh: 60000 // Set the refresh rate during downtime" >> $(CONFIG_FILE)"
 	@echo "};" >> $(CONFIG_FILE)
 
 	@echo "Ensuring $(CONFIG_FILE) is in $(GITIGNORE_FILE)..."

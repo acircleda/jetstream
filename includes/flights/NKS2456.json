@@ -1,0 +1,39 @@
+{
+  "response": {
+    "flightroute": {
+      "callsign": "NKS2456",
+      "callsign_icao": "NKS2456",
+      "callsign_iata": "NK2456",
+      "airline": {
+        "name": "Spirit Airlines",
+        "icao": "NKS",
+        "iata": "NK",
+        "country": "United States",
+        "country_iso": "US",
+        "callsign": "SPIRIT WINGS"
+      },
+      "origin": {
+        "country_iso_name": "US",
+        "country_name": "United States",
+        "elevation": 125,
+        "iata_code": "LAX",
+        "icao_code": "KLAX",
+        "latitude": 33.942501,
+        "longitude": -118.407997,
+        "municipality": "Los Angeles",
+        "name": "Los Angeles International Airport"
+      },
+      "destination": {
+        "country_iso_name": "US",
+        "country_name": "United States",
+        "elevation": 607,
+        "iata_code": "DFW",
+        "icao_code": "KDFW",
+        "latitude": 32.896801,
+        "longitude": -97.038002,
+        "municipality": "Dallas-Fort Worth",
+        "name": "Dallas Fort Worth International Airport"
+      }
+    }
+  }
+}
