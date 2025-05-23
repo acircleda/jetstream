@@ -1,0 +1,39 @@
+{
+  "response": {
+    "flightroute": {
+      "callsign": "JIA5484",
+      "callsign_icao": "JIA5484",
+      "callsign_iata": "US5484",
+      "airline": {
+        "name": "PSA Airlines",
+        "icao": "JIA",
+        "iata": "US",
+        "country": "United States",
+        "country_iso": "US",
+        "callsign": "BLUE STREAK"
+      },
+      "origin": {
+        "country_iso_name": "US",
+        "country_name": "United States",
+        "elevation": 15,
+        "iata_code": "DCA",
+        "icao_code": "KDCA",
+        "latitude": 38.8521,
+        "longitude": -77.037697,
+        "municipality": "Washington",
+        "name": "Ronald Reagan Washington National Airport"
+      },
+      "destination": {
+        "country_iso_name": "US",
+        "country_name": "United States",
+        "elevation": 981,
+        "iata_code": "TYS",
+        "icao_code": "KTYS",
+        "latitude": 35.811001,
+        "longitude": -83.994003,
+        "municipality": "Knoxville",
+        "name": "McGhee Tyson Airport"
+      }
+    }
+  }
+}

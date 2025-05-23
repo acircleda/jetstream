@@ -27,12 +27,14 @@ proj_config:
 
 .PHONY: proj_config
 
-server:
+go:
 	@echo "Starting server..."
-	@node proxy.js
+	@npm run dev
 
-.PHONY: start_server
+.PHONY: go
 
-site:
-	@echo "Starting site"
-	@python3 -m http.server 8000
+commit:
+	@echo "Committing db to ..."
+	@git add -A
+	@git commit -m "Autocommit"
+	@git push

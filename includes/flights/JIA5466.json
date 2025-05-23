@@ -1,0 +1,39 @@
+{
+  "response": {
+    "flightroute": {
+      "callsign": "JIA5466",
+      "callsign_icao": "JIA5466",
+      "callsign_iata": "US5466",
+      "airline": {
+        "name": "PSA Airlines",
+        "icao": "JIA",
+        "iata": "US",
+        "country": "United States",
+        "country_iso": "US",
+        "callsign": "BLUE STREAK"
+      },
+      "origin": {
+        "country_iso_name": "US",
+        "country_name": "United States",
+        "elevation": 15,
+        "iata_code": "SGF",
+        "icao_code": "KSGF",
+        "latitude": 38.8521,
+        "longitude": -77.037697,
+        "municipality": "Springfield",
+        "name": "Springfield Branson National Airport"
+      },
+      "destination": {
+        "country_iso_name": "US",
+        "country_name": "United States",
+        "elevation": 173,
+        "iata_code": "CLT",
+        "icao_code": "KCLT",
+        "latitude": 41.93851,
+        "longitude": -72.688066,
+        "municipality": "Charlotte",
+        "name": "Charlotte Douglas International Airport"
+      }
+    }
+  }
+}

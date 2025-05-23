@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@drustack/leaflet.resetview/dist/L.Control.ResetView.min.js"></script>
   <script src="includes/config.js"></script>
 
  </head>
@@ -23,7 +24,7 @@
 
     const map = L.map('map', {
       zoomControl: false,
-      dragging: false,
+      dragging: true,
       scrollWheelZoom: false,
       doubleClickZoom: false,
       boxZoom: false,
@@ -34,6 +35,13 @@
     L.tileLayer(CONFIG.tileLayerUrl, {
       maxZoom: CONFIG.maxZoom,
     }).addTo(map);
+
+    L.control.resetView({
+                position: "topleft",
+                title: "Reset view",
+                latlng: L.latLng([CONFIG.lat, CONFIG.lon]),
+                zoom: CONFIG.initialZoom,
+            }).addTo(map);
 
     // Add a black dot to represent the house
     const houseMarker = L.circleMarker([CONFIG.lat, CONFIG.lon], {
@@ -206,7 +214,7 @@
         <div id='sidebar-info'">
           <h2><a href="https://www.flightradar24.com/${closestPlane.flight}" target="_blank">${closestPlane.flight || 'N/A'}</a></h2>
           <div class="sb-route">
-            <h1>Origin</h2>
+            <h1>Origin</h1>
             <h2>${closestOriginName}</h1>
             <h3>${closestOrigin['name'] || ''}<h3>
           </div>
@@ -216,7 +224,7 @@
             <h3>${closestDestination['name'] || ''}<h3>
           </div>
           <div class="sb-flight-info">
-            <strong>Aircraft:</strong> ${closestPlane.t || 'N/A'} ft<br>
+            <strong>Aircraft:</strong> ${closestPlane.t || 'N/A'}<br>
             <strong>Altitude:</strong> ${closestPlane.alt_baro || ''} ft<br>
             <strong>Speed:</strong> ${closestPlane.gs ? `${closestPlane.gs} knots` : ''}<br><br>
             <a href="https://www.flightradar24.com/${closestPlane.flight}" target="_blank">View on Flightradar24</a>

@@ -57,8 +57,9 @@ a:hover, a:active, a:focus {
 
 #sidebar-info h2 {
     text-align: center;
-    font-size: 3em;
+    font-size: 2.5em;
     padding-top: 0px;
+    margin-bottom: -30px;
     color:#bd6200;
 }
 
@@ -76,14 +77,14 @@ a:hover, a:active, a:focus {
 
 .sb-route h1 {
     color: #a1a1a1 !important;
-    font-size: 2em !important;
-    margin-bottom: -60px !important;
+    font-size: 1.2em !important;
+    margin-bottom: -30px !important;
     padding-top:30px !important;
 }
 
 .sb-route h2 {
     color: #e0e0e0 !important;
-    font-size: 4em !important;
+    font-size: 2em !important;
     margin-bottom: -15px !important;
 }
 
@@ -98,4 +99,23 @@ a:hover, a:active, a:focus {
 .sb-flight-info {
     padding-top: 20px;
     text-align: center;
+}
+/*# sourceMappingURL=L.Control.ResetView.min.css.map */
+.leaflet-touch .leaflet-bar a:last-child{
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.leaflet-control-resetview a{
+    cursor:pointer}
+.leaflet-control-resetview a .leaflet-control-resetview-icon{
+    display:inline-block;
+    width:16px;
+    height:16px;
+    margin:7px;
+    background-color:#b0b0b0;
+    -webkit-mask-image:url("https://cdn.jsdelivr.net/npm/@drustack/leaflet.resetview/dist/redo-solid.svg");
+    mask-image:url("https://cdn.jsdelivr.net/npm/@drustack/leaflet.resetview/dist/redo-solid.svg");
+    -webkit-mask-repeat:no-repeat;
+    mask-repeat:no-repeat;
+    -webkit-mask-position:center;
+    mask-position:center
 }
