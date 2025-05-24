@@ -22,6 +22,7 @@
     <div id="map"></div>
     <div id="info"></div>
   </div>
+  <button id="move-json-btn">Needs Review</button>
 
   <script>
 
@@ -155,17 +156,21 @@
         // Fetch additional flight info
         let origin = 'N/A';
         let destination = 'N/A';
+        let hasRoute = false;
 
         if (plane.flight) {
           try {
-          console.log(`Fetching flight info for ${plane.flight}`);
-          const flightInfoRes = await fetch(`http://localhost:3000/flightinfo?callsign=${plane.flight}`);
-          const flightInfoData = await flightInfoRes.json();
-          flightroute = flightInfoData.response.flightroute;
-          origin = flightroute?.origin || 'N/A';
-          destination = flightroute?.destination || 'N/A';
+            console.log(`Fetching flight info for ${plane.flight}`);
+            const flightInfoRes = await fetch(`http://localhost:3000/flightinfo?callsign=${plane.flight}&heading=${plane.track}`);
+            const flightInfoData = await flightInfoRes.json();
+            if (flightInfoData && flightInfoData.response && flightInfoData.response.flightroute) {
+              flightroute = flightInfoData.response.flightroute;
+              origin = flightroute?.origin || 'N/A';
+              destination = flightroute?.destination || 'N/A';
+              hasRoute = true;
+            }
           } catch(err) {
-          console.error(`Error fetching flight info for ${plane.flight}:`, err);
+            // Silently ignore errors fetching route info
           }
         }
 
@@ -180,7 +185,8 @@
             <small>${destination['name']}</small><br><br>
             <strong>Altitude:</strong> ${plane.alt_baro || ''}<br>
             <strong>Speed:</strong> ${plane.gs ? `${plane.gs} knots` : 'N/A'}<br><br>
-            <a href="https://www.flightradar24.com/${plane.flight}" target="_blank">View on Flightradar24</a><br>
+            View on <a href="https://www.flightradar24.com/${plane.flight}" target="_blank"> FlightRadar24</a> | 
+             <a href="https://www.flightaware.com/live/flight/${plane.flight}" target="_blank">FlightAware</a>
           </div>
           `)
           .addTo(map);
@@ -215,7 +221,7 @@
         // Update info div
         document.getElementById('info').innerHTML = `
         <div id='sidebar-info'">
-          <h2><a href="https://www.flightradar24.com/${closestPlane.flight}" target="_blank">${closestPlane.flight || 'N/A'}</a></h2>
+          <h2><a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">${closestPlane.flight || 'N/A'}</a></h2>
           <div class="sb-route">
             <h1>Origin</h1>
             <h2>${closestOriginName}</h1>
@@ -234,6 +240,15 @@
           </div>
         </div>
         `;
+        // Show the move-json button if a flight is displayed
+        const moveBtn = document.getElementById('move-json-btn');
+        if (closestPlane && closestPlane.flight) {
+          moveBtn.style.display = 'block';
+          moveBtn.setAttribute('data-callsign', closestPlane.flight);
+        } else {
+          moveBtn.style.display = 'none';
+          moveBtn.removeAttribute('data-callsign');
+        }
       } else {
         document.getElementById('info').innerHTML = '';
       }
@@ -272,6 +287,23 @@
       refreshInterval = setInterval(fetchPlanes, newRate);
       }
     }, 60 * 1000); // Check every minute
+
+    // Add event listener for the move-json button at the end of the script
+  document.getElementById('move-json-btn').addEventListener('click', async function() {
+    let callsign = this.getAttribute('data-callsign');
+    if (!callsign) return;
+    callsign = callsign.trim(); // Remove whitespace
+    try {
+      const res = await fetch(`http://localhost:3000/move_for_review?callsign=${encodeURIComponent(callsign)}`, { method: 'POST' });
+      if (res.ok) {
+        alert(`Marked ${callsign} for review.`);
+      } else {
+        console.log(`Failed to mark ${callsign} for review.`);
+      }
+    } catch (e) {
+      console.log(`Error marking ${callsign} for review.`);
+    }
+  });
   </script>
 </body>
 </html>

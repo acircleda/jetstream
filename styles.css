@@ -119,3 +119,13 @@ a:hover, a:active, a:focus {
     -webkit-mask-position:center;
     mask-position:center
 }
+
+#move-json-btn {
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    z-index:3000;
+    display:none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.535);
+}
