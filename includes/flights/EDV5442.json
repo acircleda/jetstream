@@ -1,0 +1,39 @@
+{
+  "response": {
+    "flightroute": {
+      "callsign": "EDV5442",
+      "callsign_icao": "EDV5442",
+      "callsign_iata": "9E5442",
+      "airline": {
+        "name": "Endeavor Air",
+        "icao": "EDV",
+        "iata": "9E",
+        "country": "United States",
+        "country_iso": "US",
+        "callsign": "Endeavor"
+      },
+      "origin": {
+        "country_iso_name": "US",
+        "country_name": "United States",
+        "elevation": 192,
+        "iata_code": "BGR",
+        "icao_code": "KBGR",
+        "latitude": 44.8074,
+        "longitude": -68.828102,
+        "municipality": "Bangor",
+        "name": "Bangor International Airport"
+      },
+      "destination": {
+        "country_iso_name": "US",
+        "country_name": "United States",
+        "elevation": 13,
+        "iata_code": "JFK",
+        "icao_code": "KJFK",
+        "latitude": 40.639801,
+        "longitude": -73.7789,
+        "municipality": "New York",
+        "name": "John F Kennedy International Airport"
+      }
+    }
+  }
+}
