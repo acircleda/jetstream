@@ -5,10 +5,10 @@ const AIRPORTS_DB_PATH = path.join(__dirname, 'airports.db');
 // Format function for ADSBDB data
 function format_adsbdb(dataArray) {
   return dataArray.map(data => ({
-    callsign: data.callsign,
+    callsign: data.flightroute?.callsign,
     callsign_icao: data.flightroute?.callsign_icao,
     callsign_iata: data.flightroute?.callsign_iata,
-    airline_name: data.flightroute?.airline_name,
+    airline_name: data.flightroute?.airline?.name,
     origin: {
       name: data.flightroute.origin?.name,
       city: data.flightroute.origin?.municipality,

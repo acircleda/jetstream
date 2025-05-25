@@ -114,14 +114,14 @@ app.get('/adsbdb', async (req, res) => {
     console.log('adsbdb Data:', data);
 
     if (data && data.response && data.response === 'unknown callsign') {
-        res.json(data);
-        return;
+      res.json(data);
+      return;
     } else {
-    const formatted = format_adsbdb(data.response);
-    console.log('Formatted Data:', formatted);
-    res.json(formatted);
-    return;
-  }
+      const formatted = format_adsbdb([data.response]);
+      console.log('Formatted Data:', formatted);
+      res.json(formatted);
+      return;
+    }
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'Failed to fetch aircraft data from adsbdb' });
