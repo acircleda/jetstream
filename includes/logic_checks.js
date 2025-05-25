@@ -85,7 +85,7 @@ function heading_check(data, heading, toleraance) {
   let origin = [Number(data.flightroute.origin?.latitude), Number(data.flightroute.origin?.longitude)];
   let destination = [Number(data.flightroute.destination?.latitude), Number(data.flightroute.destination?.longitude)];
   
-  const check = isHeadingTowardDestination(origin, destination, heading, toleraance = 15);
+  const check = isHeadingTowardDestination(origin, destination, heading, toleraance);
   return check;
 }
 

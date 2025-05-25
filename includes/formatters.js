@@ -2,9 +2,8 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const AIRPORTS_DB_PATH = path.join(__dirname, 'airports.db');
 
-// Helper functions
+// Format function for ADSBDB data
 function format_adsbdb(dataArray) {
-  // Returns a simplified, flat array of flight info objects
   return dataArray.map(data => ({
     callsign: data.callsign,
     callsign_icao: data.flightroute?.callsign_icao,
@@ -31,6 +30,7 @@ function format_adsbdb(dataArray) {
   }));
 }
 
+// Function to get airport information from the SQLite database
 async function getAirportInfo(icao) {
   if (!icao) return { country: null, city: null, lat: null, lon: null };
   return new Promise((resolve) => {
@@ -55,6 +55,7 @@ async function getAirportInfo(icao) {
   });
 }
 
+// Format function for AviationStack data
 async function format_aviationstack(dataArray) {
   // Find the first entry where live is not null
   const data = Array.isArray(dataArray) ? dataArray.find(d => d.live != null) : null;

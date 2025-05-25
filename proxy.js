@@ -3,7 +3,7 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const CONFIG = require('./includes/config.js').CONFIG;
-const { route_logic_check, heading_check } = require('./includes/crossTrackDistance.js');
+const { route_logic_check, heading_check } = require('./includes/logic_checks.js');
 const { format_adsbdb , format_aviationstack} = require('./includes/formatters.js');
 
 const app = express();
@@ -29,6 +29,7 @@ app.get('/planes', async (req, res) => {
 });
 
 app.get('/flightinfo', async (req, res) => {
+  
     let { callsign, heading } = req.query;
     callsign = callsign ? callsign.trim() : null; // Ensure callsign is trimmed
     if (!callsign) {
@@ -82,7 +83,7 @@ app.get('/flightinfo', async (req, res) => {
             console.log(`Flight ${callsign} flagged: crossTrackDistance ${logicRes} > threshold ${CONFIG.route_check_threshold}`);
           } else {
             // If logicRes is within threshold, perform heading check
-            const headingRes = heading_check(data.response, heading, 15);
+            const headingRes = heading_check(data.response, heading, CONFIG.heading_tolerance);
             console.log('heading check:', headingRes);
             if (headingRes === false) {
               // Swap origin and destination in the response (not in file)
@@ -104,19 +105,44 @@ app.get('/flightinfo', async (req, res) => {
     }
   })
 
+app.get('/adsbdb', async (req, res) => {
+  const { callsign } = req.query;
+  const url = `https://api.adsbdb.com/v0/callsign/${callsign}`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log('adsbdb Data:', data);
+
+    if (data && data.response && data.response === 'unknown callsign') {
+        res.json(data);
+        return;
+    } else {
+    const formatted = format_adsbdb(data.response);
+    console.log('Formatted Data:', formatted);
+    res.json(formatted);
+    return;
+  }
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: 'Failed to fetch aircraft data from adsbdb' });
+  }
+});
+
 app.get('/aviationstack', async (req, res) => {
   const { callsign } = req.query;
+  if (!CONFIG.aviation_stack_api_key){
+    res.status(400).json({ error: 'AviationStack API key is not configured' });
+    return;
+  }
   const url = `https://api.aviationstack.com/v1/flights?flight_icao=${callsign}&access_key=${CONFIG.aviation_stack_api_key}`;
   try {
     const response = await fetch(url);
     const data = await response.json();
-    console.log('Data:', data);
     const formatted = await format_aviationstack(data.data);
-    console.log('Formatted Data:', formatted);
     res.json(formatted);
   } catch (e) {
     console.error(e);
-    res.status(500).json({ error: 'Failed to fetch aircraft data' });
+    res.status(500).json({ error: 'Failed to fetch aircraft data from aviationstack' });
   }
 });
 
