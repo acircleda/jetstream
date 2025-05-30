@@ -1,0 +1,27 @@
+{
+  "callsign": "UCA4854",
+  "callsign_icao": "UCA4854",
+  "callsign_iata": "C54854",
+  "airline_name": "CommutAir",
+  "origin": {
+    "name": "McGhee Tyson Airport",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "destination": {
+    "name": "George Bush Intercontinental Houston Airport",
+    "city": "Houston",
+    "country": "US",
+    "iata": "IAH",
+    "icao": "KIAH",
+    "lat": 29.984399795532227,
+    "lon": -95.34140014648438
+  },
+  "created_at": "2025-05-26T21:52:21.642Z",
+  "timestamp": 1748296341642,
+  "api_source": "adsbdb"
+}

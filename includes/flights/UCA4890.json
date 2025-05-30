@@ -1,39 +1,27 @@
 {
-  "response": {
-    "flightroute": {
-      "callsign": "UCA4890",
-      "callsign_icao": "UCA4890",
-      "callsign_iata": "C54890",
-      "airline": {
-        "name": "CommutAir",
-        "icao": "UCA",
-        "iata": "C5",
-        "country": "United States",
-        "country_iso": "US",
-        "callsign": "COMMUTAIR"
-      },
-      "origin": {
-        "country_iso_name": "US",
-        "country_name": "United States",
-        "elevation": 97,
-        "iata_code": "IAH",
-        "icao_code": "KIAH",
-        "latitude": 29.984399795532227,
-        "longitude": -95.34140014648438,
-        "municipality": "Houston",
-        "name": "George Bush Intercontinental Houston Airport"
-      },
-      "destination": {
-        "country_iso_name": "US",
-        "country_name": "United States",
-        "elevation": 981,
-        "iata_code": "TYS",
-        "icao_code": "KTYS",
-        "latitude": 35.811001,
-        "longitude": -83.994003,
-        "municipality": "Knoxville",
-        "name": "McGhee Tyson Airport"
-      }
-    }
-  }
+  "callsign": "UCA4890",
+  "callsign_icao": "UCA4890",
+  "callsign_iata": "C54890",
+  "airline_name": "CommutAir",
+  "origin": {
+    "name": "George Bush Intercontinental Houston Airport",
+    "city": "Houston",
+    "country": "US",
+    "iata": "IAH",
+    "icao": "KIAH",
+    "lat": 29.984399795532227,
+    "lon": -95.34140014648438
+  },
+  "destination": {
+    "name": "McGhee Tyson Airport",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "created_at": "2025-05-26T22:29:33.872Z",
+  "timestamp": 1748298573872,
+  "api_source": "adsbdb"
 }

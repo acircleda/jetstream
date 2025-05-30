@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL1217",
+  "callsign_icao": "AAL1217",
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Raleigh Durham International Airport",
+    "city": "Raleigh/Durham",
+    "country": "US",
+    "iata": "RDU",
+    "icao": "KRDU",
+    "lat": 35.877602,
+    "lon": -78.787498
+  },
+  "destination": {
+    "name": "Dallas Fort Worth International Airport",
+    "city": "Dallas-Fort Worth",
+    "country": "US",
+    "iata": "DFW",
+    "icao": "KDFW",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "created_at": "2025-05-27T13:13:19.114Z",
+  "timestamp": 1748351599114,
+  "api_source": "adsb.lol"
+}

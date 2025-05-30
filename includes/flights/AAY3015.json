@@ -1,0 +1,27 @@
+{
+  "callsign": "AAY3015",
+  "callsign_icao": "AAY3015",
+  "callsign_iata": "G43015",
+  "airline_name": "Allegiant Air",
+  "origin": {
+    "name": "McGhee Tyson Airport",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "destination": {
+    "name": "Sarasota Bradenton International Airport",
+    "city": "Sarasota/Bradenton",
+    "country": "US",
+    "iata": "SRQ",
+    "icao": "KSRQ",
+    "lat": 27.395399,
+    "lon": -82.554398
+  },
+  "created_at": "2025-05-26T22:29:35.209Z",
+  "timestamp": 1748298575209,
+  "api_source": "adsbdb"
+}

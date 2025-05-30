@@ -1,0 +1,27 @@
+{
+  "callsign": "EDV4921",
+  "callsign_icao": "EDV4921",
+  "callsign_iata": "9E4921",
+  "airline_name": "Endeavor Air",
+  "origin": {
+    "name": "Hartsfield Jackson Atlanta International Airport",
+    "city": "Atlanta",
+    "country": "US",
+    "iata": "ATL",
+    "icao": "KATL",
+    "lat": 33.6367,
+    "lon": -84.428101
+  },
+  "destination": {
+    "name": "McGhee Tyson Airport",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "created_at": "2025-05-26T21:30:50.936Z",
+  "timestamp": 1748295050936,
+  "api_source": "adsbdb"
+}

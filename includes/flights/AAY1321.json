@@ -1,0 +1,27 @@
+{
+  "callsign": "AAY1321",
+  "callsign_icao": "AAY1321",
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Orlando Sanford International Airport",
+    "city": "Orlando",
+    "country": "US",
+    "iata": "SFB",
+    "icao": "KSFB",
+    "lat": 28.777599,
+    "lon": -81.237503
+  },
+  "destination": {
+    "name": "Blue Grass Airport",
+    "city": "Lexington",
+    "country": "US",
+    "iata": "LEX",
+    "icao": "KLEX",
+    "lat": 38.036499,
+    "lon": -84.605904
+  },
+  "created_at": "2025-05-28T11:04:00.161Z",
+  "timestamp": 1748430240161,
+  "api_source": "adsb.lol"
+}

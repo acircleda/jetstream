@@ -29,12 +29,12 @@ proj_config:
 	@echo "  maxZoom: 15," >> $(CONFIG_FILE)
 	@echo "  initialZoom: 12, // Zoom level for the map" >> $(CONFIG_FILE)
 	@echo "  distance: 10, // Distance in miles" >> $(CONFIG_FILE)
-	@echo "  route_check_threshold: 50, // Threshold to determine if a plane's origin and departure airports (as reported by adsbdb (and hexdb.io)) are logical, in km" >> $(CONFIG_FILE)
-	@echo "  refreshRate: 10000 // Refresh rate in milliseconds" >> $(CONFIG_FILE)
+	@echo "  route_check_threshold: 150, // Threshold to determine if a plane's origin and departure airports (as reported by adsbdb (and hexdb.io)) are logical, in km" >> $(CONFIG_FILE)
+	@echo "  refreshRate: 10000, // Refresh rate in milliseconds" >> $(CONFIG_FILE)
 	@echo "  use_downtime: false, // Set to true to use downtime" >> $(CONFIG_FILE)
 	@echo "  downtime_start: 21, // Set hour downtime begins" >> $(CONFIG_FILE)
 	@echo "  downtime_end: 6, // Set hour downtime ends" >> $(CONFIG_FILE)
-	@echo "  downtime_refresh: 60000 // Set the refresh rate during downtime" >> $(CONFIG_FILE)"
+	@echo "  downtime_refresh: 60000, // Set the refresh rate during downtime" >> $(CONFIG_FILE)"
 	@echo "  aviation_stack_api_key: null '// http://aviationstack.com/" >> $(CONFIG_FILE)
 	@echo "};" >> $(CONFIG_FILE)
 
@@ -57,6 +57,13 @@ go:
 	@npm run dev
 
 .PHONY: go
+
+review:
+	@echo "Starting server..."
+	@echo "Review files at http://localhost:5000/review.html."
+	@npm run dev
+	
+.PHONY: review
 
 commit:
 	@echo "Committing ..."

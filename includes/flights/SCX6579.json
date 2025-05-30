@@ -1,0 +1,27 @@
+{
+  "callsign": "SCX6579",
+  "callsign_icao": "SCX6579",
+  "callsign_iata": "SY6579",
+  "airline_name": "Sun Country Airlines",
+  "origin": {
+    "name": "Cincinnati Northern Kentucky International Airport",
+    "city": "Cincinnati / Covington",
+    "country": "US",
+    "iata": "CVG",
+    "icao": "KCVG",
+    "lat": 39.048801,
+    "lon": -84.667801
+  },
+  "destination": {
+    "name": "Lakeland Linder International Airport",
+    "city": "Lakeland",
+    "country": "US",
+    "iata": "LAL",
+    "icao": "KLAL",
+    "lat": 27.988899,
+    "lon": -82.018602
+  },
+  "created_at": "2025-05-28T12:38:11.824Z",
+  "timestamp": 1748435891824,
+  "api_source": "adsbdb"
+}

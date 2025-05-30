@@ -1,0 +1,27 @@
+{
+  "callsign": "FFT3110",
+  "callsign_icao": "FFT3110",
+  "callsign_iata": "F93110",
+  "airline_name": "Frontier Airlines",
+  "origin": {
+    "name": "Dallas Fort Worth International Airport",
+    "city": "Dallas-Fort Worth",
+    "country": "US",
+    "iata": "DFW",
+    "icao": "KDFW",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "destination": {
+    "name": "Charlotte Douglas International Airport",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 35.2140007019043,
+    "lon": -80.94309997558594
+  },
+  "created_at": "2025-05-26T21:09:29.400Z",
+  "timestamp": 1748293769400,
+  "api_source": "adsbdb"
+}

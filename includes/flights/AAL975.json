@@ -1,0 +1,29 @@
+{
+  "callsign": "AAL975",
+  "callsign_icao": "AAL975",
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Chicago O'Hare International Airport",
+    "city": "Chicago",
+    "country": "US",
+    "iata": "ORD",
+    "icao": "KORD",
+    "lat": 41.9786,
+    "lon": -87.9048
+  },
+  "destination": {
+    "name": "Sangster International Airport",
+    "city": "Montego Bay",
+    "country": "JM",
+    "iata": "MBJ",
+    "icao": "MKJS",
+    "lat": 18.5037,
+    "lon": -77.913399
+  },
+  "created_at": "2025-05-27T17:44:47.322Z",
+  "timestamp": 1748367887322,
+  "api_source": "adsb.lol",
+  "reviewed": true,
+  "review_source": "adsb.lol"
+}

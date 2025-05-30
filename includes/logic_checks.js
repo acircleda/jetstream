@@ -53,6 +53,14 @@ function route_logic_check(data, local_lat, local_lon) {
   return distanceKm;
 }
 
+function route_logic_check2(data, local_lat, local_lon) {
+  let origin = [Number(data.origin?.lat), Number(data.origin?.lon)];
+  let destination = [Number(data.destination?.lat), Number(data.destination?.lon)];
+  let local_coords = [Number(local_lat), Number(local_lon)];    
+  const distanceKm = crossTrackDistance(origin, destination, local_coords);
+  return distanceKm;
+}
+
 function calculateBearing(lat1, lon1, lat2, lon2) {
   const φ1 = toRadians(lat1);
   const φ2 = toRadians(lat2);
@@ -89,9 +97,33 @@ function heading_check(data, heading, toleraance) {
   return check;
 }
 
+function heading_check2(data, heading, toleraance) {
+  console.log('within function data:', data);
+  let origin = [Number(data.origin?.lat), Number(data.origin?.lon)];
+  let destination = [Number(data.destination?.lat), Number(data.destination?.lon)];
+  
+  const check = isHeadingTowardDestination(origin, destination, heading, toleraance);
+  return check;
+}
+
+// Simple heading check: takes explicit current, origin, and destination positions
+function simple_heading_check(currentLat, currentLon, route_data, heading, tolerance = tolerance) {
+
+   let destLat = Number(route_data.destination?.lat);
+   let destLon = Number(route_data.destination?.lon);
+
+  // Calculate bearing from current position to destination
+  const bearingToDest = calculateBearing(currentLat, currentLon, destLat, destLon);
+  const angleDiff = Math.abs(heading - bearingToDest) % 360;
+  const smallestDiff = Math.min(angleDiff, 360 - angleDiff);
+  return smallestDiff <= tolerance;
+}
 
 module.exports = {
   crossTrackDistance,
   route_logic_check,
-  heading_check
+  route_logic_check2,
+  heading_check,
+  heading_check2,
+  simple_heading_check
 };

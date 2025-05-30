@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL2544",
+  "callsign_icao": "AAL2544",
+  "callsign_iata": "AA2544",
+  "airline_name": "American Airlines",
+  "origin": {
+    "name": "Dallas Fort Worth International Airport",
+    "city": "Dallas-Fort Worth",
+    "country": "US",
+    "iata": "DFW",
+    "icao": "KDFW",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "destination": {
+    "name": "McGhee Tyson Airport",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "created_at": "2025-05-26T20:04:41.765Z",
+  "timestamp": 1748289881765,
+  "api_source": "adsbdb"
+}

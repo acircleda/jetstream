@@ -1,4 +1,4 @@
 .DS_Store
-config.js
 node_modules/*
 includes/config.js
+proxy.log

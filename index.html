@@ -2,13 +2,16 @@
 <html>
 <head>
   <script src="includes/config.js"></script>
+  <link rel="stylesheet" href="includes/styles.css" />
+  <script src="includes/color.js"></script>
+  <script src="includes/formatters.js"></script>
   <script>
     document.title = "Jetstream: " + CONFIG.city_name;
   </script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="styles.css" />
+
   
   <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   
@@ -22,6 +25,7 @@
     <div id="map"></div>
     <div id="info"></div>
   </div>
+
   <button id="move-json-btn">Needs Review</button>
 
   <script>
@@ -56,11 +60,11 @@
     }).addTo(map).bindPopup("Home");
 
     function format_name(location) {
-      if (!location || typeof location !== 'object') return '';
-      const municipality = location['municipality'];
-      const country = location['country_iso_name'];
-      if (municipality && municipality !== 'N/A') {
-      return country ? `${municipality}, ${country}` : municipality;
+      if (!location) return '';
+      const city = location.city;
+      const country = location.country;
+      if (city && city !== 'N/A') {
+      return country ? `${city}, ${country}` : city;
       }
       return country || '';
     }
@@ -103,6 +107,11 @@
     let planeMarkers = {};
 
     async function fetchPlanes() {
+      // Remove previous circle if exists (always, even on error)
+      if (window.closestPlaneCircle) {
+        map.removeLayer(window.closestPlaneCircle);
+        window.closestPlaneCircle = null;
+      }
       const bounds = map.getBounds();
       const getPlanes = `http://localhost:3000/planes?lat=${CONFIG.lat}&lon=${CONFIG.lon}&dist=${CONFIG.distance}`;
 
@@ -161,16 +170,25 @@
         if (plane.flight) {
           try {
             console.log(`Fetching flight info for ${plane.flight}`);
-            const flightInfoRes = await fetch(`http://localhost:3000/flightinfo?callsign=${plane.flight}&heading=${plane.track}`);
+            const flightInfoRes = await fetch(`http://localhost:3000/flightinfo2?callsign=${plane.flight}&heading=${plane.track}&current_lat=${plane.lat}&current_lon=${plane.lon}`);
             const flightInfoData = await flightInfoRes.json();
-            if (flightInfoData && flightInfoData.response && flightInfoData.response.flightroute) {
-              flightroute = flightInfoData.response.flightroute;
-              origin = flightroute?.origin || 'N/A';
-              destination = flightroute?.destination || 'N/A';
+            console.log(`Flight info for ${plane.flight}:`, flightInfoData);
+            if (flightInfoData && flightInfoData.callsign) {
+              origin = flightInfoData?.origin || '';
+              destination = flightInfoData?.destination || '';
+              flight_name = titleCase(flightInfoData?.airline_name || '');
               hasRoute = true;
+              console.log(`Origin info for ${plane.flight}:, ${JSON.stringify(origin)}`);
+              console.log(`Dest info for ${plane.flight}:, ${JSON.stringify(destination)}`);
+            } else if (!flightInfoData.callsign){
+              console.log(`Fetching aircraft info for ${plane.flight}`);
+              const aircraft_info_res = await fetch(`http://localhost:3000/aircraft?callsign=${plane.flight}`);
+              const aircraft_info = await aircraft_info_res.json();
+              console.log(`Aircraft info for ${plane.flight}:`, aircraft_info);
+              flight_name = titleCase(aircraft_info?.response?.aircraft?.registered_owner || '');
             }
           } catch(err) {
-            // Silently ignore errors fetching route info
+            console.error(`Error fetching route info for ${plane.flight}:`, err);
           }
         }
 
@@ -178,11 +196,12 @@
           .bindPopup(`
           <div>
             <strong>Flight ${plane.flight || 'N/A'}</strong><br>
-            ${origin['municipality']}, ${origin['country_iso_name']}<br>
-            <small>${origin['name']}</small><br>
-            <h3>to</h3>
-            ${destination['municipality']}, ${destination['country_iso_name']}<br>
-            <small>${destination['name']}</small><br><br>
+            <strong>${flight_name}</strong><br><br>
+            ${format_name(origin)}<br>
+            <small>${clean_field(origin.name)}</small><br>
+            ${format_name(origin) !== '' ? '<h3>to</h3>' : ''}
+            ${format_name(destination)}<br>
+            <small>${clean_field(destination.name)}</small><br><br>
             <strong>Altitude:</strong> ${plane.alt_baro || ''}<br>
             <strong>Speed:</strong> ${plane.gs ? `${plane.gs} knots` : 'N/A'}<br><br>
             View on <a href="https://www.flightradar24.com/${plane.flight}" target="_blank"> FlightRadar24</a> | 
@@ -201,6 +220,7 @@
           closestDestination = destination;
           closestOriginName = format_name(closestOrigin)
           closestDestinationName = format_name(closestDestination)
+          closestFlightName = flight_name;
         }
         }
       }
@@ -213,7 +233,7 @@
       if (closestPlane && closestMarker) {
         window.closestPlaneCircle = L.circle([closestPlane.lat, closestPlane.lon], {
         radius: 800, // meters
-        color: '#FF8200',
+        color: CONFIG.highlight_color,
         fill: false, // No fill at all
         weight: 1 // Optional: makes the circle outline a bit more visible
         }).addTo(map);
@@ -222,6 +242,7 @@
         document.getElementById('info').innerHTML = `
         <div id='sidebar-info'">
           <h2><a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">${closestPlane.flight || 'N/A'}</a></h2>
+          <p>${closestFlightName || ''}</p>
           <div class="sb-route">
             <h1>Origin</h1>
             <h2>${closestOriginName}</h1>
@@ -236,7 +257,7 @@
             <strong>Aircraft:</strong> ${closestPlane.t || 'N/A'}<br>
             <strong>Altitude:</strong> ${closestPlane.alt_baro || ''} ft<br>
             <strong>Speed:</strong> ${closestPlane.gs ? `${closestPlane.gs} knots` : ''}<br><br>
-            <a href="https://www.flightradar24.com/${closestPlane.flight}" target="_blank">View on Flightradar24</a>
+            <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">View on FlightAware</a>
           </div>
         </div>
         `;

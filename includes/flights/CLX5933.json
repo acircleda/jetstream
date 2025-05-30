@@ -1,0 +1,27 @@
+{
+  "callsign": "CLX5933",
+  "callsign_icao": "CLX5933",
+  "callsign_iata": "CV5933",
+  "airline_name": "Cargolux",
+  "origin": {
+    "name": "Santa Lucía Air Force Base / General Felipe Ángeles International Airport",
+    "city": "Mexico City (Santa Lucía)",
+    "country": "MX",
+    "iata": "NLU",
+    "icao": "MMSM",
+    "lat": 19.7458,
+    "lon": -99.0145
+  },
+  "destination": {
+    "name": "Luxembourg-Findel International Airport",
+    "city": "Luxembourg",
+    "country": "LU",
+    "iata": "LUX",
+    "icao": "ELLX",
+    "lat": 49.6233333,
+    "lon": 6.2044444
+  },
+  "created_at": "2025-05-28T10:57:00.303Z",
+  "timestamp": 1748429820303,
+  "api_source": "adsbdb"
+}

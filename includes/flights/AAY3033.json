@@ -1,0 +1,27 @@
+{
+  "callsign": "AAY3033",
+  "callsign_icao": "AAY3033",
+  "callsign_iata": "G43033",
+  "airline_name": "Allegiant Air",
+  "origin": {
+    "name": "St Petersburg Clearwater International Airport",
+    "city": "St Petersburg-Clearwater",
+    "country": "US",
+    "iata": "PIE",
+    "icao": "KPIE",
+    "lat": 27.91020012,
+    "lon": -82.68740082
+  },
+  "destination": {
+    "name": "McGhee Tyson Airport",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "created_at": "2025-05-26T21:02:54.488Z",
+  "timestamp": 1748293374488,
+  "api_source": "adsbdb"
+}

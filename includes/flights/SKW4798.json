@@ -1,39 +1,27 @@
 {
-  "response": {
-    "flightroute": {
-      "callsign": "SKW4798",
-      "callsign_icao": "SKW4798",
-      "callsign_iata": "OO4798",
-      "airline": {
-        "name": "SkyWest Airlines",
-        "icao": "SKW",
-        "iata": "OO",
-        "country": "United States",
-        "country_iso": "US",
-        "callsign": "SKYWEST"
-      },
-      "origin": {
-        "country_iso_name": "US",
-        "country_name": "United States",
-        "elevation": 672,
-        "iata_code": "ORD",
-        "icao_code": "KORD",
-        "latitude": 41.9786,
-        "longitude": -87.9048,
-        "municipality": "Chicago",
-        "name": "Chicago O'Hare International Airport"
-      },
-      "destination": {
-        "country_iso_name": "US",
-        "country_name": "United States",
-        "elevation": 683,
-        "iata_code": "CHA",
-        "icao_code": "KCHA",
-        "latitude": 35.035301,
-        "longitude": -85.203796,
-        "municipality": "Chattanooga",
-        "name": "Chattanooga Metropolitan Airport (Lovell Field)"
-      }
-    }
-  }
+  "callsign": "SKW4798",
+  "callsign_icao": "SKW4798",
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Denver International Airport",
+    "city": "Denver",
+    "country": "US",
+    "iata": "DEN",
+    "icao": "KDEN",
+    "lat": 39.861698,
+    "lon": -104.672997
+  },
+  "destination": {
+    "name": "McGhee Tyson Airport",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "created_at": "2025-05-28T02:18:21.317Z",
+  "timestamp": 1748398701317,
+  "api_source": "adsb.lol"
 }

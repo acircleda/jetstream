@@ -1,0 +1,27 @@
+{
+  "callsign": "DAL1679",
+  "callsign_icao": "DAL1679",
+  "callsign_iata": "DL1679",
+  "airline_name": "Delta Air Lines",
+  "origin": {
+    "name": "Cincinnati Northern Kentucky International Airport",
+    "city": "Cincinnati / Covington",
+    "country": "US",
+    "iata": "CVG",
+    "icao": "KCVG",
+    "lat": 39.048801,
+    "lon": -84.667801
+  },
+  "destination": {
+    "name": "Tampa International Airport",
+    "city": "Tampa",
+    "country": "US",
+    "iata": "TPA",
+    "icao": "KTPA",
+    "lat": 27.975500106811523,
+    "lon": -82.533203125
+  },
+  "created_at": "2025-05-26T20:00:46.576Z",
+  "timestamp": 1748289646576,
+  "api_source": "adsbdb"
+}

@@ -1,0 +1,27 @@
+{
+  "callsign": "AAY634",
+  "callsign_icao": "AAY634",
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Indianapolis International Airport",
+    "city": "Indianapolis",
+    "country": "US",
+    "iata": "IND",
+    "icao": "KIND",
+    "lat": 39.7173,
+    "lon": -86.294403
+  },
+  "destination": {
+    "name": "Fort Lauderdale Hollywood International Airport",
+    "city": "Fort Lauderdale",
+    "country": "US",
+    "iata": "FLL",
+    "icao": "KFLL",
+    "lat": 26.072599,
+    "lon": -80.152702
+  },
+  "created_at": "2025-05-28T12:20:11.203Z",
+  "timestamp": 1748434811203,
+  "api_source": "adsb.lol"
+}

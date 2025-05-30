@@ -1,0 +1,27 @@
+{
+  "callsign": "DAL3042",
+  "callsign_icao": "DAL3042",
+  "callsign_iata": "DL3042",
+  "airline_name": "Delta Air Lines",
+  "origin": {
+    "name": "Hartsfield Jackson Atlanta International Airport",
+    "city": "Atlanta",
+    "country": "US",
+    "iata": "ATL",
+    "icao": "KATL",
+    "lat": 33.6367,
+    "lon": -84.428101
+  },
+  "destination": {
+    "name": "McGhee Tyson Airport",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "created_at": "2025-05-26T21:30:50.032Z",
+  "timestamp": 1748295050032,
+  "api_source": "adsbdb"
+}

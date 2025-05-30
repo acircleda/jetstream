@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL2878",
+  "callsign_icao": "AAL2878",
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Denver International Airport",
+    "city": "Denver",
+    "country": "US",
+    "iata": "DEN",
+    "icao": "KDEN",
+    "lat": 39.861698,
+    "lon": -104.672997
+  },
+  "destination": {
+    "name": "Charlotte Douglas International Airport",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 35.214001,
+    "lon": -80.9431
+  },
+  "created_at": "2025-05-28T08:10:09.234Z",
+  "timestamp": 1748419809234,
+  "api_source": "adsb.lol"
+}
