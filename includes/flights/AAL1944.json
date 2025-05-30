@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL1944",
+  "callsign_icao": "AAL1944",
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Ronald Reagan Washington National Airport",
+    "city": "Washington",
+    "country": "US",
+    "iata": "DCA",
+    "icao": "KDCA",
+    "lat": 38.8521,
+    "lon": -77.037697
+  },
+  "destination": {
+    "name": "Tampa International Airport",
+    "city": "Tampa",
+    "country": "US",
+    "iata": "TPA",
+    "icao": "KTPA",
+    "lat": 27.9755,
+    "lon": -82.533203
+  },
+  "created_at": "2025-05-27T13:14:01.430Z",
+  "timestamp": 1748351641430,
+  "api_source": "adsb.lol"
+}

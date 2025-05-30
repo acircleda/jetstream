@@ -1,0 +1,26 @@
+{
+  "callsign": "N941Q",
+  "callsign_icao": null,
+  "callsign_iata": null,
+  "origin": {
+    "name": "Middletown Regional Airport",
+    "city": "Middletown",
+    "country": "US",
+    "iata": "MWO",
+    "icao": "KMWO",
+    "lat": 39.530998,
+    "lon": -84.395302
+  },
+  "destination": {
+    "name": "Destin Executive Airport",
+    "city": "Destin",
+    "country": "US",
+    "iata": "DSI",
+    "icao": "KDTS",
+    "lat": 30.40010071,
+    "lon": -86.47149658
+  },
+  "created_at": "2025-05-26T22:25:28.451Z",
+  "timestamp": 1748298328451,
+  "api_source": "adsbdb"
+}

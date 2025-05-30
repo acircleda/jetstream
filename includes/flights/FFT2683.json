@@ -1,0 +1,27 @@
+{
+  "callsign": "FFT2683",
+  "callsign_icao": "FFT2683",
+  "callsign_iata": "F92683",
+  "airline_name": "Frontier Airlines",
+  "origin": {
+    "name": "Cleveland Hopkins International Airport",
+    "city": "Cleveland",
+    "country": "US",
+    "iata": "CLE",
+    "icao": "KCLE",
+    "lat": 41.4117012024,
+    "lon": -81.8498001099
+  },
+  "destination": {
+    "name": "Tampa International Airport",
+    "city": "Tampa",
+    "country": "US",
+    "iata": "TPA",
+    "icao": "KTPA",
+    "lat": 27.975500106811523,
+    "lon": -82.533203125
+  },
+  "created_at": "2025-05-30T16:41:43.527Z",
+  "timestamp": 1748623303527,
+  "api_source": "adsbdb"
+}

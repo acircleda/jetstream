@@ -1,0 +1,27 @@
+{
+  "callsign": "AAY2877",
+  "callsign_icao": "AAY2877",
+  "callsign_iata": "G42877",
+  "airline_name": "Allegiant Air",
+  "origin": {
+    "name": "Eugene F. Kranz Toledo Express Airport",
+    "city": "Toledo",
+    "country": "US",
+    "iata": "TOL",
+    "icao": "KTOL",
+    "lat": 41.5868,
+    "lon": -83.8078
+  },
+  "destination": {
+    "name": "Orlando Sanford International Airport",
+    "city": "Orlando",
+    "country": "US",
+    "iata": "SFB",
+    "icao": "KSFB",
+    "lat": 28.777599334716797,
+    "lon": -81.23750305175781
+  },
+  "created_at": "2025-05-26T19:35:27.973Z",
+  "timestamp": 1748288127973,
+  "api_source": "adsbdb"
+}

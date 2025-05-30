@@ -1,0 +1,27 @@
+{
+  "callsign": "JBU2065",
+  "callsign_icao": "JBU2065",
+  "callsign_iata": "B62065",
+  "airline_name": "JetBlue Airways",
+  "origin": {
+    "name": "Logan International",
+    "city": "Boston",
+    "country": "US",
+    "iata": "BOS",
+    "icao": "KBOS",
+    "lat": 42.36197,
+    "lon": -71.0079
+  },
+  "destination": {
+    "name": "Southwest Florida International",
+    "city": "Fort Myers",
+    "country": "US",
+    "iata": "RSW",
+    "icao": "KRSW",
+    "lat": 26.53619956970215,
+    "lon": -81.75520324707031
+  },
+  "created_at": "2025-05-26T20:56:09.819Z",
+  "timestamp": 1748292969819,
+  "api_source": "aviationstack"
+}

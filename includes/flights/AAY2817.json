@@ -1,0 +1,27 @@
+{
+  "callsign": "AAY2817",
+  "callsign_icao": "AAY2817",
+  "callsign_iata": "G42817",
+  "airline_name": "Allegiant Air",
+  "origin": {
+    "name": "Orlando Sanford International Airport",
+    "city": "Orlando",
+    "country": "US",
+    "iata": "SFB",
+    "icao": "KSFB",
+    "lat": 28.777599334716797,
+    "lon": -81.23750305175781
+  },
+  "destination": {
+    "name": "James M Cox Dayton International Airport",
+    "city": "Dayton",
+    "country": "US",
+    "iata": "DAY",
+    "icao": "KDAY",
+    "lat": 39.902401,
+    "lon": -84.219398
+  },
+  "created_at": "2025-05-26T19:47:31.426Z",
+  "timestamp": 1748288851426,
+  "api_source": "adsbdb"
+}

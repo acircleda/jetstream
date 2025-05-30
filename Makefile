@@ -1,9 +1,27 @@
+setup:
+	@echo "Checking for Node.js and npm..."
+	@if ! command -v node >/dev/null 2>&1; then \
+	  echo "Node.js not found. Installing with Homebrew..."; \
+	  brew install node; \
+	else \
+	  echo "Node.js is already installed."; \
+	fi
+	@if ! command -v npm >/dev/null 2>&1; then \
+	  echo "npm not found. Please check your Node.js installation."; \
+	else \
+	  echo "npm is already installed."; \
+	fi
+	@echo "Installing npm dependencies..."
+	npm install
+	@echo "Setup complete!"
+
 CONFIG_FILE=includes/config.js
 GITIGNORE_FILE=.gitignore
 
 proj_config:
 	@echo "Generating $(CONFIG_FILE)..."
 	@echo "const CONFIG = {" > $(CONFIG_FILE)
+	@echo "  test_mode: true, // Set to true to avoid any calls to limited APIs" >> $(CONFIG_FILE)
 	@echo "  lat: 37.77697315135698," >> $(CONFIG_FILE)
 	@echo "  lon: -122.41922177136804," >> $(CONFIG_FILE)
 	@echo "  city_name: 'my city', // your city name" >> $(CONFIG_FILE)
@@ -11,11 +29,13 @@ proj_config:
 	@echo "  maxZoom: 15," >> $(CONFIG_FILE)
 	@echo "  initialZoom: 12, // Zoom level for the map" >> $(CONFIG_FILE)
 	@echo "  distance: 10, // Distance in miles" >> $(CONFIG_FILE)
-	@echo "  refreshRate: 10000 // Refresh rate in milliseconds" >> $(CONFIG_FILE)
+	@echo "  route_check_threshold: 150, // Threshold to determine if a plane's origin and departure airports (as reported by adsbdb (and hexdb.io)) are logical, in km" >> $(CONFIG_FILE)
+	@echo "  refreshRate: 10000, // Refresh rate in milliseconds" >> $(CONFIG_FILE)
 	@echo "  use_downtime: false, // Set to true to use downtime" >> $(CONFIG_FILE)
 	@echo "  downtime_start: 21, // Set hour downtime begins" >> $(CONFIG_FILE)
 	@echo "  downtime_end: 6, // Set hour downtime ends" >> $(CONFIG_FILE)
-	@echo "  downtime_refresh: 60000 // Set the refresh rate during downtime" >> $(CONFIG_FILE)"
+	@echo "  downtime_refresh: 60000, // Set the refresh rate during downtime" >> $(CONFIG_FILE)"
+	@echo "  aviation_stack_api_key: null '// http://aviationstack.com/" >> $(CONFIG_FILE)
 	@echo "};" >> $(CONFIG_FILE)
 
 	@echo "Ensuring $(CONFIG_FILE) is in $(GITIGNORE_FILE)..."
@@ -38,8 +58,16 @@ go:
 
 .PHONY: go
 
+review:
+	@echo "Starting server..."
+	@echo "Review files at http://localhost:5000/review.html."
+	@npm run dev
+	
+.PHONY: review
+
 commit:
-	@echo "Committing db to ..."
+	@echo "Committing ..."
 	@git add -A
 	@git commit -m "Autocommit"
 	@git push
+

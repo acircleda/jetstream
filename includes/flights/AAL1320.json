@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL1320",
+  "callsign_icao": "AAL1320",
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Austin Bergstrom International Airport",
+    "city": "Austin",
+    "country": "US",
+    "iata": "AUS",
+    "icao": "KAUS",
+    "lat": 30.1945,
+    "lon": -97.669899
+  },
+  "destination": {
+    "name": "Charlotte Douglas International Airport",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 35.214001,
+    "lon": -80.9431
+  },
+  "created_at": "2025-05-27T13:15:31.671Z",
+  "timestamp": 1748351731671,
+  "api_source": "adsb.lol"
+}

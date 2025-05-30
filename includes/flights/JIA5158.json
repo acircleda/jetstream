@@ -1,0 +1,27 @@
+{
+  "callsign": "JIA5158",
+  "callsign_icao": "JIA5158",
+  "callsign_iata": "US5158",
+  "airline_name": "PSA Airlines",
+  "origin": {
+    "name": "Philadelphia International Airport",
+    "city": "Philadelphia",
+    "country": "US",
+    "iata": "PHL",
+    "icao": "KPHL",
+    "lat": 39.87189865112305,
+    "lon": -75.24109649658203
+  },
+  "destination": {
+    "name": "Birmingham-Shuttlesworth International Airport",
+    "city": "Birmingham",
+    "country": "US",
+    "iata": "BHM",
+    "icao": "KBHM",
+    "lat": 33.562901,
+    "lon": -86.753502
+  },
+  "created_at": "2025-05-26T19:51:03.558Z",
+  "timestamp": 1748289063558,
+  "api_source": "adsbdb"
+}

@@ -1,0 +1,29 @@
+{
+  "callsign": "UAL2420",
+  "callsign_icao": "UAL2420",
+  "callsign_iata": "UA2420",
+  "airline_name": "United Airlines",
+  "origin": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 37.618999,
+    "lon": -122.375
+  },
+  "destination": {
+    "name": "Denver International Airport",
+    "city": "Denver",
+    "country": "US",
+    "iata": "DEN",
+    "icao": "KDEN",
+    "lat": 39.861698,
+    "lon": -104.672997
+  },
+  "created_at": "2025-05-30T19:35:00.820Z",
+  "timestamp": 1748633700820,
+  "api_source": "manual",
+  "reviewed": true,
+  "review_source": "manual"
+}

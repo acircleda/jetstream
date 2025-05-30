@@ -1,0 +1,27 @@
+{
+  "callsign": "FFT1511",
+  "callsign_icao": "FFT1511",
+  "callsign_iata": "F91511",
+  "airline_name": "Frontier Airlines",
+  "origin": {
+    "name": "La Guardia Airport",
+    "city": "New York",
+    "country": "US",
+    "iata": "LGA",
+    "icao": "KLGA",
+    "lat": 40.777199,
+    "lon": -73.872597
+  },
+  "destination": {
+    "name": "Hartsfield Jackson Atlanta International Airport",
+    "city": "Atlanta",
+    "country": "US",
+    "iata": "ATL",
+    "icao": "KATL",
+    "lat": 33.6367,
+    "lon": -84.428101
+  },
+  "created_at": "2025-05-30T18:43:48.808Z",
+  "timestamp": 1748630628808,
+  "api_source": "adsbdb"
+}

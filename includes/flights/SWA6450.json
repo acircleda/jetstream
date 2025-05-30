@@ -1,0 +1,27 @@
+{
+  "callsign": "SWA6450",
+  "callsign_icao": "SWA6450",
+  "callsign_iata": "WN6450",
+  "airline_name": "Southwest Airlines",
+  "origin": {
+    "name": "Orlando International Airport",
+    "city": "Orlando",
+    "country": "US",
+    "iata": "MCO",
+    "icao": "KMCO",
+    "lat": 28.429399490356445,
+    "lon": -81.30899810791016
+  },
+  "destination": {
+    "name": "Chicago Midway International Airport",
+    "city": "Chicago",
+    "country": "US",
+    "iata": "MDW",
+    "icao": "KMDW",
+    "lat": 41.785999,
+    "lon": -87.752403
+  },
+  "created_at": "2025-05-27T20:45:22.269Z",
+  "timestamp": 1748378722269,
+  "api_source": "adsbdb"
+}

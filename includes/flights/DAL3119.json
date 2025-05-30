@@ -1,0 +1,27 @@
+{
+  "callsign": "DAL3119",
+  "callsign_icao": "DAL3119",
+  "callsign_iata": "DL3119",
+  "airline_name": "Delta Air Lines",
+  "origin": {
+    "name": "Hartsfield Jackson Atlanta International Airport",
+    "city": "Atlanta",
+    "country": "US",
+    "iata": "ATL",
+    "icao": "KATL",
+    "lat": 33.6367,
+    "lon": -84.428101
+  },
+  "destination": {
+    "name": "Cincinnati Northern Kentucky International Airport",
+    "city": "Cincinnati / Covington",
+    "country": "US",
+    "iata": "CVG",
+    "icao": "KCVG",
+    "lat": 39.048801,
+    "lon": -84.667801
+  },
+  "created_at": "2025-05-26T22:31:41.861Z",
+  "timestamp": 1748298701861,
+  "api_source": "adsbdb"
+}

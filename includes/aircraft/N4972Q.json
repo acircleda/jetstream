@@ -1,0 +1,17 @@
+{
+  "response": {
+    "aircraft": {
+      "type": "A185F",
+      "icao_type": "C185",
+      "manufacturer": "Cessna",
+      "mode_s": "A62CC6",
+      "registration": "N4972Q",
+      "registered_owner_country_iso_name": "US",
+      "registered_owner_country_name": "United States",
+      "registered_owner_operator_flag_code": null,
+      "registered_owner": "ADAMS DAVID G",
+      "url_photo": null,
+      "url_photo_thumbnail": null
+    }
+  }
+}

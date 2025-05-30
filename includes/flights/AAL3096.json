@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL3096",
+  "callsign_icao": "AAL3096",
+  "callsign_iata": "AA3096",
+  "airline_name": "American Airlines",
+  "origin": {
+    "name": "Charlotte Douglas International Airport",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 35.2140007019043,
+    "lon": -80.94309997558594
+  },
+  "destination": {
+    "name": "St Louis Lambert International Airport",
+    "city": "St Louis",
+    "country": "US",
+    "iata": "STL",
+    "icao": "KSTL",
+    "lat": 38.748697,
+    "lon": -90.370003
+  },
+  "created_at": "2025-05-26T19:52:21.529Z",
+  "timestamp": 1748289141529,
+  "api_source": "adsbdb"
+}
