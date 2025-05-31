@@ -37,7 +37,8 @@
       doubleClickZoom: false,
       boxZoom: false,
       keyboard: false,
-      touchZoom: false
+      touchZoom: false,
+      attributionControl: false
     }).setView([CONFIG.lat, CONFIG.lon], CONFIG.initialZoom); // Use CONFIG constants
 
     L.tileLayer(CONFIG.tileLayerUrl, {
@@ -52,7 +53,7 @@
             }).addTo(map);
 
     // Add a black dot to represent the house
-    const houseMarker = L.circleMarker([CONFIG.lat, CONFIG.lon], {
+    const houseMarker = L.circleMarker([CONFIG.house_lat, CONFIG.house_lon], {
       radius: 5,
       color: 'black',
       fillColor: 'black',
@@ -112,169 +113,184 @@
         map.removeLayer(window.closestPlaneCircle);
         window.closestPlaneCircle = null;
       }
-      const bounds = map.getBounds();
-      const getPlanes = `http://localhost:3000/planes?lat=${CONFIG.lat}&lon=${CONFIG.lon}&dist=${CONFIG.distance}`;
 
-      try {
-      console.log("Fetching planes...");
-      const res = await fetch(getPlanes);
-      const data = await res.json();
-      console.log(data);
-
-      // Remove old markers
+      // Always remove old markers before fetching new data
       for (let id in planeMarkers) {
         map.removeLayer(planeMarkers[id]);
       }
       planeMarkers = {};
 
-      let closestPlane = null;
-      let closestDistance = Infinity;
-      let closestMarker = null;
-      let closestOrigin = 'N/A';
-      let closestDestination = 'N/A';
+      const bounds = map.getBounds();
+      const getPlanes = `http://localhost:3000/planes?lat=${CONFIG.lat}&lon=${CONFIG.lon}&dist=${CONFIG.distance}`;
 
-      for (let plane of data.ac) {
-        if (plane.lat && plane.lon) {
-        // Calculate distance to center
-        const dLat = (plane.lat - CONFIG.lat);
-        const dLon = (plane.lon - CONFIG.lon);
-        const distance = Math.sqrt(dLat * dLat + dLon * dLon);
+      try {
+        console.log("Fetching planes...");
+        const res = await fetch(getPlanes);
+        const data = await res.json();
+        console.log(data);
 
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closestPlane = plane;
+        // Remove old markers
+        for (let id in planeMarkers) {
+          map.removeLayer(planeMarkers[id]);
         }
-        }
-      }
+        planeMarkers = {};
 
-      for (let plane of data.ac) {
-        if (plane.lat && plane.lon) {
-        
-        const opacity = plane.alt_baro ? Math.max(0.3, Math.min(1, plane.alt_baro / 1000)) : 1;
-        selected_marker = select_marker(plane.t, plane.category)
-        const icon = L.divIcon({
-        html: `<div style="display: flex; justify-content: center; align-items: center; width: 60px; height: 60px;">
-          <img class='icon' src="${selected_marker}" alt="Icon"
-            style="width:48px; height:48px; filter: invert(38%) sepia(100%) saturate(1000%) hue-rotate(10deg); transform: rotate(${(plane.track || 0)}deg); display: block; margin: auto;" />
-        </div>`,
-          className: 'plane-icon',
-          iconSize: [60, 60],
-          iconAnchor: [30, 30]
-        });
+        let closestPlane = null;
+        let closestDistance = Infinity;
+        let closestMarker = null;
+        let closestOrigin = 'N/A';
+        let closestDestination = 'N/A';
 
-        // Fetch additional flight info
-        let origin = 'N/A';
-        let destination = 'N/A';
-        let hasRoute = false;
+        for (let plane of data.ac) {
+          if (plane.lat && plane.lon) {
+          // Calculate distance to center
+          const dLat = (plane.lat - CONFIG.lat);
+          const dLon = (plane.lon - CONFIG.lon);
+          const distance = Math.sqrt(dLat * dLat + dLon * dLon);
 
-        if (plane.flight) {
-          try {
-            console.log(`Fetching flight info for ${plane.flight}`);
-            const flightInfoRes = await fetch(`http://localhost:3000/flightinfo2?callsign=${plane.flight}&heading=${plane.track}&current_lat=${plane.lat}&current_lon=${plane.lon}`);
-            const flightInfoData = await flightInfoRes.json();
-            console.log(`Flight info for ${plane.flight}:`, flightInfoData);
-            if (flightInfoData && flightInfoData.callsign) {
-              origin = flightInfoData?.origin || '';
-              destination = flightInfoData?.destination || '';
-              flight_name = titleCase(flightInfoData?.airline_name || '');
-              hasRoute = true;
-              console.log(`Origin info for ${plane.flight}:, ${JSON.stringify(origin)}`);
-              console.log(`Dest info for ${plane.flight}:, ${JSON.stringify(destination)}`);
-            } else if (!flightInfoData.callsign){
-              console.log(`Fetching aircraft info for ${plane.flight}`);
-              const aircraft_info_res = await fetch(`http://localhost:3000/aircraft?callsign=${plane.flight}`);
-              const aircraft_info = await aircraft_info_res.json();
-              console.log(`Aircraft info for ${plane.flight}:`, aircraft_info);
-              flight_name = titleCase(aircraft_info?.response?.aircraft?.registered_owner || '');
-            }
-          } catch(err) {
-            console.error(`Error fetching route info for ${plane.flight}:`, err);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestPlane = plane;
+          }
           }
         }
 
-        const marker = L.marker([plane.lat, plane.lon], { icon: icon })
-          .bindPopup(`
-          <div>
-            <strong>Flight ${plane.flight || 'N/A'}</strong><br>
-            <strong>${flight_name}</strong><br><br>
-            ${format_name(origin)}<br>
-            <small>${clean_field(origin.name)}</small><br>
-            ${format_name(origin) !== '' ? '<h3>to</h3>' : ''}
-            ${format_name(destination)}<br>
-            <small>${clean_field(destination.name)}</small><br><br>
-            <strong>Altitude:</strong> ${plane.alt_baro || ''}<br>
-            <strong>Speed:</strong> ${plane.gs ? `${plane.gs} knots` : 'N/A'}<br><br>
-            View on <a href="https://www.flightradar24.com/${plane.flight}" target="_blank"> FlightRadar24</a> | 
-             <a href="https://www.flightaware.com/live/flight/${plane.flight}" target="_blank">FlightAware</a>
-          </div>
-          `)
-          .addTo(map);
+        for (let plane of data.ac) {
+          if (plane.lat && plane.lon) {
+          
+          const opacity = plane.alt_baro ? Math.max(0.3, Math.min(1, plane.alt_baro / 1000)) : 1;
+          selected_marker = select_marker(plane.t, plane.category)
+          const icon = L.divIcon({
+          html: `<div style="display: flex; justify-content: center; align-items: center; width: 60px; height: 60px;">
+            <div style="
+              width: 48px;
+              height: 48px;
+              background-color: ${CONFIG.highlight_color};
+              mask: url(${selected_marker}) center/contain no-repeat;
+              -webkit-mask: url(${selected_marker}) center/contain no-repeat;
+              transform: rotate(${(plane.track || 0)}deg);
+              "></div>
+          </div>`,
 
-        planeMarkers[plane.hex] = marker;
-        
+          
+            className: 'plane-icon',
+            iconSize: [60, 60],
+            iconAnchor: [30, 30]
+          });
 
-        // Save marker and info for closest plane
-        if (closestPlane && plane.hex === closestPlane.hex) {
-          closestMarker = marker;
-          closestOrigin = origin;
-          closestDestination = destination;
-          closestOriginName = format_name(closestOrigin)
-          closestDestinationName = format_name(closestDestination)
-          closestFlightName = flight_name;
+          // Fetch additional flight info
+          let origin = 'N/A';
+          let destination = 'N/A';
+          let hasRoute = false;
+
+          if (plane.flight) {
+            try {
+              console.log(`Fetching flight info for ${plane.flight}`);
+              const flightInfoRes = await fetch(`http://localhost:3000/flightinfo2?callsign=${plane.flight}&heading=${plane.track}&current_lat=${plane.lat}&current_lon=${plane.lon}`);
+              const flightInfoData = await flightInfoRes.json();
+              console.log(`Flight info for ${plane.flight}:`, flightInfoData);
+              if (flightInfoData && flightInfoData.callsign) {
+                origin = flightInfoData?.origin || '';
+                destination = flightInfoData?.destination || '';
+                flight_name = titleCase(flightInfoData?.airline_name || '');
+                hasRoute = true;
+                console.log(`Origin info for ${plane.flight}:, ${JSON.stringify(origin)}`);
+                console.log(`Dest info for ${plane.flight}:, ${JSON.stringify(destination)}`);
+              } else if (!flightInfoData.callsign){
+                console.log(`Fetching aircraft info for ${plane.flight}`);
+                const aircraft_info_res = await fetch(`http://localhost:3000/aircraft?callsign=${plane.flight}`);
+                const aircraft_info = await aircraft_info_res.json();
+                console.log(`Aircraft info for ${plane.flight}:`, aircraft_info);
+                flight_name = titleCase(aircraft_info?.response?.aircraft?.registered_owner || '');
+              }
+            } catch(err) {
+              console.error(`Error fetching route info for ${plane.flight}:`, err);
+            }
+          }
+
+          const marker = L.marker([plane.lat, plane.lon], { icon: icon })
+            .bindPopup(`
+            <div>
+              <strong>Flight ${plane.flight || 'N/A'}</strong><br>
+              <strong>${flight_name}</strong><br><br>
+              ${format_name(origin)}<br>
+              <small>${clean_field(origin.name)}</small><br>
+              ${format_name(origin) !== '' ? '<h3>to</h3>' : ''}
+              ${format_name(destination)}<br>
+              <small>${clean_field(destination.name)}</small><br><br>
+              <strong>Altitude:</strong> ${plane.alt_baro || ''}<br>
+              <strong>Speed:</strong> ${plane.gs ? `${plane.gs} knots` : 'N/A'}<br><br>
+              View on <a href="https://www.flightradar24.com/${plane.flight}" target="_blank"> FlightRadar24</a> | 
+               <a href="https://www.flightaware.com/live/flight/${plane.flight}" target="_blank">FlightAware</a>
+            </div>
+            `)
+            .addTo(map);
+
+          planeMarkers[plane.hex] = marker;
+          
+
+          // Save marker and info for closest plane
+          if (closestPlane && plane.hex === closestPlane.hex) {
+            closestMarker = marker;
+            closestOrigin = origin;
+            closestDestination = destination;
+            closestOriginName = format_name(closestOrigin)
+            closestDestinationName = format_name(closestDestination)
+            closestFlightName = flight_name;
+          }
+          }
         }
+
+        // Highlight closest plane
+        // Remove previous circle if exists
+        if (window.closestPlaneCircle) {
+          map.removeLayer(window.closestPlaneCircle);
         }
-      }
+        if (closestPlane && closestMarker) {
+          window.closestPlaneCircle = L.circle([closestPlane.lat, closestPlane.lon], {
+          radius: 800, // meters
+          color: CONFIG.highlight_color,
+          fill: false, // No fill at all
+          weight: 1 // Optional: makes the circle outline a bit more visible
+          }).addTo(map);
 
-      // Highlight closest plane
-      // Remove previous circle if exists
-      if (window.closestPlaneCircle) {
-        map.removeLayer(window.closestPlaneCircle);
-      }
-      if (closestPlane && closestMarker) {
-        window.closestPlaneCircle = L.circle([closestPlane.lat, closestPlane.lon], {
-        radius: 800, // meters
-        color: CONFIG.highlight_color,
-        fill: false, // No fill at all
-        weight: 1 // Optional: makes the circle outline a bit more visible
-        }).addTo(map);
-
-        // Update info div
-        document.getElementById('info').innerHTML = `
-        <div id='sidebar-info'">
-          <h2><a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">${closestPlane.flight || 'N/A'}</a></h2>
-          <p>${closestFlightName || ''}</p>
-          <div class="sb-route">
-            <h1>Origin</h1>
-            <h2>${closestOriginName}</h1>
-            <h3>${closestOrigin['name'] || ''}<h3>
+          // Update info div
+          document.getElementById('info').innerHTML = `
+          <div id='sidebar-info'">
+            <h2><a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">${closestPlane.flight || 'N/A'}</a></h2>
+            <p>${closestFlightName || ''}</p>
+            <div class="sb-route">
+              <h1>Origin</h1>
+              <h2>${closestOriginName}</h1>
+              <h3>${closestOrigin['name'] || ''}<h3>
+            </div>
+            <div class="sb-route">
+              <h1>Destination</h2>
+              <h2>${closestDestinationName}</h1>
+              <h3>${closestDestination['name'] || ''}<h3>
+            </div>
+            <div class="sb-flight-info">
+              <strong>Aircraft:</strong> ${closestPlane.t || 'N/A'}<br>
+              <strong>Altitude:</strong> ${closestPlane.alt_baro || ''} ft<br>
+              <strong>Speed:</strong> ${closestPlane.gs ? `${closestPlane.gs} knots` : ''}<br><br>
+              <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">View on FlightAware</a>
+            </div>
           </div>
-          <div class="sb-route">
-            <h1>Destination</h2>
-            <h2>${closestDestinationName}</h1>
-            <h3>${closestDestination['name'] || ''}<h3>
-          </div>
-          <div class="sb-flight-info">
-            <strong>Aircraft:</strong> ${closestPlane.t || 'N/A'}<br>
-            <strong>Altitude:</strong> ${closestPlane.alt_baro || ''} ft<br>
-            <strong>Speed:</strong> ${closestPlane.gs ? `${closestPlane.gs} knots` : ''}<br><br>
-            <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">View on FlightAware</a>
-          </div>
-        </div>
-        `;
-        // Show the move-json button if a flight is displayed
-        const moveBtn = document.getElementById('move-json-btn');
-        if (closestPlane && closestPlane.flight) {
-          moveBtn.style.display = 'block';
-          moveBtn.setAttribute('data-callsign', closestPlane.flight);
+          `;
+          // Show the move-json button if a flight is displayed
+          const moveBtn = document.getElementById('move-json-btn');
+          if (closestPlane && closestPlane.flight) {
+            moveBtn.style.display = 'block';
+            moveBtn.setAttribute('data-callsign', closestPlane.flight);
+          } else {
+            moveBtn.style.display = 'none';
+            moveBtn.removeAttribute('data-callsign');
+          }
         } else {
-          moveBtn.style.display = 'none';
-          moveBtn.removeAttribute('data-callsign');
+          document.getElementById('info').innerHTML = '';
         }
-      } else {
-        document.getElementById('info').innerHTML = '';
-      }
       } catch (err) {
-      console.error('Error fetching aircraft:', err);
+        console.error('Error fetching aircraft:', err);
       }
     }
 

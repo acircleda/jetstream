@@ -15,27 +15,33 @@ setup:
 	npm install
 	@echo "Setup complete!"
 
-CONFIG_FILE=includes/config.js
+CONFIG_FILE=includes/config2.js
 GITIGNORE_FILE=.gitignore
 
-proj_config:
+config:
 	@echo "Generating $(CONFIG_FILE)..."
 	@echo "const CONFIG = {" > $(CONFIG_FILE)
 	@echo "  test_mode: true, // Set to true to avoid any calls to limited APIs" >> $(CONFIG_FILE)
 	@echo "  lat: 37.77697315135698," >> $(CONFIG_FILE)
 	@echo "  lon: -122.41922177136804," >> $(CONFIG_FILE)
 	@echo "  city_name: 'my city', // your city name" >> $(CONFIG_FILE)
+	@echo "  highlight_color: '#FF8200', // The color of the text and plane markers" >> $(CONFIG_FILE)
 	@echo "  tileLayerUrl: 'http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}'," >> $(CONFIG_FILE)
 	@echo "  maxZoom: 15," >> $(CONFIG_FILE)
 	@echo "  initialZoom: 12, // Zoom level for the map" >> $(CONFIG_FILE)
 	@echo "  distance: 10, // Distance in miles" >> $(CONFIG_FILE)
 	@echo "  route_check_threshold: 150, // Threshold to determine if a plane's origin and departure airports (as reported by adsbdb (and hexdb.io)) are logical, in km" >> $(CONFIG_FILE)
+	@echo "  heading_tolerance: 15, // Tolerance, in degrees, for heading check of whether a plane is heading towards its destination" >> $(CONFIG_FILE)
 	@echo "  refreshRate: 10000, // Refresh rate in milliseconds" >> $(CONFIG_FILE)
 	@echo "  use_downtime: false, // Set to true to use downtime" >> $(CONFIG_FILE)
 	@echo "  downtime_start: 21, // Set hour downtime begins" >> $(CONFIG_FILE)
 	@echo "  downtime_end: 6, // Set hour downtime ends" >> $(CONFIG_FILE)
-	@echo "  downtime_refresh: 60000, // Set the refresh rate during downtime" >> $(CONFIG_FILE)"
-	@echo "  aviation_stack_api_key: null '// http://aviationstack.com/" >> $(CONFIG_FILE)
+	@echo "  downtime_refresh: 60000, // Set the refresh rate during downtime" >> $(CONFIG_FILE)
+	@echo "  aviation_stack_api_key: null // http://aviationstack.com/" >> $(CONFIG_FILE)
+	@echo "};" >> $(CONFIG_FILE)
+	@echo "" >> $(CONFIG_FILE)
+	@echo "module.exports = {" >> $(CONFIG_FILE)
+	@echo "  CONFIG" >> $(CONFIG_FILE)
 	@echo "};" >> $(CONFIG_FILE)
 
 	@echo "Ensuring $(CONFIG_FILE) is in $(GITIGNORE_FILE)..."
@@ -50,7 +56,7 @@ proj_config:
 		echo "$(CONFIG_FILE) already in $(GITIGNORE_FILE)"; \
 	fi
 
-.PHONY: proj_config
+.PHONY: config
 
 go:
 	@echo "Starting server..."
@@ -70,4 +76,3 @@ commit:
 	@git add -A
 	@git commit -m "Autocommit"
 	@git push
-

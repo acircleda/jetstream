@@ -149,6 +149,106 @@ async function format_aviationstack(dataArray) {
   return formattedArray[0];
 }
 
+// Format function for LIVE flight aware data
+async function format_flightaware_live(dataArray) {
+  const date = new Date();
+  const timestamp = date.getTime();
+  const flights = dataArray.flights
+
+  // Identify the live data -  "status": "En Route / On Time",
+  const live_flight = flights.filter(flight => flight.status.includes("En Route"));
+
+  // Extract origin and destination
+  const origin = live_flight[0]?.origin;
+  const destination = live_flight[0]?.destination;
+
+  const depIcao = origin?.code_icao;
+  const arrIcao = origin?.code_icao;
+  const depInfo = await getAirportInfo(depIcao);
+  const arrInfo = await getAirportInfo(arrIcao);
+
+  const formattedArray = flights.map(data => ({
+    callsign: data.ident,
+    callsign_icao: data.ident_icao,
+    callsign_iata: data.ident_iata,
+    airline_name: data.operator,
+    origin: {
+      name: origin.name,
+      city: origin.city,
+      country: arrInfo.country,
+      iata: origin.code_iata,
+      icao: origin.code_icao,
+      lat: depInfo.lat,
+      lon: depInfo.lon
+    },
+    destination: {
+      name: destination.name,
+      city: destination.city,
+      country: arrInfo.country,
+      iata: destination.code_iata,
+      icao: destination.code_icao,
+      lat: arrInfo.lat,
+      lon: arrInfo.lon
+    },
+    created_at: date,
+    timestamp: timestamp,
+    api_source: 'flightaware'
+  }));
+  return formattedArray[0];
+}
+
+// Format function for LIVE flight aware data
+async function format_flightaware_all(dataArray) {
+  const date = new Date();
+  const timestamp = date.getTime();
+  const flights = dataArray.flights
+
+  const formattedArray = [];
+
+  for (const flight of flights) {
+    const origin = flight.origin;
+    const destination = flight.destination;
+
+    const depIcao = origin?.code_icao;
+    const arrIcao = destination?.code_icao;
+
+    const depInfo = await getAirportInfo(depIcao);
+    const arrInfo = await getAirportInfo(arrIcao);
+
+    formattedArray.push({
+      callsign: flight.ident,
+      callsign_icao: flight.ident_icao,
+      callsign_iata: flight.ident_iata,
+      airline_name: flight.operator,
+      status: flight.status,
+      depart_time: flight.actual_out,
+      origin: {
+        name: origin?.name,
+        city: origin?.city,
+        country: depInfo?.country,
+        iata: origin?.code_iata,
+        icao: origin?.code_icao,
+        lat: depInfo?.lat,
+        lon: depInfo?.lon
+      },
+      destination: {
+        name: destination?.name,
+        city: destination?.city,
+        country: arrInfo?.country,
+        iata: destination?.code_iata,
+        icao: destination?.code_icao,
+        lat: arrInfo?.lat,
+        lon: arrInfo?.lon
+      },
+      created_at: date,
+      timestamp: timestamp,
+      api_source: 'flightaware'
+    });
+  }
+
+  return formattedArray;
+}
+
 
 
 function titleCase(str) {
@@ -194,6 +294,8 @@ module.exports = {
   format_adsbdb,
   format_aviationstack,
   format_adsblol_route,
+  format_flightaware_live,
+  format_flightaware_all,
   titleCase,
   addUnknownCallsign,
   clean_field
