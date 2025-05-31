@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL1616",
+  "callsign_icao": "AAL1616",
+  "callsign_iata": "AA1616",
+  "airline_name": "American Airlines",
+  "origin": {
+    "name": "Bradley International Airport",
+    "city": "Hartford",
+    "country": "US",
+    "iata": "BDL",
+    "icao": "KBDL",
+    "lat": 41.93851,
+    "lon": -72.688066
+  },
+  "destination": {
+    "name": "Philadelphia International Airport",
+    "city": "Philadelphia",
+    "country": "US",
+    "iata": "PHL",
+    "icao": "KPHL",
+    "lat": 39.87189865112305,
+    "lon": -75.24109649658203
+  },
+  "created_at": "2025-05-30T20:43:42.366Z",
+  "timestamp": 1748637822366,
+  "api_source": "adsbdb"
+}

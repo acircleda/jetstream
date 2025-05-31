@@ -1,0 +1,27 @@
+{
+  "callsign": "UCA4311",
+  "callsign_icao": "UCA4311",
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "McGhee Tyson Airport",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "destination": {
+    "name": "Washington Dulles International Airport",
+    "city": "Washington",
+    "country": "US",
+    "iata": "IAD",
+    "icao": "KIAD",
+    "lat": 38.9445,
+    "lon": -77.455803
+  },
+  "created_at": "2025-05-31T09:57:46.630Z",
+  "timestamp": 1748685466630,
+  "api_source": "adsb.lol"
+}

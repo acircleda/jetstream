@@ -1,0 +1,27 @@
+{
+  "callsign": "SWA3387",
+  "callsign_icao": "SWA3387",
+  "callsign_iata": "WN3387",
+  "airline_name": "Southwest Airlines",
+  "origin": {
+    "name": "Norman Y. Mineta San Jose International Airport",
+    "city": "San Jose",
+    "country": "US",
+    "iata": "SJC",
+    "icao": "KSJC",
+    "lat": 37.362598,
+    "lon": -121.929001
+  },
+  "destination": {
+    "name": "Daniel K Inouye International Airport",
+    "city": "Honolulu",
+    "country": "US",
+    "iata": "HNL",
+    "icao": "PHNL",
+    "lat": 21.32062,
+    "lon": -157.924228
+  },
+  "created_at": "2025-05-30T20:40:19.083Z",
+  "timestamp": 1748637619083,
+  "api_source": "adsbdb"
+}

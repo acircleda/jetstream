@@ -1,0 +1,27 @@
+{
+  "callsign": "MXY229",
+  "callsign_icao": "MXY229",
+  "callsign_iata": "MX229",
+  "airline_name": "Breeze Airways",
+  "origin": {
+    "name": "Louisville Muhammad Ali International Airport",
+    "city": "Louisville",
+    "country": "US",
+    "iata": "SDF",
+    "icao": "KSDF",
+    "lat": 38.1744,
+    "lon": -85.736
+  },
+  "destination": {
+    "name": "Charleston International Airport",
+    "city": "Charleston",
+    "country": "US",
+    "iata": "CHS",
+    "icao": "KCHS",
+    "lat": 32.898602,
+    "lon": -80.040497
+  },
+  "created_at": "2025-05-31T01:25:05.777Z",
+  "timestamp": 1748654705777,
+  "api_source": "adsbdb"
+}

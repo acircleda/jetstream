@@ -1,0 +1,27 @@
+{
+  "callsign": "FDX1562",
+  "callsign_icao": "FDX1562",
+  "callsign_iata": "FX1562",
+  "airline_name": "FedEx Express",
+  "origin": {
+    "name": "Memphis International Airport",
+    "city": "Memphis",
+    "country": "US",
+    "iata": "MEM",
+    "icao": "KMEM",
+    "lat": 35.04240036010742,
+    "lon": -89.97669982910156
+  },
+  "destination": {
+    "name": "Tri-State/Milton J. Ferguson Field",
+    "city": "Huntington",
+    "country": "US",
+    "iata": "HTS",
+    "icao": "KHTS",
+    "lat": 38.366699,
+    "lon": -82.557999
+  },
+  "created_at": "2025-05-31T09:47:06.215Z",
+  "timestamp": 1748684826215,
+  "api_source": "adsbdb"
+}

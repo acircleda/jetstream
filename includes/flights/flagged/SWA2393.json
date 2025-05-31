@@ -1,0 +1,27 @@
+{
+  "callsign": "SWA2393",
+  "callsign_icao": "SWA2393",
+  "callsign_iata": "WN2393",
+  "airline_name": "Southwest Airlines",
+  "origin": {
+    "name": "McCarran International Airport",
+    "city": "Las Vegas",
+    "country": "US",
+    "iata": "LAS",
+    "icao": "KLAS",
+    "lat": 36.08010101,
+    "lon": -115.1520004
+  },
+  "destination": {
+    "name": "Austin Bergstrom International Airport",
+    "city": "Austin",
+    "country": "US",
+    "iata": "AUS",
+    "icao": "KAUS",
+    "lat": 30.197535,
+    "lon": -97.662015
+  },
+  "created_at": "2025-05-30T20:34:49.527Z",
+  "timestamp": 1748637289527,
+  "api_source": "adsbdb"
+}

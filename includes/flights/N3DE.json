@@ -1,0 +1,26 @@
+{
+  "callsign": "N3DE",
+  "callsign_icao": null,
+  "callsign_iata": null,
+  "origin": {
+    "name": "Pitt Greenville Airport",
+    "city": "Greenville",
+    "country": "US",
+    "iata": "PGV",
+    "icao": "KPGV",
+    "lat": 35.6352005,
+    "lon": -77.38529968
+  },
+  "destination": {
+    "name": "Statesville Regional Airport",
+    "city": "Statesville",
+    "country": "US",
+    "iata": "SVH",
+    "icao": "KSVH",
+    "lat": 35.765300750732,
+    "lon": -80.953903198242
+  },
+  "created_at": "2025-05-31T04:55:16.324Z",
+  "timestamp": 1748667316324,
+  "api_source": "adsbdb"
+}

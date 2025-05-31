@@ -1,0 +1,27 @@
+{
+  "callsign": "KAL285",
+  "callsign_icao": "KAL285",
+  "callsign_iata": "KE285",
+  "airline_name": "Korean Air",
+  "origin": {
+    "name": "Incheon International Airport",
+    "city": "Seoul",
+    "country": "KR",
+    "iata": "ICN",
+    "icao": "RKSI",
+    "lat": 37.46910095214844,
+    "lon": 126.45099639892578
+  },
+  "destination": {
+    "name": "Ted Stevens Anchorage International Airport",
+    "city": "Anchorage",
+    "country": "US",
+    "iata": "ANC",
+    "icao": "PANC",
+    "lat": 61.1744,
+    "lon": -149.996002
+  },
+  "created_at": "2025-05-31T09:05:37.457Z",
+  "timestamp": 1748682337457,
+  "api_source": "adsbdb"
+}

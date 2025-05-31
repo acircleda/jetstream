@@ -1,0 +1,27 @@
+{
+  "callsign": "NKS2902",
+  "callsign_icao": "NKS2902",
+  "callsign_iata": "NK2902",
+  "airline_name": "Spirit Airlines",
+  "origin": {
+    "name": "Dallas Fort Worth International Airport",
+    "city": "Dallas-Fort Worth",
+    "country": "US",
+    "iata": "DFW",
+    "icao": "KDFW",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "destination": {
+    "name": "Phoenix Sky Harbor International Airport",
+    "city": "Phoenix",
+    "country": "US",
+    "iata": "PHX",
+    "icao": "KPHX",
+    "lat": 33.435302,
+    "lon": -112.005905
+  },
+  "created_at": "2025-05-31T03:52:26.096Z",
+  "timestamp": 1748663546096,
+  "api_source": "adsbdb"
+}

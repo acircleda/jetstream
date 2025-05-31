@@ -1,0 +1,27 @@
+{
+  "callsign": "UPS5354",
+  "callsign_icao": "UPS5354",
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Louisville International Standiford Field",
+    "city": "Louisville",
+    "country": "US",
+    "iata": "SDF",
+    "icao": "KSDF",
+    "lat": 38.1744,
+    "lon": -85.736
+  },
+  "destination": {
+    "name": "Tampa International Airport",
+    "city": "Tampa",
+    "country": "US",
+    "iata": "TPA",
+    "icao": "KTPA",
+    "lat": 27.9755,
+    "lon": -82.533203
+  },
+  "created_at": "2025-05-30T21:27:45.887Z",
+  "timestamp": 1748640465887,
+  "api_source": "adsb.lol"
+}

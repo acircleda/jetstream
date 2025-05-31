@@ -1,0 +1,26 @@
+{
+  "callsign": "ERY917",
+  "callsign_icao": null,
+  "callsign_iata": null,
+  "origin": {
+    "name": "Groton New London Airport",
+    "city": "Groton (New London)",
+    "country": "US",
+    "iata": "GON",
+    "icao": "KGON",
+    "lat": 41.330101013183594,
+    "lon": -72.04509735107422
+  },
+  "destination": {
+    "name": "Washington Dulles International Airport",
+    "city": "Washington",
+    "country": "US",
+    "iata": "IAD",
+    "icao": "KIAD",
+    "lat": 38.9445,
+    "lon": -77.455803
+  },
+  "created_at": "2025-05-31T01:24:58.695Z",
+  "timestamp": 1748654698695,
+  "api_source": "adsbdb"
+}

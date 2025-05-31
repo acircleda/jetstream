@@ -1,0 +1,27 @@
+{
+  "callsign": "SWA3356",
+  "callsign_icao": "SWA3356",
+  "callsign_iata": "WN3356",
+  "airline_name": "Southwest Airlines",
+  "origin": {
+    "name": "Salt Lake City International Airport",
+    "city": "Salt Lake City",
+    "country": "US",
+    "iata": "SLC",
+    "icao": "KSLC",
+    "lat": 40.785749,
+    "lon": -111.979746
+  },
+  "destination": {
+    "name": "Metropolitan Oakland International Airport",
+    "city": "Oakland",
+    "country": "US",
+    "iata": "OAK",
+    "icao": "KOAK",
+    "lat": 37.721298,
+    "lon": -122.221001
+  },
+  "created_at": "2025-05-30T21:56:56.282Z",
+  "timestamp": 1748642216282,
+  "api_source": "adsbdb"
+}

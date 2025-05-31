@@ -1,0 +1,27 @@
+{
+  "callsign": "JBU1313",
+  "callsign_icao": "JBU1313",
+  "callsign_iata": "B61313",
+  "airline_name": "JetBlue Airways",
+  "origin": {
+    "name": "John F Kennedy International Airport",
+    "city": "New York",
+    "country": "US",
+    "iata": "JFK",
+    "icao": "KJFK",
+    "lat": 40.639801,
+    "lon": -73.7789
+  },
+  "destination": {
+    "name": "Louis Armstrong New Orleans International Airport",
+    "city": "New Orleans",
+    "country": "US",
+    "iata": "MSY",
+    "icao": "KMSY",
+    "lat": 29.99340057373047,
+    "lon": -90.25800323486328
+  },
+  "created_at": "2025-05-30T20:18:45.286Z",
+  "timestamp": 1748636325286,
+  "api_source": "adsbdb"
+}
