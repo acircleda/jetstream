@@ -1,0 +1,27 @@
+{
+  "callsign": "EDV5276",
+  "callsign_icao": "EDV5276",
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "La Guardia Airport",
+    "city": "New York",
+    "country": "US",
+    "iata": "LGA",
+    "icao": "KLGA",
+    "lat": 40.777199,
+    "lon": -73.872597
+  },
+  "destination": {
+    "name": "Lovell Field",
+    "city": "Chattanooga",
+    "country": "US",
+    "iata": "CHA",
+    "icao": "KCHA",
+    "lat": 35.035301,
+    "lon": -85.203796
+  },
+  "created_at": "2025-05-31T01:47:55.669Z",
+  "timestamp": 1748656075669,
+  "api_source": "adsb.lol"
+}

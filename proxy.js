@@ -1,43 +1,97 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
+const fs = require('fs').promises;
+const fsSync = require('fs');
 const path = require('path');
 const CONFIG = require('./includes/config.js').CONFIG;
 const { route_logic_check, route_logic_check2, heading_check, heading_check2, simple_heading_check} = require('./includes/logic_checks.js');
-const { get_adsbdb, get_aviationstack, get_adsblol_route } = require('./includes/get.js');
+const { get_adsbdb, get_aviationstack, get_adsblol_route, get_flightaware } = require('./includes/get.js');
 const { addUnknownCallsign, clean_field } = require('./includes/formatters.js');
 const morgan = require('morgan');
 
 const app = express();
 app.use(cors()); // 👈 this must come BEFORE any routes
 
+const LOG_PATH = path.join(__dirname, 'proxy.log');
+const MAX_LOG_SIZE = 5 * 1024 * 1024; // 5MB
+
+async function rotateLogIfNeeded() {
+  try {
+    if (fsSync.existsSync(LOG_PATH)) {
+      const stats = await fs.stat(LOG_PATH);
+      if (stats.size >= MAX_LOG_SIZE) {
+        const archiveName = `proxy.log.${Date.now()}`;
+        await fs.rename(LOG_PATH, path.join(__dirname, archiveName));
+      }
+    }
+  } catch (e) {
+    origConsole.error('Log rotation error:', e);
+  }
+}
+
 // Logging setup: capture all console output and errors to proxy.log
-const logStream = fs.createWriteStream(path.join(__dirname, 'proxy.log'), { flags: 'a' });
+const logStream = fsSync.createWriteStream(LOG_PATH, { flags: 'a' });
 const origConsole = { ...console };
+
+// Cache log rotation check for performance
+let lastRotationCheck = 0;
+const ROTATION_CHECK_INTERVAL = 60000; // Check every minute
+
 ['log', 'info', 'warn', 'error'].forEach(method => {
   console[method] = function (...args) {
+    const now = Date.now();
+    if (now - lastRotationCheck > ROTATION_CHECK_INTERVAL) {
+      rotateLogIfNeeded().catch(err => origConsole.error('Log rotation error:', err));
+      lastRotationCheck = now;
+    }
     const msg = `[${new Date().toISOString()}] [${method.toUpperCase()}] ` + args.map(a => (typeof a === 'object' ? JSON.stringify(a) : a)).join(' ') + '\n';
-    logStream.write(msg);
+    fs.appendFile(LOG_PATH, msg).catch(err => origConsole.error('Log write error:', err));
     origConsole[method].apply(console, args);
   };
 });
+
 process.on('uncaughtException', err => {
   const msg = `[${new Date().toISOString()}] [UNCAUGHT EXCEPTION] ${err.stack || err}\n`;
-  logStream.write(msg);
+  fs.appendFile(LOG_PATH, msg).catch(() => {});
   origConsole.error(err);
 });
+
 process.on('unhandledRejection', reason => {
   const msg = `[${new Date().toISOString()}] [UNHANDLED REJECTION] ${reason}\n`;
-  logStream.write(msg);
+  fs.appendFile(LOG_PATH, msg).catch(() => {});
   origConsole.error(reason);
 });
+
 // HTTP request logging
 app.use(morgan('combined', { stream: logStream }));
 
 const FLIGHTS_DIR = path.join(__dirname, 'includes', 'flights');
 
-if (!fs.existsSync(FLIGHTS_DIR)) {
-  fs.mkdirSync(FLIGHTS_DIR, { recursive: true });
+if (!fsSync.existsSync(FLIGHTS_DIR)) {
+  fsSync.mkdirSync(FLIGHTS_DIR, { recursive: true });
+}
+
+// In-memory cache for frequently requested data
+const cache = new Map();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+const MAX_CACHE_SIZE = 1000;
+
+function getCachedData(key) {
+  const cached = cache.get(key);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.data;
+  }
+  cache.delete(key);
+  return null;
+}
+
+function setCachedData(key, data) {
+  // Implement LRU eviction if cache is full
+  if (cache.size >= MAX_CACHE_SIZE) {
+    const firstKey = cache.keys().next().value;
+    cache.delete(firstKey);
+  }
+  cache.set(key, { data, timestamp: Date.now() });
 }
 
 app.get('/planes', async (req, res) => {
@@ -55,27 +109,39 @@ app.get('/planes', async (req, res) => {
 });
 
 app.get('/flightinfo', async (req, res) => {
-  
     let { callsign, heading } = req.query;
-    callsign = callsign ? callsign.trim() : null; // Ensure callsign is trimmed
+    callsign = callsign ? callsign.trim() : null;
     if (!callsign) {
       res.status(400).json({ error: 'Missing callsign parameter' });
       return;
     }
 
+    // Check cache first
+    const cacheKey = `flightinfo:${callsign}:${heading}`;
+    const cachedData = getCachedData(cacheKey);
+    if (cachedData) {
+      res.json(cachedData);
+      console.log('Data (from cache):', callsign);
+      return;
+    }
+
     const filePath = path.join(FLIGHTS_DIR, `${callsign}.json`);
-    if (fs.existsSync(filePath)) {
-      // If file exists, return its contents
-      try {
-        const fileData = fs.readFileSync(filePath, 'utf8');
-        res.json(JSON.parse(fileData));
-        console.log('Data (from file):', filePath);
-        return;
-      } catch (err) {
+    
+    try {
+      // Check if file exists and read it
+      const fileData = await fs.readFile(filePath, 'utf8');
+      const data = JSON.parse(fileData);
+      setCachedData(cacheKey, data);
+      res.json(data);
+      console.log('Data (from file):', filePath);
+      return;
+    } catch (err) {
+      if (err.code !== 'ENOENT') {
         console.error('File read error:', err);
         res.status(500).json({ error: 'Failed to read flight info file' });
         return;
       }
+      // File doesn't exist, continue to fetch from API
     }
     // If not found, fetch and store
     const url = `https://api.adsbdb.com/v0/callsign/${callsign}`;
@@ -91,7 +157,7 @@ app.get('/flightinfo', async (req, res) => {
         return;
       }
       // Store as JSON file first
-      fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+      await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
       try {
         const origin = data?.response?.flightroute?.origin;
         const destination = data?.response?.flightroute?.destination;
@@ -103,11 +169,11 @@ app.get('/flightinfo', async (req, res) => {
           // Flag if crossTrackDistance exceeds threshold
           if (!isNaN(logicRes) && logicRes > CONFIG.route_check_threshold) {
             const flaggedDir = path.join(__dirname, 'includes', 'flights', 'flagged');
-            if (!fs.existsSync(flaggedDir)) {
-              fs.mkdirSync(flaggedDir, { recursive: true });
+            if (!fsSync.existsSync(flaggedDir)) {
+              fsSync.mkdirSync(flaggedDir, { recursive: true });
             }
             const flaggedPath = path.join(flaggedDir, `${callsign}.json`);
-            fs.copyFileSync(filePath, flaggedPath);
+            await fs.copyFile(filePath, flaggedPath);
             console.log(`Flight ${callsign} flagged: crossTrackDistance ${logicRes} > threshold ${CONFIG.route_check_threshold}`);
           } else {
             // If logicRes is within threshold, perform heading check
@@ -125,6 +191,7 @@ app.get('/flightinfo', async (req, res) => {
       } catch (logicErr) {
         console.error('Error extracting or sending to logic_check:', logicErr);
       }
+      setCachedData(cacheKey, data);
       res.json(data);
       console.log('Data (fetched and saved):', filePath);
     } catch (e) {
@@ -135,40 +202,53 @@ app.get('/flightinfo', async (req, res) => {
 
 app.get('/aircraft', async (req, res) => {
   const { callsign } = req.query;
+  
+  // Check cache first
+  const cacheKey = `aircraft:${callsign}`;
+  const cachedData = getCachedData(cacheKey);
+  if (cachedData) {
+    res.json(cachedData);
+    console.log('Data (from cache):', callsign);
+    return;
+  }
+  
   const AIRCRAFT_DIR = path.join(__dirname, 'includes', 'aircraft');
   const filePath = path.join(AIRCRAFT_DIR, `${callsign}.json`);
   const unknownsPath = path.join(AIRCRAFT_DIR, '_unknown_aircrafts.json');
 
   // 1. Try to read the aircraft file if it exists
-  if (fs.existsSync(filePath)) {
-    try {
-      const fileData = fs.readFileSync(filePath, 'utf8');
-      res.json(JSON.parse(fileData));
-      console.log('Data (from aircraft file):', filePath);
-      return;
-    } catch (err) {
+  try {
+    const fileData = await fs.readFile(filePath, 'utf8');
+    const data = JSON.parse(fileData);
+    setCachedData(cacheKey, data);
+    res.json(data);
+    console.log('Data (from aircraft file):', filePath);
+    return;
+  } catch (err) {
+    if (err.code !== 'ENOENT') {
       console.error('File read error:', err && (err.stack || err.message || err));
       res.status(500).json({ error: 'Failed to read aircraft info file' });
       return;
     }
+    // File doesn't exist, continue to check unknowns
   }
 
   // 2. Try to lookup if it is an unknown aircraft
   try {
-    if (fs.existsSync(unknownsPath)) {
-      const unknownsData = fs.readFileSync(unknownsPath, 'utf8');
-      const unknowns = JSON.parse(unknownsData);
-      if (unknowns[callsign]) {
-        const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
-        if (Date.now() - unknowns[callsign] < thirtyDaysMs) {
-          res.status(200).json({ response: 'Unknown aircraft previously seen' });
-          return;
-        }
+    const unknownsData = await fs.readFile(unknownsPath, 'utf8');
+    const unknowns = JSON.parse(unknownsData);
+    if (unknowns[callsign]) {
+      const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
+      if (Date.now() - unknowns[callsign] < thirtyDaysMs) {
+        res.status(200).json({ response: 'Unknown aircraft previously seen' });
+        return;
       }
     }
   } catch (e) {
-    console.error('Error checking _unknown_aircrafts.json:', e && (e.stack || e.message || e));
-    // If error, continue as normal
+    if (e.code !== 'ENOENT') {
+      console.error('Error checking _unknown_aircrafts.json:', e && (e.stack || e.message || e));
+    }
+    // If error or file doesn't exist, continue as normal
   }
 
   // 3. If not found, fetch and store
@@ -181,18 +261,21 @@ app.get('/aircraft', async (req, res) => {
     // If unknown, add to unknowns file
     if (!data || !data.response || data.response === 'unknown aircraft') {
       let unknowns = {};
-      if (fs.existsSync(unknownsPath)) {
-        try {
-          unknowns = JSON.parse(fs.readFileSync(unknownsPath, 'utf8'));
-        } catch (e) { unknowns = {}; }
+      try {
+        const unknownsData = await fs.readFile(unknownsPath, 'utf8');
+        unknowns = JSON.parse(unknownsData);
+      } catch (e) { 
+        unknowns = {}; 
       }
       unknowns[callsign] = Date.now();
-      fs.writeFileSync(unknownsPath, JSON.stringify(unknowns, null, 2), 'utf8');
+      await fs.writeFile(unknownsPath, JSON.stringify(unknowns, null, 2), 'utf8');
+      setCachedData(cacheKey, data);
       res.json(data);
       return;
     }
     // Otherwise, store and return
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+    await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
+    setCachedData(cacheKey, data);
     res.json(data);
   } catch (e) {
     console.error(e && (e.stack || e.message || e));
@@ -214,14 +297,13 @@ app.get('/flightinfo2', async (req, res) => {
   const filePath = path.join(FLIGHTS_DIR, `${callsign}.json`);
 
   // 3. Try to read the callsign.json file, if it exists
-  if (fs.existsSync(filePath)) {
-    try {
-      const fileData = fs.readFileSync(filePath, 'utf8');
-      const jsonData = JSON.parse(fileData);
-      const fileTimestamp = jsonData.timestamp ? new Date(jsonData.timestamp).getTime() : null;
-      const ninetyDaysMs = 90 * 24 * 60 * 60 * 1000;
-      //if the file is less than 90 days old, return the data
-      if (fileTimestamp && (Date.now() - fileTimestamp <= ninetyDaysMs)) {
+  try {
+    const fileData = await fs.readFile(filePath, 'utf8');
+    const jsonData = JSON.parse(fileData);
+    const fileTimestamp = jsonData.timestamp ? new Date(jsonData.timestamp).getTime() : null;
+    const ninetyDaysMs = 90 * 24 * 60 * 60 * 1000;
+    //if the file is less than 90 days old, return the data
+    if (fileTimestamp && (Date.now() - fileTimestamp <= ninetyDaysMs)) {
         // Check heading and swap if needed before returning
         let headingRes = null;
         if (jsonData.origin && jsonData.destination) {
@@ -247,28 +329,31 @@ app.get('/flightinfo2', async (req, res) => {
       } else {
         console.log('File is older than 90 days, skipping:', filePath);
       }
-    } catch (err) {
+  } catch (err) {
+    if (err.code !== 'ENOENT') {
       console.error('File read error:', err);
       res.status(500).json({ error: 'Failed to read flight info file' });
       return;
     }
+    // File doesn't exist, continue to fetch from API
   }
   //try to lookup if it is an unknown callsign
   try {
     const unknownsPath = path.join(__dirname, 'includes', 'flights', '_unknown_routes.json');
-    if (fs.existsSync(unknownsPath)) {
-      const unknownsData = fs.readFileSync(unknownsPath, 'utf8');
-      const unknowns = JSON.parse(unknownsData);
-      if (unknowns[callsign]) {
-        const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
-        if (Date.now() - unknowns[callsign] < thirtyDaysMs) {
-          res.status(200).json({ response: 'Unknown call sign previously seen' });
-          return;
-        }
+    const unknownsData = await fs.readFile(unknownsPath, 'utf8');
+    const unknowns = JSON.parse(unknownsData);
+    if (unknowns[callsign]) {
+      const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
+      if (Date.now() - unknowns[callsign] < thirtyDaysMs) {
+        res.status(200).json({ response: 'Unknown call sign previously seen' });
+        return;
       }
     }
   } catch (e) {
-    console.error('Error checking _unknown_routes.json:', e);
+    if (e.code !== 'ENOENT') {
+      console.error('Error checking _unknown_routes.json:', e);
+    }
+    // If error or file doesn't exist, continue as normal
   }
 
   try {
@@ -327,17 +412,17 @@ app.get('/flightinfo2', async (req, res) => {
 
     // 9. Otherwise, save the data
       console.log('Saving data to file:', filePath);
-      fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+      await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
     
     // 10. If the logic check still fails, copy file to flagged, then get new data from get_aviationstack
       if (!route_is_valid) {
         console.log('Route logic check failed for flight:', callsign, 'Flagging for review');
         const flaggedDir = path.join(__dirname, 'includes', 'flights', 'flagged');
-        if (!fs.existsSync(flaggedDir)) {
-          fs.mkdirSync(flaggedDir, { recursive: true });
+        if (!fsSync.existsSync(flaggedDir)) {
+          fsSync.mkdirSync(flaggedDir, { recursive: true });
         }
         const flaggedPath = path.join(flaggedDir, `${callsign}.json`);
-        fs.copyFileSync(filePath, flaggedPath);
+        await fs.copyFile(filePath, flaggedPath);
         
     if(CONFIG.aviation_stack_api_key){
         // Get new data from aviationstack
@@ -348,7 +433,7 @@ app.get('/flightinfo2', async (req, res) => {
         if (aviationstackData.callsign) {
           console.log('Overwriting file with aviationstack data:', filePath);
           data = aviationstackData;
-          fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+          await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
         }
       }
   }
@@ -387,26 +472,30 @@ app.get('/flightinfo2', async (req, res) => {
   }
 });
 
-app.post('/move_for_review', express.json(), (req, res) => {
+app.post('/move_for_review', express.json(), async (req, res) => {
   let callsign = req.query.callsign;
   if (!callsign) {
     res.status(400).json({ error: 'Missing callsign parameter' });
     return;
   }
-  // Remove whitespace from callsign (e.g., trailing spaces)
   callsign = callsign.trim();
   const srcPath = path.join(FLIGHTS_DIR, `${callsign}.json`);
   const reviewDir = path.join(__dirname, 'includes', 'flights', 'flagged');
   const destPath = path.join(reviewDir, `${callsign}.json`);
   try {
-    if (!fs.existsSync(srcPath)) {
+    if (!fsSync.existsSync(srcPath)) {
+      console.error('Source file not found:', srcPath);
       res.status(404).json({ error: 'File not found' });
       return;
     }
-    if (!fs.existsSync(reviewDir)) {
-      fs.mkdirSync(reviewDir, { recursive: true });
+    if (!fsSync.existsSync(reviewDir)) {
+      fsSync.mkdirSync(reviewDir, { recursive: true });
     }
-    fs.copyFileSync(srcPath, destPath);
+    await fs.copyFile(srcPath, destPath);
+    console.log(res.json
+      
+    );
+
     res.json({ success: true });
   } catch (e) {
     console.error('Error moving file for review:', e);
@@ -417,8 +506,8 @@ app.post('/move_for_review', express.json(), (req, res) => {
 // List flagged files
 app.get('/flagged_files', (req, res) => {
   const flaggedDir = path.join(__dirname, 'includes', 'flights', 'flagged');
-  if (!fs.existsSync(flaggedDir)) return res.json([]);
-  const files = fs.readdirSync(flaggedDir).filter(f => f.endsWith('.json'));
+  if (!fsSync.existsSync(flaggedDir)) return res.json([]);
+  const files = fsSync.readdirSync(flaggedDir).filter(f => f.endsWith('.json'));
   res.json(files);
 });
 
@@ -428,8 +517,8 @@ app.get('/flagged_file', (req, res) => {
   if (!file) return res.status(400).send('Missing file');
   const flaggedDir = path.join(__dirname, 'includes', 'flights', 'flagged');
   const filePath = path.join(flaggedDir, file);
-  if (!fs.existsSync(filePath)) return res.status(404).send('Not found');
-  res.type('application/json').send(fs.readFileSync(filePath, 'utf8'));
+  if (!fsSync.existsSync(filePath)) return res.status(404).send('Not found');
+  res.type('application/json').send(fsSync.readFileSync(filePath, 'utf8'));
 });
 
 // API: get_adsblol_route
@@ -471,20 +560,20 @@ app.post('/approve_flagged', express.json({limit: '2mb'}), (req, res) => {
   const reviewedPath = path.join(reviewedDir, file);
   try {
     // Ensure reviewed folder exists
-    if (!fs.existsSync(reviewedDir)) {
-      fs.mkdirSync(reviewedDir, { recursive: true });
+    if (!fsSync.existsSync(reviewedDir)) {
+      fsSync.mkdirSync(reviewedDir, { recursive: true });
     }
     // Add reviewed fields
     let data = req.body;
     data.reviewed = true;
     data.review_source = reviewSource;
     // Write to reviewed first
-    fs.writeFileSync(reviewedPath, JSON.stringify(data, null, 2), 'utf8');
+    fsSync.writeFileSync(reviewedPath, JSON.stringify(data, null, 2), 'utf8');
     // Write to flights (overwrite or create)
-    fs.writeFileSync(destPath, JSON.stringify(data, null, 2), 'utf8');
+    fsSync.writeFileSync(destPath, JSON.stringify(data, null, 2), 'utf8');
     // Remove from flagged if it exists
-    if (fs.existsSync(flaggedPath)) {
-      fs.unlinkSync(flaggedPath);
+    if (fsSync.existsSync(flaggedPath)) {
+      fsSync.unlinkSync(flaggedPath);
     }
     res.json({ success: true });
   } catch (e) {
@@ -500,8 +589,8 @@ app.post('/remove_flagged', (req, res) => {
   const flaggedDir = path.join(__dirname, 'includes', 'flights', 'flagged');
   const flaggedPath = path.join(flaggedDir, file);
   try {
-    if (fs.existsSync(flaggedPath)) {
-      fs.unlinkSync(flaggedPath);
+    if (fsSync.existsSync(flaggedPath)) {
+      fsSync.unlinkSync(flaggedPath);
       res.json({ success: true });
     } else {
       res.status(404).json({ error: 'Flagged file not found' });
@@ -522,12 +611,12 @@ app.post('/delete_everywhere', (req, res) => {
   const flightsPath = path.join(flightsDir, file);
   let deleted = false;
   try {
-    if (fs.existsSync(flaggedPath)) {
-      fs.unlinkSync(flaggedPath);
+    if (fsSync.existsSync(flaggedPath)) {
+      fsSync.unlinkSync(flaggedPath);
       deleted = true;
     }
-    if (fs.existsSync(flightsPath)) {
-      fs.unlinkSync(flightsPath);
+    if (fsSync.existsSync(flightsPath)) {
+      fsSync.unlinkSync(flightsPath);
       deleted = true;
     }
     if (deleted) {
@@ -538,6 +627,18 @@ app.post('/delete_everywhere', (req, res) => {
   } catch (e) {
     console.error('Delete everywhere error:', e && (e.stack || e.message || e));
     res.status(500).json({ error: 'Failed to delete' });
+  }
+});
+
+app.get('/test', async (req, res) => {
+  const { callsign } = req.query;
+  if (!callsign) return res.status(400).json({ error: 'Missing callsign' });
+  try {
+    const data = await get_flightaware(callsign, CONFIG.flight_aware_api_key);
+    res.json(data);
+  } catch (e) {
+    console.error('get_flightaware error:', e && (e.stack || e.message || e));
+    res.status(500).json({ error: 'Failed to fetch from FlightAware' });
   }
 });
 

@@ -1,0 +1,27 @@
+{
+  "callsign": "DAL1347",
+  "callsign_icao": "DAL1347",
+  "callsign_iata": "DL1347",
+  "airline_name": "Delta Air Lines",
+  "origin": {
+    "name": "Tampa International Airport",
+    "city": "Tampa",
+    "country": "US",
+    "iata": "TPA",
+    "icao": "KTPA",
+    "lat": 27.975500106811523,
+    "lon": -82.533203125
+  },
+  "destination": {
+    "name": "La Guardia Airport",
+    "city": "New York",
+    "country": "US",
+    "iata": "LGA",
+    "icao": "KLGA",
+    "lat": 40.777199,
+    "lon": -73.872597
+  },
+  "created_at": "2025-05-31T02:33:24.158Z",
+  "timestamp": 1748658804158,
+  "api_source": "adsbdb"
+}

@@ -1,0 +1,27 @@
+{
+  "callsign": "NKS2315",
+  "callsign_icao": "NKS2315",
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Pensacola Regional Airport",
+    "city": "Pensacola",
+    "country": "US",
+    "iata": "PNS",
+    "icao": "KPNS",
+    "lat": 30.4734,
+    "lon": -87.1866
+  },
+  "destination": {
+    "name": "Detroit Metropolitan Wayne County Airport",
+    "city": "Detroit",
+    "country": "US",
+    "iata": "DTW",
+    "icao": "KDTW",
+    "lat": 42.212399,
+    "lon": -83.353401
+  },
+  "created_at": "2025-05-31T01:13:48.409Z",
+  "timestamp": 1748654028409,
+  "api_source": "adsb.lol"
+}

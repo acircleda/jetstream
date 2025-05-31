@@ -1,4 +1,10 @@
-const { format_adsbdb, format_aviationstack, format_adsblol_route } = require('./formatters.js');
+const { format_adsbdb, 
+  format_aviationstack, 
+  format_adsblol_route, 
+  format_flightaware_live, format_flightaware_all } = require('./formatters.js');
+const path = require('path');
+const fsSync = require('fs');
+const fs = require('fs').promises;
 
 async function get_adsblol_route(callsign) {
   const url = "https://api.adsb.lol/api/0/routeset";
@@ -90,8 +96,66 @@ async function get_aviationstack(callsign, key) {
   }
 }
 
+async function get_flightaware(callsign, key) {
+  if (!key) {
+    return { error: 'FlightAware API key is not configured' };
+  }
+
+  const url = `https://aeroapi.flightaware.com/aeroapi/flights/${callsign}`;
+  const headers = {
+    "Accept": "application/json",
+    "x-apikey": key
+  };
+
+  const api_counter_file = path.join(__dirname, '.flightaware');
+
+  // Ensure the usage file exists
+  if (!fsSync.existsSync(api_counter_file)) {
+    console.log('Creating .flightaware file');
+    await fs.writeFile(api_counter_file, '0', 'utf8'); // Write initial value "0"
+  }
+
+  // Read current usage
+  const api_counter = await fs.readFile(api_counter_file, 'utf8');
+  const current_api_usage = parseInt(api_counter || '0');
+  console.log('Current FlightAware API usage:', current_api_usage);
+
+  if (current_api_usage >= 499) {
+    console.log('FlightAware API limit reached');
+    return { error: 'FlightAware API limit reached' };
+  }
+
+  try {
+    // Increment usage count
+    const new_api_usage = current_api_usage + 1;
+    await fs.writeFile(api_counter_file, String(new_api_usage), 'utf8');
+
+    // Use real API request
+    //const response = await fetch(url, { headers });
+    //const data = await response.json();
+
+    // Or use test data (for development/testing)
+    const testFile = path.join(__dirname, 'example.json');
+    const data = JSON.parse(await fs.readFile(testFile, 'utf8'));
+    console.log('FlightAware Test Data:', data);
+    const formatted = await format_flightaware_live(data); //STOPPED HERE
+    console.log('Formatted FlightAware Data:', formatted);
+
+    if (!data.data || data.data.length === 0) {
+      return { response: 'unknown callsign' };
+    } else {
+      return data;
+    }
+  } catch (e) {
+    console.error('Error during FlightAware API request:', e);
+    return { error: 'Failed to fetch aircraft data from FlightAware' };
+  }
+}
+
+
 module.exports = {
     get_adsbdb,
     get_aviationstack,
-    get_adsblol_route
+    get_adsblol_route,
+    get_flightaware
 };

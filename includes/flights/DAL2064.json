@@ -1,0 +1,27 @@
+{
+  "callsign": "DAL2064",
+  "callsign_icao": "DAL2064",
+  "callsign_iata": "DL2064",
+  "airline_name": "Delta Air Lines",
+  "origin": {
+    "name": "La Guardia Airport",
+    "city": "New York",
+    "country": "US",
+    "iata": "LGA",
+    "icao": "KLGA",
+    "lat": 40.777199,
+    "lon": -73.872597
+  },
+  "destination": {
+    "name": "George Bush Intercontinental Houston Airport",
+    "city": "Houston",
+    "country": "US",
+    "iata": "IAH",
+    "icao": "KIAH",
+    "lat": 29.984399795532227,
+    "lon": -95.34140014648438
+  },
+  "created_at": "2025-05-31T02:19:23.801Z",
+  "timestamp": 1748657963801,
+  "api_source": "adsbdb"
+}

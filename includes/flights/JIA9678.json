@@ -1,0 +1,27 @@
+{
+  "callsign": "JIA9678",
+  "callsign_icao": "JIA9678",
+  "callsign_iata": "US9678",
+  "airline_name": "PSA Airlines",
+  "origin": {
+    "name": "Chattanooga Metropolitan Airport (Lovell Field)",
+    "city": "Chattanooga",
+    "country": "US",
+    "iata": "CHA",
+    "icao": "KCHA",
+    "lat": 35.035301,
+    "lon": -85.203796
+  },
+  "destination": {
+    "name": "Manchester-Boston Regional Airport",
+    "city": "Manchester",
+    "country": "US",
+    "iata": "MHT",
+    "icao": "KMHT",
+    "lat": 42.932598,
+    "lon": -71.435699
+  },
+  "created_at": "2025-05-31T00:35:51.603Z",
+  "timestamp": 1748651751603,
+  "api_source": "adsbdb"
+}

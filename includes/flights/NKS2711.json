@@ -1,6 +1,6 @@
 {
-  "callsign": "DAL2583",
-  "callsign_icao": "DAL2583",
+  "callsign": "NKS2711",
+  "callsign_icao": "NKS2711",
   "callsign_iata": null,
   "airline_name": null,
   "origin": {
@@ -13,16 +13,16 @@
     "lon": -84.428101
   },
   "destination": {
-    "name": "Pittsburgh International Airport",
-    "city": "Pittsburgh",
+    "name": "Port Columbus International Airport",
+    "city": "Columbus",
     "country": "US",
-    "iata": "PIT",
-    "icao": "KPIT",
-    "lat": 40.491501,
-    "lon": -80.232903
+    "iata": "CMH",
+    "icao": "KCMH",
+    "lat": 39.998001,
+    "lon": -82.891899
   },
-  "created_at": "2025-05-31T01:52:01.609Z",
-  "timestamp": 1748656321609,
+  "created_at": "2025-05-31T01:53:42.900Z",
+  "timestamp": 1748656422900,
   "api_source": "adsb.lol",
   "reviewed": true,
   "review_source": "adsb.lol"

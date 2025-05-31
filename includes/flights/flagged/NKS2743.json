@@ -1,0 +1,27 @@
+{
+  "callsign": "NKS2743",
+  "callsign_icao": "NKS2743",
+  "callsign_iata": "NK2743",
+  "airline_name": "Spirit Airlines",
+  "origin": {
+    "name": "Detroit Metropolitan Wayne County Airport",
+    "city": "Detroit",
+    "country": "US",
+    "iata": "DTW",
+    "icao": "KDTW",
+    "lat": 42.212398529052734,
+    "lon": -83.35340118408203
+  },
+  "destination": {
+    "name": "Fort Lauderdale Hollywood International Airport",
+    "city": "Fort Lauderdale",
+    "country": "US",
+    "iata": "FLL",
+    "icao": "KFLL",
+    "lat": 26.072599,
+    "lon": -80.152702
+  },
+  "created_at": "2025-05-31T17:34:02.487Z",
+  "timestamp": 1748712842487,
+  "api_source": "adsbdb"
+}

@@ -1,0 +1,27 @@
+{
+  "callsign": "AAY1461",
+  "callsign_icao": "AAY1461",
+  "callsign_iata": "G41461",
+  "airline_name": "Allegiant Air",
+  "origin": {
+    "name": "Destin-Fort Walton Beach Airport",
+    "city": "Valparaiso",
+    "country": "US",
+    "iata": "VPS",
+    "icao": "KVPS",
+    "lat": 30.4832,
+    "lon": -86.525398
+  },
+  "destination": {
+    "name": "Tri-State/Milton J. Ferguson Field",
+    "city": "Huntington",
+    "country": "US",
+    "iata": "HTS",
+    "icao": "KHTS",
+    "lat": 38.366699,
+    "lon": -82.557999
+  },
+  "created_at": "2025-05-31T01:16:21.778Z",
+  "timestamp": 1748654181778,
+  "api_source": "adsbdb"
+}

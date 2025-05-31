@@ -1,0 +1,27 @@
+{
+  "callsign": "DAL2398",
+  "callsign_icao": "DAL2398",
+  "callsign_iata": "DL2398",
+  "airline_name": "Delta Air Lines",
+  "origin": {
+    "name": "Orlando International Airport",
+    "city": "Orlando",
+    "country": "US",
+    "iata": "MCO",
+    "icao": "KMCO",
+    "lat": 28.429399490356445,
+    "lon": -81.30899810791016
+  },
+  "destination": {
+    "name": "La Guardia Airport",
+    "city": "New York",
+    "country": "US",
+    "iata": "LGA",
+    "icao": "KLGA",
+    "lat": 40.777199,
+    "lon": -73.872597
+  },
+  "created_at": "2025-05-30T20:49:43.649Z",
+  "timestamp": 1748638183649,
+  "api_source": "adsbdb"
+}

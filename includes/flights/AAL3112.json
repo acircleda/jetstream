@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL3112",
+  "callsign_icao": "AAL3112",
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Dallas Fort Worth International Airport",
+    "city": "Dallas-Fort Worth",
+    "country": "US",
+    "iata": "DFW",
+    "icao": "KDFW",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "destination": {
+    "name": "McGhee Tyson Airport",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "created_at": "2025-05-30T23:30:08.882Z",
+  "timestamp": 1748647808882,
+  "api_source": "adsb.lol"
+}
