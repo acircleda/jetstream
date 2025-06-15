@@ -1,5 +1,18 @@
 # Jetstream
 
+# TODO
+- Removing heading check
+- RapidAPI integration (to do)
+- FlightAware API (finish endpoint, add to review system)
+- API reordering (AviationStack, RapidAPI, FlightAware API, ADSB.lol, ADSBDB)
+  - Consider checking for aircraft first before fetching flight data
+- Add fullscreen refresh button
+- Hourly-refresh or half-hour refresh to clear any stagnant data on screen
+  - Or find a better way to remove icons
+- Set 30-day as constant and make 30-day checks on all JSON files
+- Add weather widget
+
+
 A real-time flight tracking visualization application that displays aircraft near your location on an interactive map. The application fetches flight data from multiple APIs, validates flight routes, and provides detailed information about nearby aircraft.
 
 ## Features

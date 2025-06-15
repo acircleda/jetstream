@@ -7,6 +7,10 @@
   <script src="includes/formatters.js"></script>
   <script>
     document.title = "Jetstream: " + CONFIG.city_name;
+    document.addEventListener("DOMContentLoaded", () => {
+    const locationDiv = document.getElementById("title");
+    locationDiv.textContent = `Jetstream: ${CONFIG.city_name}`;
+  });
   </script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,14 +20,15 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@drustack/leaflet.resetview/dist/L.Control.ResetView.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@drustack/leaflet.resetview/dist/L.Control.ResetView.min.js"></script>
   
 
  </head>
 <body>
-  <div id="main">
-    <div id="map"></div>
-    <div id="info"></div>
+    <div id="main"> 
+      <div id="map"></div>
+      <div id="title"></div>
+      <div id="info"></div>
   </div>
 
   <button id="move-json-btn">Needs Review</button>
@@ -186,7 +191,7 @@
           if (plane.flight) {
             try {
               console.log(`Fetching flight info for ${plane.flight}`);
-              const flightInfoRes = await fetch(`http://localhost:3000/flightinfo2?callsign=${plane.flight}&heading=${plane.track}&current_lat=${plane.lat}&current_lon=${plane.lon}`);
+              const flightInfoRes = await fetch(`http://localhost:3000/flightinfo3?callsign=${plane.flight}&heading=${plane.track}&current_lat=${plane.lat}&current_lon=${plane.lon}`);
               const flightInfoData = await flightInfoRes.json();
               console.log(`Flight info for ${plane.flight}:`, flightInfoData);
               if (flightInfoData && flightInfoData.callsign) {
@@ -198,7 +203,7 @@
                 console.log(`Dest info for ${plane.flight}:, ${JSON.stringify(destination)}`);
               } else if (!flightInfoData.callsign){
                 console.log(`Fetching aircraft info for ${plane.flight}`);
-                const aircraft_info_res = await fetch(`http://localhost:3000/aircraft?callsign=${plane.flight}`);
+                const aircraft_info_res = await fetch(`http://localhost:3000/aircraft?callsign=${plane.flight}&reg=${plane.r}`);
                 const aircraft_info = await aircraft_info_res.json();
                 console.log(`Aircraft info for ${plane.flight}:`, aircraft_info);
                 flight_name = titleCase(aircraft_info?.response?.aircraft?.registered_owner || '');
@@ -256,6 +261,7 @@
 
           // Update info div
           document.getElementById('info').innerHTML = `
+          
           <div id='sidebar-info'">
             <h2><a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">${closestPlane.flight || 'N/A'}</a></h2>
             <p>${closestFlightName || ''}</p>

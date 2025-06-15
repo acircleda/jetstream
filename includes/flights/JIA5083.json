@@ -1,0 +1,27 @@
+{
+  "callsign": "JIA5083",
+  "callsign_icao": "JIA5083",
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Charlotte Douglas International Airport",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 35.214001,
+    "lon": -80.9431
+  },
+  "destination": {
+    "name": "Nashville International Airport",
+    "city": "Nashville",
+    "country": "US",
+    "iata": "BNA",
+    "icao": "KBNA",
+    "lat": 36.1245,
+    "lon": -86.6782
+  },
+  "created_at": "2025-06-15T16:03:03.735Z",
+  "timestamp": 1750003383735,
+  "api_source": "adsb.lol"
+}

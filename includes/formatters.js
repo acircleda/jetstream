@@ -249,8 +249,48 @@ async function format_flightaware_all(dataArray) {
   return formattedArray;
 }
 
+async function format_flightera(dataArray, callsign) {
+  const date = new Date();
+  const timestamp = date.getTime();
 
+  const data = dataArray[0];
 
+  const depIcao = data.departure_icao;
+  const arrIcao = data.arrival_icao;
+  const depInfo = await getAirportInfo(depIcao);
+  const arrInfo = await getAirportInfo(arrIcao);
+
+  const formattedArray = dataArray.map(data => ({
+    callsign: callsign,
+    callsign_icao: callsign,
+    callsign_iata: data.flnr,
+    airline_name: data.airline_name,
+    origin: {
+      name: data.departure_name,
+      city: data.departure_city,
+      country: depInfo.country,
+      iata: data.departure_iata,
+      icao: data.departure_icao,
+      lat: depInfo.lat,
+      lon: depInfo.lon
+    },
+    destination: {
+      name: data.arrival_name,
+      city: data.arrival_city,
+      country: arrInfo.country,
+      iata: data.arrival_iata,
+      icao: data.arrival_icao,
+      lat: arrInfo.lat,
+      lon: arrInfo.lon
+    },
+    created_at: date,
+    timestamp: timestamp,
+    api_source: 'flightera'
+  }));
+  return formattedArray[0];
+}
+
+// Function to convert a string to title case
 function titleCase(str) {
   return str
     .toLowerCase()
@@ -286,8 +326,14 @@ function addUnknownCallsign(callsign) {
   }
 }
 
+// Cleans a field by returning an empty string if the value is null, undefined, or the string 'undefined'
 function clean_field(val) {
   return (val === null || val === undefined || val === 'undefined') ? '' : val;
+}
+
+// Returns the current month and year in MM/YYYY format
+function format_month_year(){
+  return new Intl.DateTimeFormat('en-US', { month: '2-digit', year: 'numeric' }).format(new Date());
 }
 
 module.exports = {
@@ -296,7 +342,9 @@ module.exports = {
   format_adsblol_route,
   format_flightaware_live,
   format_flightaware_all,
+  format_flightera,
   titleCase,
   addUnknownCallsign,
-  clean_field
+  clean_field,
+  format_month_year
 };

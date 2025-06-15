@@ -1,0 +1,27 @@
+{
+  "callsign": "SWA2735",
+  "callsign_icao": "SWA2735",
+  "callsign_iata": "WN2735",
+  "airline_name": "Southwest Airlines",
+  "origin": {
+    "name": "Jacksonville International Airport",
+    "city": "Jacksonville",
+    "country": "US",
+    "iata": "JAX",
+    "icao": "KJAX",
+    "lat": 30.492469,
+    "lon": -81.687813
+  },
+  "destination": {
+    "name": "Midway International Airport",
+    "city": "Chicago",
+    "country": "US",
+    "iata": "MDW",
+    "icao": "KMDW",
+    "lat": 41.785999,
+    "lon": -87.752403
+  },
+  "created_at": "2025-06-15T16:00:03.402Z",
+  "timestamp": 1750003203402,
+  "api_source": "flightera"
+}
