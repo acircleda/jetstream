@@ -1,0 +1,27 @@
+{
+  "callsign": "RPA5890",
+  "callsign_icao": "RPA5890",
+  "callsign_iata": "YX5890",
+  "airline_name": "RPA",
+  "origin": {
+    "name": "Nashville Intl",
+    "city": "Nashville",
+    "country": "US",
+    "iata": "BNA",
+    "icao": "KBNA",
+    "lat": 36.1245,
+    "lon": -86.6782
+  },
+  "destination": {
+    "name": "Piedmont Triad Intl",
+    "city": "Greensboro",
+    "country": "US",
+    "iata": "GSO",
+    "icao": "KGSO",
+    "lat": 36.1245,
+    "lon": -86.6782
+  },
+  "created_at": "2025-06-19T22:25:33.832Z",
+  "timestamp": 1750371933832,
+  "api_source": "flightaware"
+}

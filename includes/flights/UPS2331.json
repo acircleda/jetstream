@@ -1,0 +1,27 @@
+{
+  "callsign": "UPS2331",
+  "callsign_icao": "UPS2331",
+  "callsign_iata": "5X2331",
+  "airline_name": "United Parcel Service (UPS)",
+  "origin": {
+    "name": "Miami International Airport",
+    "city": "Miami",
+    "country": "US",
+    "iata": "MIA",
+    "icao": "KMIA",
+    "lat": 25.79319953918457,
+    "lon": -80.29060363769531
+  },
+  "destination": {
+    "name": "Louisville International Airport",
+    "city": "Louisville",
+    "country": "US",
+    "iata": "SDF",
+    "icao": "KSDF",
+    "lat": 38.1744,
+    "lon": -85.736
+  },
+  "created_at": "2025-06-19T14:00:08.393Z",
+  "timestamp": 1750341608393,
+  "api_source": "flightera"
+}

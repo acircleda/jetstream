@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL2242",
+  "callsign_icao": "AAL2242",
+  "callsign_iata": "AA2242",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Dallas-Fort Worth Intl",
+    "city": "Dallas-Fort Worth",
+    "country": "US",
+    "iata": "DFW",
+    "icao": "KDFW",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "destination": {
+    "name": "Piedmont Triad Intl",
+    "city": "Greensboro",
+    "country": "US",
+    "iata": "GSO",
+    "icao": "KGSO",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "created_at": "2025-06-19T22:08:41.303Z",
+  "timestamp": 1750370921303,
+  "api_source": "flightaware"
+}

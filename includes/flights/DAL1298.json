@@ -1,0 +1,27 @@
+{
+  "callsign": "DAL1298",
+  "callsign_icao": "DAL1298",
+  "callsign_iata": "DL1298",
+  "airline_name": "Delta Air Lines",
+  "origin": {
+    "name": "Atlanta Hartsfield-Jackson International Airport",
+    "city": "Atlanta",
+    "country": "US",
+    "iata": "ATL",
+    "icao": "KATL",
+    "lat": 33.6367,
+    "lon": -84.428101
+  },
+  "destination": {
+    "name": "Detroit Metropolitan Wayne County Airport",
+    "city": "Detroit",
+    "country": "US",
+    "iata": "DTW",
+    "icao": "KDTW",
+    "lat": 42.21377,
+    "lon": -83.353786
+  },
+  "created_at": "2025-06-19T14:00:06.163Z",
+  "timestamp": 1750341606163,
+  "api_source": "flightera"
+}

@@ -4,7 +4,7 @@ const fs = require('fs').promises;
 const fsSync = require('fs');
 const path = require('path');
 const CONFIG = require('./includes/config.js').CONFIG;
-const { route_logic_check, route_logic_check2, heading_check, heading_check2, simple_heading_check} = require('./includes/logic_checks.js');
+const { route_logic_check, route_logic_check2, heading_check, heading_check2, simple_heading_check, smart_heading_check} = require('./includes/logic_checks.js');
 const { get_adsbdb, get_aviationstack, get_adsblol_route, get_flightaware, get_flightera } = require('./includes/get.js');
 const { addUnknownCallsign, clean_field } = require('./includes/formatters.js');
 const morgan = require('morgan');
@@ -109,112 +109,22 @@ app.get('/planes', async (req, res) => {
   }
 });
 
-app.get('/flightinfo', async (req, res) => {
-    let { callsign, heading } = req.query;
-    callsign = callsign ? callsign.trim() : null;
-    if (!callsign) {
-      res.status(400).json({ error: 'Missing callsign parameter' });
-      return;
-    }
-
-    // Check cache first
-    const cacheKey = `flightinfo:${callsign}:${heading}`;
-    const cachedData = getCachedData(cacheKey);
-    if (cachedData) {
-      res.json(cachedData);
-      console.log('Data (from cache):', callsign);
-      return;
-    }
-
-    const filePath = path.join(FLIGHTS_DIR, `${callsign}.json`);
-    
-    try {
-      // Check if file exists and read it
-      const fileData = await fs.readFile(filePath, 'utf8');
-      const data = JSON.parse(fileData);
-      setCachedData(cacheKey, data);
-      res.json(data);
-      console.log('Data (from file):', filePath);
-      return;
-    } catch (err) {
-      if (err.code !== 'ENOENT') {
-        console.error('File read error:', err);
-        res.status(500).json({ error: 'Failed to read flight info file' });
-        return;
-      }
-      // File doesn't exist, continue to fetch from API
-    }
-    // If not found, fetch and store
-    const url = `https://api.adsbdb.com/v0/callsign/${callsign}`;
-    //const url = `http://localhost:3000/adsbdb?callsign=${callsign}`;
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      // Only store if not 'unknown callsign'
-      console.log('Fetched data:', data);
-      if (!(data && data.response && data.response.flightroute)) {
-        res.json(data);
-        console.log('Not storing:', callsign, ':', data);
-        return;
-      }
-      // Store as JSON file first
-      await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
-      try {
-        const origin = data?.response?.flightroute?.origin;
-        const destination = data?.response?.flightroute?.destination;
-        console.log('Route logic check for flight:', callsign);
-        if (origin && destination ) {
-          // Use route_logic_check directly
-          const logicRes = route_logic_check(data.response, CONFIG.lat, CONFIG.lon);
-          console.log('crossTrackDistance:', logicRes);
-          // Flag if crossTrackDistance exceeds threshold
-          if (!isNaN(logicRes) && logicRes > CONFIG.route_check_threshold) {
-            const flaggedDir = path.join(__dirname, 'includes', 'flights', 'flagged');
-            if (!fsSync.existsSync(flaggedDir)) {
-              fsSync.mkdirSync(flaggedDir, { recursive: true });
-            }
-            const flaggedPath = path.join(flaggedDir, `${callsign}.json`);
-            await fs.copyFile(filePath, flaggedPath);
-            console.log(`Flight ${callsign} flagged: crossTrackDistance ${logicRes} > threshold ${CONFIG.route_check_threshold}`);
-          } else {
-            // If logicRes is within threshold, perform heading check
-            const headingRes = heading_check(data.response, heading, CONFIG.heading_tolerance);
-            console.log('heading check:', headingRes);
-            if (headingRes === false) {
-              // Swap origin and destination in the response (not in file)
-              const temp = data.response.flightroute.origin;
-              data.response.flightroute.origin = data.response.flightroute.destination;
-              data.response.flightroute.destination = temp;
-              console.log('Swapped origin and destination in returned data');
-            }
-          }
-        }
-      } catch (logicErr) {
-        console.error('Error extracting or sending to logic_check:', logicErr);
-      }
-      setCachedData(cacheKey, data);
-      res.json(data);
-      console.log('Data (fetched and saved):', filePath);
-    } catch (e) {
-      console.error(e);
-      res.status(500).json({ error: 'Failed to fetch flight info' });
-    }
-  })
-
 app.get('/aircraft', async (req, res) => {
   const { callsign, reg } = req.query;
   
+  const callsign_trimmed = callsign.trim();
+
   // Check cache first
-  const cacheKey = `aircraft:${callsign}`;
+  const cacheKey = `aircraft:${callsign_trimmed}`;
   const cachedData = getCachedData(cacheKey);
   if (cachedData) {
     res.json(cachedData);
-    console.log('Data (from cache):', callsign);
+    console.log('Data (from cache):', callsign_trimmed);
     return;
   }
   
   const AIRCRAFT_DIR = path.join(__dirname, 'includes', 'aircraft');
-  const filePath = path.join(AIRCRAFT_DIR, `${callsign}.json`);
+  const filePath = path.join(AIRCRAFT_DIR, `${callsign_trimmed}.json`);
   const unknownsPath = path.join(AIRCRAFT_DIR, '_unknown_aircrafts.json');
 
   // 1. Try to read the aircraft file if it exists
@@ -239,8 +149,7 @@ app.get('/aircraft', async (req, res) => {
     const unknownsData = await fs.readFile(unknownsPath, 'utf8');
     const unknowns = JSON.parse(unknownsData);
     if (unknowns[callsign]) {
-      const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
-      if (Date.now() - unknowns[callsign] < thirtyDaysMs) {
+      if (Date.now() - unknowns[callsign_trimmed] < thirtyDaysMs) {
         res.status(200).json({ response: 'Unknown aircraft previously seen' });
         return;
       }
@@ -255,7 +164,7 @@ app.get('/aircraft', async (req, res) => {
   // 3. If not found, fetch and store
   const url = `https://api.adsbdb.com/v0/aircraft/${reg}`;
   try {
-    console.log('Fetching aircraft data for callsign:', callsign);
+    console.log('Fetching aircraft data for callsign:', callsign_trimmed);
     const response = await fetch(url);
     const data = await response.json();
     console.log('Aircraft data:', data);
@@ -268,7 +177,7 @@ app.get('/aircraft', async (req, res) => {
       } catch (e) { 
         unknowns = {}; 
       }
-      unknowns[callsign] = Date.now();
+      unknowns[callsign_trimmed] = Date.now();
       await fs.writeFile(unknownsPath, JSON.stringify(unknowns, null, 2), 'utf8');
       setCachedData(cacheKey, data);
       res.json(data);
@@ -284,197 +193,7 @@ app.get('/aircraft', async (req, res) => {
   }
 });
 
-app.get('/flightinfo2', async (req, res) => {
-  let { callsign, heading, current_lat, current_lon } = req.query;
-
-  // 1. Check if callsign is present
-  if (!callsign) {
-    res.status(400).json({ error: 'Missing callsign parameter' });
-    return;
-  }
-
-  // 2. Trim callsign
-  callsign = callsign.trim();
-  const filePath = path.join(FLIGHTS_DIR, `${callsign}.json`);
-
-  // 3. Try to read the callsign.json file, if it exists
-  try {
-    const fileData = await fs.readFile(filePath, 'utf8');
-    const jsonData = JSON.parse(fileData);
-    const fileTimestamp = jsonData.timestamp ? new Date(jsonData.timestamp).getTime() : null;
-    const ninetyDaysMs = 90 * 24 * 60 * 60 * 1000;
-    //if the file is less than 90 days old, return the data
-    if (fileTimestamp && (Date.now() - fileTimestamp <= ninetyDaysMs)) {
-        // Check heading and swap if needed before returning
-        let headingRes = null;
-        if (jsonData.origin && jsonData.destination) {
-          console.log('Heading check for flight (from file):', callsign);
-          //headingRes = heading_check2(jsonData, heading, CONFIG.heading_tolerance);
-          headingRes = simple_heading_check(current_lat, current_lon, jsonData, heading, CONFIG.heading_tolerance);
-        }
-        console.log('heading check (from file):', headingRes);
-        if (headingRes === false) {
-          const swappedData = {
-            ...jsonData,
-            origin: jsonData.destination,
-            destination: jsonData.origin
-          };
-          console.log('Swapped origin and destination in returned data (from file)');
-          res.json(swappedData);
-          console.log('Data (swapped and returned from file):', swappedData);
-          return;
-        }
-        res.json(jsonData);
-        console.log('Data (from file):', filePath);
-        return;
-      } else {
-        console.log('File is older than 90 days, skipping:', filePath);
-      }
-  } catch (err) {
-    if (err.code !== 'ENOENT') {
-      console.error('File read error:', err);
-      res.status(500).json({ error: 'Failed to read flight info file' });
-      return;
-    }
-    // File doesn't exist, continue to fetch from API
-  }
-  //try to lookup if it is an unknown callsign
-  try {
-    const unknownsPath = path.join(__dirname, 'includes', 'flights', '_unknown_routes.json');
-    const unknownsData = await fs.readFile(unknownsPath, 'utf8');
-    const unknowns = JSON.parse(unknownsData);
-    if (unknowns[callsign]) {
-      const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
-      if (Date.now() - unknowns[callsign] < thirtyDaysMs) {
-        res.status(200).json({ response: 'Unknown call sign previously seen' });
-        return;
-      }
-    }
-  } catch (e) {
-    if (e.code !== 'ENOENT') {
-      console.error('Error checking _unknown_routes.json:', e);
-    }
-    // If error or file doesn't exist, continue as normal
-  }
-
-  try {
-    // 4. If it does not exist or is older than 90 days, attempt to get data from adsb.lol
-      console.log('Fetching adsb.lol data for flight:', callsign);
-      let data = await get_adsblol_route(callsign);
-      //let data = await get_adsbdb(callsign);
-      console.log('Fetched adsb.lol data:', data);
-
-    // 5. If the data exists, run a logic check on the route
-    let route_is_valid; // Declare outside so it's accessible later
-    if(data.callsign){
-      console.log('Route logic check for adsb.lol data and flight:', callsign);
-      let route_logic_check_result;
-      try {
-        route_logic_check_result = route_logic_check2(data, CONFIG.lat, CONFIG.lon);
-        route_is_valid = route_logic_check_result <= CONFIG.route_check_threshold;
-        console.log('crossTrackDistance:', route_logic_check_result, 'is route valid:', route_is_valid);
-      } catch (err) {
-        console.error('Route logic check error:', err);
-        route_is_valid = false;
-      }
-    }
-
-    // 6. If the data does not exist or the route_is_valid is false, try to get data from adsblol
-    //if(CONFIG.enable_adsblol){
-      if(!data.callsign || route_is_valid === false) {
-        if(!data.callsign) { console.log('No callsign found in adsb.lol data, trying adsblol'); }
-        if(route_is_valid === false) { console.log('Route logic check failed adsb.lol data for flight:', callsign); }
-        console.log('Fetching adsbdb data for flight:', callsign);
-        data = await get_adsbdb(callsign);
-        console.log('Fetched adsbdb data:', data);
-      
-        // 7. If the data exists, run a logic check on the route
-        if(data.callsign){
-        console.log('Route logic check for adsbdb data and flight:', callsign);
-        let route_logic_check_result;
-        try {
-          route_logic_check_result = route_logic_check2(data, CONFIG.lat, CONFIG.lon);
-          route_is_valid = route_logic_check_result <= CONFIG.route_check_threshold;
-          console.log('crossTrackDistance:', route_logic_check_result, 'is route valid:', route_is_valid, 'threshold:', CONFIG.route_check_threshold);
-        } catch (err) {
-          console.error('Route logic check error:', err);
-          route_is_valid = false;
-        }
-        }
-      }
-    //}
-
-    // 8. If the data is empty, don't store the file and return
-     if (!data.callsign) {
-        addUnknownCallsign(callsign);
-        console.log('Not storing data for:', callsign);
-        return;
-    }
-
-    // 9. Otherwise, save the data
-      console.log('Saving data to file:', filePath);
-      await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
-    
-    // 10. If the logic check still fails, copy file to flagged, then get new data from get_aviationstack
-      if (!route_is_valid) {
-        console.log('Route logic check failed for flight:', callsign, 'Flagging for review');
-        const flaggedDir = path.join(__dirname, 'includes', 'flights', 'flagged');
-        if (!fsSync.existsSync(flaggedDir)) {
-          fsSync.mkdirSync(flaggedDir, { recursive: true });
-        }
-        const flaggedPath = path.join(flaggedDir, `${callsign}.json`);
-        await fs.copyFile(filePath, flaggedPath);
-        
-    if(CONFIG.aviation_stack_api_key){
-        // Get new data from aviationstack
-        console.log('Fetching aviationstack data for flight:', callsign);
-        const aviationstackData = await get_aviationstack(callsign, CONFIG.aviation_stack_api_key);
-        console.log('Fetched aviationstack data:', aviationstackData);
-        // Overwrite file with aviationstack data if valid
-        if (aviationstackData.callsign) {
-          console.log('Overwriting file with aviationstack data:', filePath);
-          data = aviationstackData;
-          await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
-        }
-      }
-  }
-
-  // TODO if error from aviation stack, try aeroapi
-
-    // 11. If successful data, check the heading.
-    let headingRes = null;
-    if (data.origin && data.destination) {
-      console.log('Heading check for flight:', callsign);
-      //headingRes = heading_check2(data, heading, CONFIG.heading_tolerance);
-      headingRes = simple_heading_check(current_lat, current_lon, data, heading, CONFIG.heading_tolerance);
-    }
-    console.log('heading check:', headingRes);
-
-    // 12. If the heading is not within tolerance, swap the destination and origin.
-    if (headingRes === false) {
-      // Rebuild the JSON with swapped origin and destination
-      const swappedData = {
-        ...data,
-        origin: data.destination,
-        destination: data.origin
-      };
-      console.log('Swapped origin and destination in returned data');
-      res.json(swappedData);
-      console.log('Data (swapped and returned):', swappedData);
-      return;
-    }
-
-    // 13. Return the data
-    res.json(data);
-    console.log('Data (fetched and saved):', filePath);
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: 'Failed to fetch flight info' });
-  }
-});
-
-
-app.get('/flightinfo3', async (req, res) => {
+app.get('/flightinfo', async (req, res) => {
   let { callsign, heading, current_lat, current_lon } = req.query;
 
   // 1. Check if callsign is present
@@ -495,11 +214,12 @@ app.get('/flightinfo3', async (req, res) => {
     //if the file is less than 30 days old, return the data
     if (fileTimestamp && (Date.now() - fileTimestamp <= thirtyDaysMs)) {
         // Check heading and swap if needed before returning
+        /*
         let headingRes = null;
         if (jsonData.origin && jsonData.destination) {
           console.log('Heading check for flight (from file):', callsign);
           //headingRes = heading_check2(jsonData, heading, CONFIG.heading_tolerance);
-          headingRes = simple_heading_check(current_lat, current_lon, jsonData, heading, CONFIG.heading_tolerance);
+          headingRes = smart_heading_check(current_lat, current_lon, jsonData, heading);
         }
         console.log('heading check (from file):', headingRes);
         if (headingRes === false) {
@@ -513,6 +233,7 @@ app.get('/flightinfo3', async (req, res) => {
           console.log('Data (swapped and returned from file):', swappedData);
           return;
         }
+          */
         res.json(jsonData);
         console.log('Data (from file):', filePath);
         return;
@@ -618,10 +339,11 @@ app.get('/flightinfo3', async (req, res) => {
 
 
     // 9. Check the heading.
+    /*
     let headingRes = null;
     if (data.origin && data.destination) {
       console.log('Heading check for flight:', callsign);
-      headingRes = heading_check2(data, heading, CONFIG.heading_tolerance);
+      headingRes = smart_heading_check(current_lat, current_lon, jsonData, heading);
       //headingRes = simple_heading_check(current_lat, current_lon, data, heading, CONFIG.heading_tolerance);
     }
     console.log('heading check:', headingRes);
@@ -639,6 +361,7 @@ app.get('/flightinfo3', async (req, res) => {
       console.log('Data (swapped and returned):', swappedData);
       return;
     }
+      */
 
       // 11. Return the data
       res.json(data);

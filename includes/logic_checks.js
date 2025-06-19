@@ -119,11 +119,88 @@ function simple_heading_check(currentLat, currentLon, route_data, heading, toler
   return smallestDiff <= tolerance;
 }
 
+function smart_heading_check(currentLat, currentLon, route_data, heading, options = {}) {
+    const {
+        baseTolerance = 45,
+        takeoffTolerance = 90,
+        landingTolerance = 30,
+        nearDistanceKm = 50  // How close is "near" origin/destination
+    } = options;
+    
+    const origLat = Number(route_data.origin?.lat);
+    const origLon = Number(route_data.origin?.lon);
+    const destLat = Number(route_data.destination?.lat);
+    const destLon = Number(route_data.destination?.lon);
+
+    // Calculate distances and progress
+    const totalDistance = calculateDistance(origLat, origLon, destLat, destLon);
+    const distanceFromOrigin = calculateDistance(origLat, origLon, currentLat, currentLon);
+    const distanceToDestination = calculateDistance(currentLat, currentLon, destLat, destLon);
+    const progress = Math.min(distanceFromOrigin / totalDistance, 1);
+    
+    // Phase 1: Near origin (likely taking off or departing)
+    if (distanceFromOrigin < nearDistanceKm || progress < 0.15) {
+        // Should be heading in the general direction of destination
+        const generalBearing = calculateBearing(origLat, origLon, destLat, destLon);
+        const diff = getAngleDifference(heading, generalBearing);
+        return diff <= takeoffTolerance; // Very lenient - planes often circle after takeoff
+    }
+    
+    // Phase 2: Near destination (likely approaching/landing)
+    if (distanceToDestination < nearDistanceKm || progress > 0.85) {
+        // Should be heading toward destination
+        const approachBearing = calculateBearing(currentLat, currentLon, destLat, destLon);
+        const diff = getAngleDifference(heading, approachBearing);
+        return diff <= landingTolerance; // Stricter - should be lined up for approach
+    }
+    
+    // Phase 3: En route (cruise phase)
+    // Use multiple checks for better accuracy
+    const directBearing = calculateBearing(currentLat, currentLon, destLat, destLon);
+    const overallRouteBearing = calculateBearing(origLat, origLon, destLat, destLon);
+    
+    // Check direct bearing to destination
+    const directDiff = getAngleDifference(heading, directBearing);
+    if (directDiff <= baseTolerance) {
+        return true;
+    }
+    
+    // Check general route bearing (helps with curved routes)
+    const routeDiff = getAngleDifference(heading, overallRouteBearing);
+    if (routeDiff <= baseTolerance + 15) { // Slightly more lenient
+        return true;
+    }
+    
+    // Final check: Is the plane at least not heading back toward origin?
+    const backwardsBearing = calculateBearing(currentLat, currentLon, origLat, origLon);
+    const backwardsDiff = getAngleDifference(heading, backwardsBearing);
+    
+    // If it's definitely not going backwards and somewhat toward destination, allow it
+    return backwardsDiff > 90 && directDiff <= (baseTolerance + 30);
+}
+
+function getAngleDifference(angle1, angle2) {
+    const diff = Math.abs(angle1 - angle2) % 360;
+    return Math.min(diff, 360 - diff);
+}
+
+// Helper function - you might already have this
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Earth's radius in km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
 module.exports = {
   crossTrackDistance,
   route_logic_check,
   route_logic_check2,
   heading_check,
   heading_check2,
-  simple_heading_check
+  simple_heading_check,
+  smart_heading_check
 };

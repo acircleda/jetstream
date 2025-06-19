@@ -5,13 +5,32 @@
   <link rel="stylesheet" href="includes/styles.css" />
   <script src="includes/color.js"></script>
   <script src="includes/formatters.js"></script>
-  <script>
-    document.title = "Jetstream: " + CONFIG.city_name;
-    document.addEventListener("DOMContentLoaded", () => {
+  <link id="dynamic-favicon" rel="icon" type="image/svg+xml">
+  <script src="includes/favicon.js" defer></script>
+
+<script>
+  document.title = "Jetstream: " + CONFIG.city_name;
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // Update the title div
     const locationDiv = document.getElementById("title");
-    locationDiv.textContent = `Jetstream: ${CONFIG.city_name}`;
+    locationDiv.innerHTML = `Jetstream: ${CONFIG.city_name} <span class="version">v4.0</span>`;
+
+    // Attach refresh button handler after DOM is fully loaded
+    const refreshBtn = document.getElementById('refresh-page-btn');
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', () => {
+        location.reload();
+      });
+    }
   });
-  </script>
+
+    // Auto-refresh every 30 minutes
+  setInterval(() => {
+    location.reload();
+  }, 1800000);
+</script>
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -24,7 +43,10 @@
   
 
  </head>
+
+
 <body>
+  <button id="refresh-page-btn" title="Refresh the page">&#x21bb;</button>
     <div id="main"> 
       <div id="map"></div>
       <div id="title"></div>
@@ -46,7 +68,7 @@
       attributionControl: false
     }).setView([CONFIG.lat, CONFIG.lon], CONFIG.initialZoom); // Use CONFIG constants
 
-    L.tileLayer(CONFIG.tileLayerUrl, {
+    L.tileLayer('http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: CONFIG.maxZoom,
     }).addTo(map);
 
@@ -186,27 +208,39 @@
           // Fetch additional flight info
           let origin = 'N/A';
           let destination = 'N/A';
+          let flight_name = '';
           let hasRoute = false;
 
           if (plane.flight) {
             try {
-              console.log(`Fetching flight info for ${plane.flight}`);
-              const flightInfoRes = await fetch(`http://localhost:3000/flightinfo3?callsign=${plane.flight}&heading=${plane.track}&current_lat=${plane.lat}&current_lon=${plane.lon}`);
-              const flightInfoData = await flightInfoRes.json();
-              console.log(`Flight info for ${plane.flight}:`, flightInfoData);
-              if (flightInfoData && flightInfoData.callsign) {
-                origin = flightInfoData?.origin || '';
-                destination = flightInfoData?.destination || '';
-                flight_name = titleCase(flightInfoData?.airline_name || '');
-                hasRoute = true;
-                console.log(`Origin info for ${plane.flight}:, ${JSON.stringify(origin)}`);
-                console.log(`Dest info for ${plane.flight}:, ${JSON.stringify(destination)}`);
-              } else if (!flightInfoData.callsign){
-                console.log(`Fetching aircraft info for ${plane.flight}`);
-                const aircraft_info_res = await fetch(`http://localhost:3000/aircraft?callsign=${plane.flight}&reg=${plane.r}`);
-                const aircraft_info = await aircraft_info_res.json();
-                console.log(`Aircraft info for ${plane.flight}:`, aircraft_info);
-                flight_name = titleCase(aircraft_info?.response?.aircraft?.registered_owner || '');
+              // Fetch aircraft info
+              console.log(`Fetching aircraft info for ${plane.flight}`);
+              const aircraft_info_res = await fetch(`http://localhost:3000/aircraft?callsign=${plane.flight}&reg=${plane.r}`);
+              const aircraft_info = await aircraft_info_res.json();
+              console.log(`Aircraft info for ${plane.flight}:`, aircraft_info);
+              flight_name = aircraft_info?.response?.aircraft?.registered_owner.toUpperCase() || '';
+              origin = '';
+              destination = '';
+              aircraft_url = aircraft_info?.response?.aircraft?.url_photo_thumbnail || '';
+              aircraft_mfg = aircraft_info?.response?.aircraft?.manufacturer || '';
+              aircraft_type = aircraft_info?.response?.aircraft?.type || '';
+
+              // Fetch flight info if aircraft info is available
+              if(aircraft_info.response.aircraft) {
+                console.log(`Fetching flight info for ${plane.flight}`);
+                const flightInfoRes = await fetch(`http://localhost:3000/flightinfo?callsign=${plane.flight}&heading=${plane.track}&current_lat=${plane.lat}&current_lon=${plane.lon}`);
+                const flightInfoData = await flightInfoRes.json();
+                console.log(`Flight info for ${plane.flight}:`, flightInfoData);
+
+                // Extract origin and destination from flight info
+                if (flightInfoData && flightInfoData.callsign) {
+                  origin = flightInfoData?.origin || '';
+                  console.log(`Origin info for ${plane.flight}:, ${JSON.stringify(origin)}`);
+                  destination = flightInfoData?.destination || '';
+                  console.log(`Dest info for ${plane.flight}:, ${JSON.stringify(destination)}`);
+                  flight_name = flight_name || flightInfoData?.airline_name.toUpperCase() ||  '';
+                  hasRoute = true;
+                }
               }
             } catch(err) {
               console.error(`Error fetching route info for ${plane.flight}:`, err);
@@ -218,13 +252,15 @@
             <div>
               <strong>Flight ${plane.flight || 'N/A'}</strong><br>
               <strong>${flight_name}</strong><br><br>
-              ${format_name(origin)}<br>
-              <small>${clean_field(origin.name)}</small><br>
-              ${format_name(origin) !== '' ? '<h3>to</h3>' : ''}
-              ${format_name(destination)}<br>
-              <small>${clean_field(destination.name)}</small><br><br>
+
+              ${format_name(origin) !== '' ? `Origin: ${format_name(origin)}<br><small>${clean_field(origin.name)}</small><br><br>` : ''}
+              ${format_name(destination) !== '' ? `Destination: ${format_name(destination)}<br><small>${clean_field(destination.name)}</small><br><br>` : ''}
+              ${aircraft_url !== '' ? `<img src="${aircraft_url}" alt="Aircraft Photo" style="max-width: 100%; height: auto;"><br>`
+  : ''}
               <strong>Altitude:</strong> ${plane.alt_baro || ''}<br>
-              <strong>Speed:</strong> ${plane.gs ? `${plane.gs} knots` : 'N/A'}<br><br>
+              <strong>Speed:</strong> ${plane.gs ? `${plane.gs} knots` : 'N/A'}<br>
+              ${aircraft_mfg !== '' ? `<strong>Aircraft:</strong> ${aircraft_mfg} ${aircraft_type}<br>` : ''}
+              <br>
               View on <a href="https://www.flightradar24.com/${plane.flight}" target="_blank"> FlightRadar24</a> | 
                <a href="https://www.flightaware.com/live/flight/${plane.flight}" target="_blank">FlightAware</a>
             </div>
@@ -242,6 +278,7 @@
             closestOriginName = format_name(closestOrigin)
             closestDestinationName = format_name(closestDestination)
             closestFlightName = flight_name;
+            closestAircraft = aircraft_mfg + ' ' + aircraft_type;
           }
           }
         }
@@ -276,7 +313,7 @@
               <h3>${closestDestination['name'] || ''}<h3>
             </div>
             <div class="sb-flight-info">
-              <strong>Aircraft:</strong> ${closestPlane.t || 'N/A'}<br>
+              <strong>Aircraft:</strong> ${closestAircraft || closestPlane.t || 'N/A'}<br>
               <strong>Altitude:</strong> ${closestPlane.alt_baro || ''} ft<br>
               <strong>Speed:</strong> ${closestPlane.gs ? `${closestPlane.gs} knots` : ''}<br><br>
               <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">View on FlightAware</a>

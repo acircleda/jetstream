@@ -1,0 +1,27 @@
+{
+  "callsign": "SWA3257",
+  "callsign_icao": "SWA3257",
+  "callsign_iata": "WN3257",
+  "airline_name": "SWA",
+  "origin": {
+    "name": "Raleigh-Durham Intl",
+    "city": "Raleigh/Durham",
+    "country": "US",
+    "iata": "RDU",
+    "icao": "KRDU",
+    "lat": 35.877602,
+    "lon": -78.787498
+  },
+  "destination": {
+    "name": "Nashville Intl",
+    "city": "Nashville",
+    "country": "US",
+    "iata": "BNA",
+    "icao": "KBNA",
+    "lat": 35.877602,
+    "lon": -78.787498
+  },
+  "created_at": "2025-06-19T22:45:16.928Z",
+  "timestamp": 1750373116928,
+  "api_source": "flightaware"
+}

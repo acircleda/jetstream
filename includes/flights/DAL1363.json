@@ -1,0 +1,27 @@
+{
+  "callsign": "DAL1363",
+  "callsign_icao": "DAL1363",
+  "callsign_iata": "DL1363",
+  "airline_name": "Delta Air Lines",
+  "origin": {
+    "name": "Atlanta Hartsfield-Jackson International Airport",
+    "city": "Atlanta",
+    "country": "US",
+    "iata": "ATL",
+    "icao": "KATL",
+    "lat": 33.6367,
+    "lon": -84.428101
+  },
+  "destination": {
+    "name": "Pittsburgh International Airport",
+    "city": "Pittsburgh",
+    "country": "US",
+    "iata": "PIT",
+    "icao": "KPIT",
+    "lat": 40.491501,
+    "lon": -80.232903
+  },
+  "created_at": "2025-06-19T13:34:50.030Z",
+  "timestamp": 1750340090030,
+  "api_source": "flightera"
+}

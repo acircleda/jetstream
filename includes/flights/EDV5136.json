@@ -1,0 +1,27 @@
+{
+  "callsign": "EDV5136",
+  "callsign_icao": "EDV5136",
+  "callsign_iata": "9E5136",
+  "airline_name": "EDV",
+  "origin": {
+    "name": "Hartsfield-Jackson Intl",
+    "city": "Atlanta",
+    "country": "US",
+    "iata": "ATL",
+    "icao": "KATL",
+    "lat": 33.6367,
+    "lon": -84.428101
+  },
+  "destination": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 33.6367,
+    "lon": -84.428101
+  },
+  "created_at": "2025-06-19T13:33:51.846Z",
+  "timestamp": 1750340031846,
+  "api_source": "flightaware"
+}

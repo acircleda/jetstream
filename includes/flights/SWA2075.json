@@ -1,0 +1,27 @@
+{
+  "callsign": "SWA2075",
+  "callsign_icao": "SWA2075",
+  "callsign_iata": "WN2075",
+  "airline_name": "SWA",
+  "origin": {
+    "name": "John Glenn Columbus Intl Airport",
+    "city": "Columbus",
+    "country": "US",
+    "iata": "CMH",
+    "icao": "KCMH",
+    "lat": 39.998001,
+    "lon": -82.891899
+  },
+  "destination": {
+    "name": "Orlando Intl",
+    "city": "Orlando",
+    "country": "US",
+    "iata": "MCO",
+    "icao": "KMCO",
+    "lat": 39.998001,
+    "lon": -82.891899
+  },
+  "created_at": "2025-06-19T22:54:09.717Z",
+  "timestamp": 1750373649717,
+  "api_source": "flightaware"
+}

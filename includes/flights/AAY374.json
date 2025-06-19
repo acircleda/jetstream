@@ -1,0 +1,27 @@
+{
+  "callsign": "AAY374",
+  "callsign_icao": "AAY374",
+  "callsign_iata": "G4374",
+  "airline_name": "Allegiant Air",
+  "origin": {
+    "name": "Valparaiso Northwest Florida Regional Airport",
+    "city": "Valparaiso",
+    "country": "US",
+    "iata": "VPS",
+    "icao": "KVPS",
+    "lat": 30.4832,
+    "lon": -86.525398
+  },
+  "destination": {
+    "name": "Cincinnati Northern Kentucky International Airport",
+    "city": "Cincinnati",
+    "country": "US",
+    "iata": "CVG",
+    "icao": "KCVG",
+    "lat": 39.048801,
+    "lon": -84.667801
+  },
+  "created_at": "2025-06-19T13:36:39.360Z",
+  "timestamp": 1750340199360,
+  "api_source": "flightera"
+}

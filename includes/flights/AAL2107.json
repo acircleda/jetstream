@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL2107",
+  "callsign_icao": "AAL2107",
+  "callsign_iata": "AA2107",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 35.2140007019043,
+    "lon": -80.94309997558594
+  },
+  "destination": {
+    "name": "Seattle-Tacoma Intl",
+    "city": "Seattle",
+    "country": "US",
+    "iata": "SEA",
+    "icao": "KSEA",
+    "lat": 35.2140007019043,
+    "lon": -80.94309997558594
+  },
+  "created_at": "2025-06-19T20:52:30.139Z",
+  "timestamp": 1750366350139,
+  "api_source": "flightaware"
+}

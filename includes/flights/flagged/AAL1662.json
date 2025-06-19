@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL1662",
+  "callsign_icao": "AAL1662",
+  "callsign_iata": "AA1662",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Denver Intl",
+    "city": "Denver",
+    "country": "US",
+    "iata": "DEN",
+    "icao": "KDEN",
+    "lat": 39.861698150635,
+    "lon": -104.672996521
+  },
+  "destination": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 39.861698150635,
+    "lon": -104.672996521
+  },
+  "created_at": "2025-06-19T22:27:55.717Z",
+  "timestamp": 1750372075717,
+  "api_source": "flightaware"
+}

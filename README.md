@@ -1,16 +1,10 @@
 # Jetstream
 
+Version: 3.9
+
 # TODO
-- Removing heading check
-- RapidAPI integration (to do)
-- FlightAware API (finish endpoint, add to review system)
-- API reordering (AviationStack, RapidAPI, FlightAware API, ADSB.lol, ADSBDB)
-  - Consider checking for aircraft first before fetching flight data
-- Add fullscreen refresh button
-- Hourly-refresh or half-hour refresh to clear any stagnant data on screen
-  - Or find a better way to remove icons
-- Set 30-day as constant and make 30-day checks on all JSON files
-- Add weather widget
+- Add all APIs to review system
+- Add weather widget when no data
 
 
 A real-time flight tracking visualization application that displays aircraft near your location on an interactive map. The application fetches flight data from multiple APIs, validates flight routes, and provides detailed information about nearby aircraft.
@@ -31,6 +25,16 @@ A real-time flight tracking visualization application that displays aircraft nea
 - Node.js and npm
 - Make (for automated setup)
 
+#### Optional but recommended APIs
+
+By default, the application uses [ADSB.lol](https://api.adsb.lol/docs) and [ADSBDB](https://www.adsbdb.com/) for flight route data. However, these data sources are not completely reliable.
+
+For enhanced route information, you can also use the following free-but-limited APIs:
+
+- **Flightera**: Free tier allows 200 requests/month. Sign up at (https://rapidapi.com/flightera/api/flightera-flight-data/). **No payment information required**.
+- **AviationStack**: Free tier allows 100 requests/month. Sign up at https://aviationstack.com/ and get your API key.
+- **FlightAware AeroAPI**: Personal tier allows roughly 500 requests/month, after which there is a fee per request. Sign up at (https://www.flightaware.com/commercial/aeroapi/). **Payment information required**. Note: API requests are tracked and the application should preevent you from exceeding your quota.
+
 ### Setup
 
 1. **Install dependencies**:
@@ -44,13 +48,7 @@ A real-time flight tracking visualization application that displays aircraft nea
    ```
 
 3. **Configure your location**:
-   Edit `includes/config.js` to set your coordinates:
-   ```javascript
-   lat: 37.77697315135698,    // Your latitude
-   lon: -122.41922177136804,  // Your longitude
-   city_name: 'Your City',
-   distance: 10,              // Search radius in miles
-   ```
+   Edit `includes/config.js` to set your information. This file is git-ignored to protect your API keys and persobal information. See configuration options below.
 
 4. **Start the application**:
    ```bash
@@ -59,7 +57,7 @@ A real-time flight tracking visualization application that displays aircraft nea
 
 5. **Access the interface**:
    - Main view: http://localhost:5000
-   - Flight review tool: http://localhost:5000/review.html
+   - Flight review tool: http://localhost:5000/review
 
 ## Configuration Options
 
@@ -67,36 +65,55 @@ The `includes/config.js` file contains all configuration options:
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `lat`, `lon` | Your location coordinates | San Francisco |
+| `lat`, `lon` | The coordinates of your search radius area | San Francisco |
+| `house_lat`, `house_lon` | Your coordinates of the center of the map, which is likely the same as `lat` and `lon` above. This is useful if you want to set a different search radius than the map center. | San Francisco |
+| `city_name` | The name of your city. This will become part of the page title, e.g., Jetstream: `city_name` | San Francisco |
+| `zipcode` | Your zipcode. This is used for the weather widget. Note: not yet implemented. |  |
+| `highlight_color` | The hex code of the color used to highlight aircraft icons and important text. | #FF8200 |
+| `maxZoom` | The maximum zoom level for the map. Note: zooming is currently disabled. | 15 |
+| `initialZoom` |  The initial zoom level for the map | 12 |
 | `distance` | Search radius in miles | 10 |
-| `refreshRate` | Data refresh interval (ms) | 10000 |
-| `route_check_threshold` | Route validation threshold (km) | 150 |
-| `heading_tolerance` | Heading validation tolerance | Configurable |
-| `aviation_stack_api_key` | AviationStack API key (optional) | null |
+| `route_check_threshold` | Route validation threshold in (km). | 150 |
+| `refreshRate` | Refresh rate, in milliseconds, to check for local aircrafts | 10000 |
+| `use_downtime` | Whether to use downtime mode. Downtime mode reduces the refresh rate during certain hours to reduce API usage. | false |
+| `downtime_start` | Refresh rate, in milliseconds, to check for local aircrafts | 10000 |
+| `downtime_end` | The hour (0-23) to end downtime mode | 6 |
+| `downtime_refresh` | Refresh rate, in milliseconds, to check for local aircrafts | 60000 |
+| `refreshRate` | Refresh rate, in milliseconds, to check for local aircrafts | 10000 |
+| `refreshRate` | Refresh rate, in milliseconds, to check for local aircrafts | 10000 |
+| `refreshRate` | Refresh rate, in milliseconds, to check for local aircrafts | 10000 |
+| `refreshRate` | Refresh rate, in milliseconds, to check for local aircrafts | 10000 |
+| `aviationstack_api_key` | The API key for AviationStack. This is optional, but recommended. | null |
+| `flightera_api_key` | The API key for Flightera. This is optional, but recommended. | null |
+| `flightaware_api_key` | The API key for FlightAware. This is optional, but recommended. | null |
+
+
 
 ## Data Sources
 
 The application uses multiple APIs for comprehensive flight data:
 
-1. **ADSB.lol**: Primary source for real-time aircraft positions
-2. **ADSBDB**: Flight route and airline information
-3. **AviationStack**: Backup data source for route validation
+1. **ADSB.lol**: Primary source for real-time aircraft positions. This is also checked for flight route information
+2. **ADSBDB**: Flight route and aircraft information
+3. **Flightera**: Optional API for additional flight route data
+3. **Flightaware AeroAPI**: Optional API for additional flight route data
 
 ## File Structure
 
 ```
 jetstream/
 ├── index.html              # Main application interface
-├── review.html             # Flight review tool
+├── review/index.html            # Flight review tool
 ├── proxy.js                # Express server and API proxy
+├── python                  # Scripts for data processing of icons and airports
 ├── includes/
 │   ├── config.js           # Configuration file (generated)
 │   ├── formatters.js       # Data formatting utilities
 │   ├── logic_checks.js     # Route validation logic
 │   ├── get.js              # API integration functions
+│   ├── airports.db         # SQLite database of airports
 │   ├── flights/            # Cached flight data
 │   │   ├── flagged/        # Flights requiring review
-│   │   └── reviewed/       # Manually reviewed flights
 │   └── aircraft/           # Cached aircraft information
 ├── icons/                  # Aircraft type icons (SVG)
 └── styles.css              # Application styling
@@ -110,14 +127,14 @@ The application includes an automated review system for questionable flight data
 - **Manual Review**: Use the review interface to validate and correct flight data
 - **Multiple Actions**: Approve, remove from flagged, or delete entirely
 
-Access the review tool at: http://localhost:5000/review.html
+Access the review tool at: http://localhost:5000/review
 
 ## API Endpoints
 
 The Express server provides several endpoints:
 
 - `GET /planes` - Live aircraft data
-- `GET /flightinfo2` - Detailed flight information
+- `GET /flightinfo3` - Detailed flight information
 - `GET /aircraft` - Aircraft registration details
 
 ## Development Commands
@@ -135,9 +152,6 @@ make review         # Start with review interface
 Add custom aircraft icons to the `icons/` directory and update the type/category lookup files:
 - `includes/type_lookup.json`
 - `includes/category_lookup.json`
-
-### Map Styling
-Modify the tile layer URL in `config.js` to change the map appearance.
 
 ### Data Processing
 Extend the logic in `includes/logic_checks.js` to customize route validation rules.

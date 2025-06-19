@@ -1,0 +1,27 @@
+{
+  "callsign": "SWA2750",
+  "callsign_icao": "SWA2750",
+  "callsign_iata": "WN2750",
+  "airline_name": "Southwest Airlines",
+  "origin": {
+    "name": "Detroit Metropolitan Wayne County Airport",
+    "city": "Detroit",
+    "country": "US",
+    "iata": "DTW",
+    "icao": "KDTW",
+    "lat": 42.21377,
+    "lon": -83.353786
+  },
+  "destination": {
+    "name": "Orlando International Airport",
+    "city": "Orlando",
+    "country": "US",
+    "iata": "MCO",
+    "icao": "KMCO",
+    "lat": 28.429399490356445,
+    "lon": -81.30899810791016
+  },
+  "created_at": "2025-06-15T18:05:54.214Z",
+  "timestamp": 1750010754214,
+  "api_source": "flightera"
+}

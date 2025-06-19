@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL1105",
+  "callsign_icao": "AAL1105",
+  "callsign_iata": "AA1105",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Los Angeles Intl",
+    "city": "Los Angeles",
+    "country": "US",
+    "iata": "LAX",
+    "icao": "KLAX",
+    "lat": 33.942501,
+    "lon": -118.407997
+  },
+  "destination": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 33.942501,
+    "lon": -118.407997
+  },
+  "created_at": "2025-06-19T22:48:43.253Z",
+  "timestamp": 1750373323253,
+  "api_source": "flightaware"
+}

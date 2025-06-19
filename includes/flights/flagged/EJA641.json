@@ -1,0 +1,27 @@
+{
+  "callsign": "EJA641",
+  "callsign_icao": "EJA641",
+  "callsign_iata": "1I641",
+  "airline_name": "EJA",
+  "origin": {
+    "name": "Chicago Exec",
+    "city": "Chicago/Prospect Heights/Wheeling",
+    "country": null,
+    "iata": "PWK",
+    "icao": "KPWK",
+    "lat": null,
+    "lon": null
+  },
+  "destination": {
+    "name": "Pickens County",
+    "city": "Pickens",
+    "country": null,
+    "iata": "LQK",
+    "icao": "KLQK",
+    "lat": null,
+    "lon": null
+  },
+  "created_at": "2025-06-19T22:45:36.184Z",
+  "timestamp": 1750373136184,
+  "api_source": "flightaware"
+}

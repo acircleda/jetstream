@@ -1,0 +1,27 @@
+{
+  "callsign": "FDX3605",
+  "callsign_icao": "FDX3605",
+  "callsign_iata": "FX3605",
+  "airline_name": "Federal Express (FedEx)",
+  "origin": {
+    "name": "Fort Lauderdale Hollywood International Airport",
+    "city": "Fort Lauderdale",
+    "country": "US",
+    "iata": "FLL",
+    "icao": "KFLL",
+    "lat": 26.072599,
+    "lon": -80.152702
+  },
+  "destination": {
+    "name": "Indianapolis International Airport",
+    "city": "Indianapolis",
+    "country": "US",
+    "iata": "IND",
+    "icao": "KIND",
+    "lat": 39.7173,
+    "lon": -86.294403
+  },
+  "created_at": "2025-06-19T13:43:39.090Z",
+  "timestamp": 1750340619090,
+  "api_source": "flightera"
+}

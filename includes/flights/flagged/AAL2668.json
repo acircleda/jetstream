@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL2668",
+  "callsign_icao": "AAL2668",
+  "callsign_iata": "AA2668",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 35.2140007019043,
+    "lon": -80.94309997558594
+  },
+  "destination": {
+    "name": "Cleveland-Hopkins Intl",
+    "city": "Cleveland",
+    "country": "US",
+    "iata": "CLE",
+    "icao": "KCLE",
+    "lat": 35.2140007019043,
+    "lon": -80.94309997558594
+  },
+  "created_at": "2025-06-19T22:06:51.779Z",
+  "timestamp": 1750370811779,
+  "api_source": "flightaware"
+}

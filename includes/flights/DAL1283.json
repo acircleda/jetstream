@@ -1,0 +1,27 @@
+{
+  "callsign": "DAL1283",
+  "callsign_icao": "DAL1283",
+  "callsign_iata": "DL1283",
+  "airline_name": "Delta Air Lines",
+  "origin": {
+    "name": "Atlanta Hartsfield-Jackson International Airport",
+    "city": "Atlanta",
+    "country": "US",
+    "iata": "ATL",
+    "icao": "KATL",
+    "lat": 33.6367,
+    "lon": -84.428101
+  },
+  "destination": {
+    "name": "Cincinnati Northern Kentucky International Airport",
+    "city": "Cincinnati",
+    "country": "US",
+    "iata": "CVG",
+    "icao": "KCVG",
+    "lat": 39.048801,
+    "lon": -84.667801
+  },
+  "created_at": "2025-06-15T17:19:44.268Z",
+  "timestamp": 1750007984268,
+  "api_source": "flightera"
+}

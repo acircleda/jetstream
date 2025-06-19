@@ -1,0 +1,27 @@
+{
+  "callsign": "UPS5321",
+  "callsign_icao": "UPS5321",
+  "callsign_iata": "5X5321",
+  "airline_name": "United Parcel Service (UPS)",
+  "origin": {
+    "name": "Jacksonville International Airport",
+    "city": "Jacksonville",
+    "country": "US",
+    "iata": "JAX",
+    "icao": "KJAX",
+    "lat": 30.492469,
+    "lon": -81.687813
+  },
+  "destination": {
+    "name": "Louisville International Airport",
+    "city": "Louisville",
+    "country": "US",
+    "iata": "SDF",
+    "icao": "KSDF",
+    "lat": 38.1744,
+    "lon": -85.736
+  },
+  "created_at": "2025-06-19T13:38:14.272Z",
+  "timestamp": 1750340294272,
+  "api_source": "flightera"
+}

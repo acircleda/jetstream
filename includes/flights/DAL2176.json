@@ -1,0 +1,27 @@
+{
+  "callsign": "DAL2176",
+  "callsign_icao": "DAL2176",
+  "callsign_iata": "DL2176",
+  "airline_name": "DAL",
+  "origin": {
+    "name": "Hartsfield-Jackson Intl",
+    "city": "Atlanta",
+    "country": "US",
+    "iata": "ATL",
+    "icao": "KATL",
+    "lat": 33.6367,
+    "lon": -84.428101
+  },
+  "destination": {
+    "name": "Pittsburgh Intl",
+    "city": "Pittsburgh",
+    "country": "US",
+    "iata": "PIT",
+    "icao": "KPIT",
+    "lat": 33.6367,
+    "lon": -84.428101
+  },
+  "created_at": "2025-06-19T22:04:08.000Z",
+  "timestamp": 1750370648000,
+  "api_source": "flightaware"
+}

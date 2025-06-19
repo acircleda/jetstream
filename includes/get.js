@@ -170,7 +170,7 @@ async function replacePrefix(str) {
 
 async function get_flightera(callsign, key, threshold) {
   if (!key) {
-    return { error: 'FlightAware API key is not configured' };
+    return { error: 'Flightera API key is not configured' };
   }
 
   // Convert ICAO to IATA if needed
@@ -227,8 +227,8 @@ async function get_flightera(callsign, key, threshold) {
       return formatted;
     }
   } catch (e) {
-    console.error('Error during FlightAware API request:', e);
-    return { error: 'Failed to fetch aircraft data from FlightAware' };
+    console.error('Error during Flightera API request:', e);
+    return { error: 'Failed to fetch aircraft data from Flightera' };
   }
 }
 

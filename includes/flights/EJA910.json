@@ -1,0 +1,27 @@
+{
+  "callsign": "N910QS",
+  "callsign_icao": null,
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Willow Run",
+    "city": "Detroit",
+    "country": null,
+    "iata": "YIP",
+    "icao": "KYIP",
+    "lat": null,
+    "lon": null
+  },
+  "destination": {
+    "name": "Fort Lauderdale Intl",
+    "city": "Fort Lauderdale",
+    "country": null,
+    "iata": "FLL",
+    "icao": "KFLL",
+    "lat": null,
+    "lon": null
+  },
+  "created_at": "2025-06-15T17:57:52.383Z",
+  "timestamp": 1750010272383,
+  "api_source": "flightaware"
+}

@@ -1,0 +1,27 @@
+{
+  "callsign": "CPA72",
+  "callsign_icao": "CPA72",
+  "callsign_iata": "CX72",
+  "airline_name": "CPA",
+  "origin": {
+    "name": "Anchorage Intl",
+    "city": "Anchorage",
+    "country": "US",
+    "iata": "ANC",
+    "icao": "PANC",
+    "lat": 61.179004,
+    "lon": -149.992561
+  },
+  "destination": {
+    "name": "Miami Intl",
+    "city": "Miami",
+    "country": "US",
+    "iata": "MIA",
+    "icao": "KMIA",
+    "lat": 61.179004,
+    "lon": -149.992561
+  },
+  "created_at": "2025-06-15T18:05:02.159Z",
+  "timestamp": 1750010702159,
+  "api_source": "flightaware"
+}

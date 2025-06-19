@@ -1,0 +1,27 @@
+{
+  "callsign": "JIA5453",
+  "callsign_icao": "JIA5453",
+  "callsign_iata": "OH5453",
+  "airline_name": "JIA",
+  "origin": {
+    "name": "Springfield",
+    "city": "Springfield",
+    "country": "US",
+    "iata": "SGF",
+    "icao": "KSGF",
+    "lat": 37.245701,
+    "lon": -93.388603
+  },
+  "destination": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 37.245701,
+    "lon": -93.388603
+  },
+  "created_at": "2025-06-15T18:03:28.820Z",
+  "timestamp": 1750010608820,
+  "api_source": "flightaware"
+}
