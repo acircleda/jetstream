@@ -140,10 +140,6 @@ async function get_flightaware(callsign, key, threshold) {
     const data = await response.json();
     console.log('FlightAware Data:', data);
 
-    // Or use test data (for development/testing)
-    //const testFile = path.join(__dirname, 'example.json');
-    //const data = JSON.parse(await fs.readFile(testFile, 'utf8'));
-    //console.log('FlightAware Test Data:', data);
     const formatted = await format_flightaware_live(data); //STOPPED HERE
     console.log('Formatted FlightAware Data:', formatted);
 

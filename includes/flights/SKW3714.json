@@ -1,0 +1,27 @@
+{
+  "callsign": "SKW3714",
+  "callsign_icao": "SKW3714",
+  "callsign_iata": "OO3714",
+  "airline_name": "SKW",
+  "origin": {
+    "name": "Detroit Metro Wayne Co",
+    "city": "Detroit",
+    "country": "US",
+    "iata": "DTW",
+    "icao": "KDTW",
+    "lat": 42.21377,
+    "lon": -83.353786
+  },
+  "destination": {
+    "name": "Charleston Intl/AFB",
+    "city": "Charleston",
+    "country": "US",
+    "iata": "CHS",
+    "icao": "KCHS",
+    "lat": 42.21377,
+    "lon": -83.353786
+  },
+  "created_at": "2025-07-05T19:19:43.878Z",
+  "timestamp": 1751743183878,
+  "api_source": "flightaware"
+}

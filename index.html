@@ -34,8 +34,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
-  
   <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -46,7 +44,7 @@
 
 
 <body>
-  <button id="refresh-page-btn" title="Refresh the page">&#x21bb;</button>
+  <button id="refresh-page-btn" title="Refresh the page">&#8634;</button>
     <div id="main"> 
       <div id="map"></div>
       <div id="title"></div>
@@ -75,12 +73,12 @@
     L.control.resetView({
                 position: "topleft",
                 title: "Reset view",
-                latlng: L.latLng([CONFIG.lat, CONFIG.lon]),
+                latlng: L.latLng([CONFIG.center_lat, CONFIG.center_lon]),
                 zoom: CONFIG.initialZoom,
             }).addTo(map);
 
     // Add a black dot to represent the house
-    const houseMarker = L.circleMarker([CONFIG.house_lat, CONFIG.house_lon], {
+    const houseMarker = L.circleMarker([CONFIG.center_lat, CONFIG.center_lon], {
       radius: 5,
       color: 'black',
       fillColor: 'black',
@@ -148,7 +146,8 @@
       planeMarkers = {};
 
       const bounds = map.getBounds();
-      const getPlanes = `http://localhost:3000/planes?lat=${CONFIG.lat}&lon=${CONFIG.lon}&dist=${CONFIG.distance}`;
+      //const getPlanes = `http://localhost:3000/planes?lat=${CONFIG.lat}&lon=${CONFIG.lon}&dist=${CONFIG.distance}`;
+      const getPlanes = `http://localhost:3000/planes2?lat=${CONFIG.lat}&lon=${CONFIG.lon}&dist=${CONFIG.distance}&use_bbox=${CONFIG.use_bbox}&minLat=${CONFIG.south_edge}&maxLat=${CONFIG.north_edge}&minLon=${CONFIG.west_edge}&maxLon=${CONFIG.east_edge}`;
 
       try {
         console.log("Fetching planes...");
@@ -171,8 +170,8 @@
         for (let plane of data.ac) {
           if (plane.lat && plane.lon) {
           // Calculate distance to center
-          const dLat = (plane.lat - CONFIG.lat);
-          const dLon = (plane.lon - CONFIG.lon);
+          const dLat = (plane.lat - CONFIG.center_lat);
+          const dLon = (plane.lon - CONFIG.center_lon);
           const distance = Math.sqrt(dLat * dLat + dLon * dLon);
 
           if (distance < closestDistance) {
@@ -313,7 +312,7 @@
               <h3>${closestDestination['name'] || ''}<h3>
             </div>
             <div class="sb-flight-info">
-              <strong>Aircraft:</strong> ${closestAircraft || closestPlane.t || 'N/A'}<br>
+              <strong> ${closestAircraft || closestPlane.t || ''}</strong><br>
               <strong>Altitude:</strong> ${closestPlane.alt_baro || ''} ft<br>
               <strong>Speed:</strong> ${closestPlane.gs ? `${closestPlane.gs} knots` : ''}<br><br>
               <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">View on FlightAware</a>
@@ -385,5 +384,6 @@
     }
   });
   </script>
+  
 </body>
 </html>

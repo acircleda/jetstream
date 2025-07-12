@@ -1,0 +1,27 @@
+{
+  "callsign": "EDV5095",
+  "callsign_icao": "EDV5095",
+  "callsign_iata": "9E5095",
+  "airline_name": "EDV",
+  "origin": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "destination": {
+    "name": "Detroit Metro Wayne Co",
+    "city": "Detroit",
+    "country": "US",
+    "iata": "DTW",
+    "icao": "KDTW",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "created_at": "2025-06-19T23:02:00.978Z",
+  "timestamp": 1750374120978,
+  "api_source": "flightaware"
+}

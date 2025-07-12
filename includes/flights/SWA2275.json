@@ -1,0 +1,27 @@
+{
+  "callsign": "SWA2275",
+  "callsign_icao": "SWA2275",
+  "callsign_iata": "WN2275",
+  "airline_name": "SWA",
+  "origin": {
+    "name": "Orlando Intl",
+    "city": "Orlando",
+    "country": "US",
+    "iata": "MCO",
+    "icao": "KMCO",
+    "lat": 28.429399490356445,
+    "lon": -81.30899810791016
+  },
+  "destination": {
+    "name": "Muhammad Ali Intl",
+    "city": "Louisville",
+    "country": "US",
+    "iata": "SDF",
+    "icao": "KSDF",
+    "lat": 28.429399490356445,
+    "lon": -81.30899810791016
+  },
+  "created_at": "2025-07-05T19:12:09.336Z",
+  "timestamp": 1751742729336,
+  "api_source": "flightaware"
+}

@@ -1,0 +1,27 @@
+{
+  "callsign": "N488PT",
+  "callsign_icao": null,
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Lonesome Pine",
+    "city": "Wise",
+    "country": "US",
+    "iata": "",
+    "icao": "KLNP",
+    "lat": 36.9874992371,
+    "lon": -82.5299987793
+  },
+  "destination": {
+    "name": "Knoxville Downtown Island",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "",
+    "icao": "KDKX",
+    "lat": 36.9874992371,
+    "lon": -82.5299987793
+  },
+  "created_at": "2025-07-08T14:57:46.845Z",
+  "timestamp": 1751986666845,
+  "api_source": "flightaware"
+}

@@ -1,0 +1,27 @@
+{
+  "callsign": "JIA5295",
+  "callsign_icao": "JIA5295",
+  "callsign_iata": "OH5295",
+  "airline_name": "JIA",
+  "origin": {
+    "name": "Dallas-Fort Worth Intl",
+    "city": "Dallas-Fort Worth",
+    "country": "US",
+    "iata": "DFW",
+    "icao": "KDFW",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "destination": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "created_at": "2025-07-08T15:19:17.495Z",
+  "timestamp": 1751987957495,
+  "api_source": "flightaware"
+}

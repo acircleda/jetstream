@@ -1,0 +1,27 @@
+{
+  "callsign": "SVL73",
+  "callsign_icao": "SVL73",
+  "callsign_iata": null,
+  "airline_name": "SVL",
+  "origin": {
+    "name": "Dayton/Wright Brothers",
+    "city": "Dayton",
+    "country": "US",
+    "iata": "MGY",
+    "icao": "KMGY",
+    "lat": 39.5890007019,
+    "lon": -84.224899292
+  },
+  "destination": {
+    "name": "Sarasota/Bradenton Intl",
+    "city": "Sarasota/Bradenton",
+    "country": "US",
+    "iata": "SRQ",
+    "icao": "KSRQ",
+    "lat": 39.5890007019,
+    "lon": -84.224899292
+  },
+  "created_at": "2025-07-05T18:44:52.079Z",
+  "timestamp": 1751741092079,
+  "api_source": "flightaware"
+}

@@ -1,0 +1,27 @@
+{
+  "callsign": "AAY3169",
+  "callsign_icao": "AAY3169",
+  "callsign_iata": "G43169",
+  "airline_name": "AAY",
+  "origin": {
+    "name": "Bishop Intl",
+    "city": "Flint",
+    "country": "US",
+    "iata": "FNT",
+    "icao": "KFNT",
+    "lat": 42.96540069580078,
+    "lon": -83.74359893798828
+  },
+  "destination": {
+    "name": "Clearwater Intl",
+    "city": "St Petersburg-Clearwater",
+    "country": "US",
+    "iata": "PIE",
+    "icao": "KPIE",
+    "lat": 42.96540069580078,
+    "lon": -83.74359893798828
+  },
+  "created_at": "2025-07-08T15:06:59.503Z",
+  "timestamp": 1751987219503,
+  "api_source": "flightaware"
+}

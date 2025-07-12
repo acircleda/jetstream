@@ -109,6 +109,42 @@ app.get('/planes', async (req, res) => {
   }
 });
 
+app.get('/planes2', async (req, res) => {
+  const { lat, lon, dist, use_bbox, minLat, maxLat, minLon, maxLon } = req.query;
+
+  const url = `https://api.adsb.lol/v2/lat/${lat}/lon/${lon}/dist/${dist}`;
+  
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    let aircraftList = data.aircraft || [];
+
+    // Optionally filter using bounding box
+    if (use_bbox === 'true') {
+      const bounds = {
+        minLat: parseFloat(minLat),
+        maxLat: parseFloat(maxLat),
+        minLon: parseFloat(minLon),
+        maxLon: parseFloat(maxLon)
+      };
+
+      aircraftList = aircraftList.filter(ac =>
+        ac.lat >= bounds.minLat &&
+        ac.lat <= bounds.maxLat &&
+        ac.lon >= bounds.minLon &&
+        ac.lon <= bounds.maxLon
+      );
+    }
+
+    res.json({ ...data, aircraft: aircraftList });
+  } catch (e) {
+    console.error(e && (e.stack || e.message || e));
+    res.status(500).json({ error: 'Failed to fetch aircraft data' });
+  }
+});
+
+
 app.get('/aircraft', async (req, res) => {
   const { callsign, reg } = req.query;
   
@@ -305,7 +341,7 @@ app.get('/flightinfo', async (req, res) => {
     // 5. If the data is still empty, don't store the file and return
      if (!data.callsign) {
         addUnknownCallsign(callsign);
-        console.log('Not storing data for:', callsign);
+        console.log('Adding unknown callsign for', callsign);
         return;
     }
 

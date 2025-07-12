@@ -1,0 +1,27 @@
+{
+  "callsign": "DAL866",
+  "callsign_icao": "DAL866",
+  "callsign_iata": "DL866",
+  "airline_name": "DAL",
+  "origin": {
+    "name": "Detroit Metro Wayne Co",
+    "city": "Detroit",
+    "country": "US",
+    "iata": "DTW",
+    "icao": "KDTW",
+    "lat": 42.21377,
+    "lon": -83.353786
+  },
+  "destination": {
+    "name": "Miami Intl",
+    "city": "Miami",
+    "country": "US",
+    "iata": "MIA",
+    "icao": "KMIA",
+    "lat": 42.21377,
+    "lon": -83.353786
+  },
+  "created_at": "2025-07-05T19:06:45.808Z",
+  "timestamp": 1751742405808,
+  "api_source": "flightaware"
+}

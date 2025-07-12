@@ -161,6 +161,8 @@ async function format_flightaware_live(dataArray) {
   // Extract origin and destination
   const origin = live_flight[0]?.origin;
   const destination = live_flight[0]?.destination;
+  console.log('Dest:', destination);
+  console.log('Origin:', origin);
 
   const depIcao = origin?.code_icao;
   const arrIcao = origin?.code_icao;
@@ -173,20 +175,20 @@ async function format_flightaware_live(dataArray) {
     callsign_iata: data.ident_iata,
     airline_name: data.operator,
     origin: {
-      name: origin.name,
-      city: origin.city,
-      country: arrInfo.country,
-      iata: origin.code_iata,
-      icao: origin.code_icao,
+      name: origin.name || '',
+      city: origin.city || '',
+      country: arrInfo.country || '',
+      iata: origin.code_iata || '',
+      icao: origin.code_icao || '',
       lat: depInfo.lat,
       lon: depInfo.lon
     },
     destination: {
-      name: destination.name,
-      city: destination.city,
-      country: arrInfo.country,
-      iata: destination.code_iata,
-      icao: destination.code_icao,
+      name: destination.name || '',
+      city: destination.city || '',
+      country: arrInfo.country || '',
+      iata: destination.code_iata || '',
+      icao: destination.code_icao || '',
       lat: arrInfo.lat,
       lon: arrInfo.lon
     },

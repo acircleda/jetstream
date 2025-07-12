@@ -1,0 +1,27 @@
+{
+  "callsign": "DAL337",
+  "callsign_icao": "DAL337",
+  "callsign_iata": "DL337",
+  "airline_name": "DAL",
+  "origin": {
+    "name": "Detroit Metro Wayne Co",
+    "city": "Detroit",
+    "country": "US",
+    "iata": "DTW",
+    "icao": "KDTW",
+    "lat": 42.21377,
+    "lon": -83.353786
+  },
+  "destination": {
+    "name": "Orlando Intl",
+    "city": "Orlando",
+    "country": "US",
+    "iata": "MCO",
+    "icao": "KMCO",
+    "lat": 42.21377,
+    "lon": -83.353786
+  },
+  "created_at": "2025-07-05T19:14:41.766Z",
+  "timestamp": 1751742881766,
+  "api_source": "flightaware"
+}
