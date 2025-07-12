@@ -139,7 +139,7 @@ async function getStyledWeatherIcon(weatherCode) {
     return svgText;
   } catch (error) {
     console.error('Error loading weather icon:', error);
-    return '🌡️'; // Fallback to emoji
+    return '☁️'; // Fallback to emoji
   }
 }
 
