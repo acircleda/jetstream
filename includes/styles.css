@@ -206,3 +206,74 @@ a, a:hover, a:active, a:focus, a:visited {
     display: none;
     cursor: pointer;
 }
+
+#weather-widget {
+    padding: 20px;
+    text-align: center;
+    color: #ffffff;
+}
+
+#weather-widget h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: rgba(var(--highlight-color), .7);
+}
+
+.weather-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.weather-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.weather-temp {
+    font-size: 5em;
+    font-weight: bold;
+    color: #e0e0e0;
+    margin-bottom: 10px;
+}
+
+.weather-description {
+    font-size: 1.5em;
+    color: #a1a1a1;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+}
+
+.weather-details {
+    text-align: center;
+    font-size: 1.4em;
+}
+
+.weather-detail {
+    margin-bottom: 8px;
+    padding: 0 20px;
+}
+
+.detail-label {
+    color: #a1a1a1;
+}
+
+.detail-value {
+    color: #a1a1a1;
+}
+
+.weather-location {
+    margin-top: 15px;
+    font-size: .8em;
+    color: #a1a1a1;
+}

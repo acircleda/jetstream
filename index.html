@@ -6,6 +6,7 @@
   <script src="includes/color.js"></script>
   <script src="includes/formatters.js"></script>
   <script src="includes/downtime.js"></script>
+  <script src="includes/weather.js"></script>
   <link id="dynamic-favicon" rel="icon" type="image/svg+xml">
   <script src="includes/favicon.js" defer></script>
 
@@ -167,6 +168,15 @@
         let closestMarker = null;
         let closestOrigin = 'N/A';
         let closestDestination = 'N/A';
+
+        // Check if no aircraft data or empty array
+        if (!data.ac || data.ac.length === 0) {
+          const weatherHTML = await displayWeatherWidget();
+          document.getElementById('info').innerHTML = weatherHTML;
+          const moveBtn = document.getElementById('move-json-btn');
+          moveBtn.style.display = 'none';
+          return;
+        }
 
         for (let plane of data.ac) {
           if (plane.lat && plane.lon) {
@@ -330,10 +340,15 @@
             moveBtn.removeAttribute('data-callsign');
           }
         } else {
-          document.getElementById('info').innerHTML = '';
+          // No planes found, show weather widget
+          const weatherHTML = await displayWeatherWidget();
+          document.getElementById('info').innerHTML = weatherHTML;
         }
       } catch (err) {
         console.error('Error fetching aircraft:', err);
+        // Error fetching planes, show weather widget
+        const weatherHTML = await displayWeatherWidget();
+        document.getElementById('info').innerHTML = weatherHTML;
       }
     }
 

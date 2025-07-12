@@ -1,0 +1,27 @@
+{
+  "callsign": "WUP820",
+  "callsign_icao": "WUP820",
+  "callsign_iata": null,
+  "airline_name": "WUP",
+  "origin": {
+    "name": "Evansville Rgnl",
+    "city": "Evansville",
+    "country": "US",
+    "iata": "EVV",
+    "icao": "KEVV",
+    "lat": 38.0369987488,
+    "lon": -87.5324020386
+  },
+  "destination": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 38.0369987488,
+    "lon": -87.5324020386
+  },
+  "created_at": "2025-07-12T21:49:17.752Z",
+  "timestamp": 1752356957752,
+  "api_source": "flightaware"
+}

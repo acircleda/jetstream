@@ -117,8 +117,8 @@ app.get('/planes2', async (req, res) => {
   try {
     const response = await fetch(url);
     const data = await response.json();
-
-    let aircraftList = data.aircraft || [];
+    console.log('Found', data.ac ? data.ac.length : 0, "planes");
+    let aircraftList = data.ac || [];
 
     // Optionally filter using bounding box
     if (use_bbox === 'true') {
@@ -137,7 +137,8 @@ app.get('/planes2', async (req, res) => {
       );
     }
 
-    res.json({ ...data, aircraft: aircraftList });
+    console.log('Found', aircraftList.length, "planes in bounding box");
+    res.json({ ...data, ac: aircraftList });
   } catch (e) {
     console.error(e && (e.stack || e.message || e));
     res.status(500).json({ error: 'Failed to fetch aircraft data' });
