@@ -194,3 +194,15 @@ a, a:hover, a:active, a:focus, a:visited {
     z-index: 9999;
     display: none;
 }
+
+#downtime-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 10000;
+    display: none;
+    cursor: pointer;
+}

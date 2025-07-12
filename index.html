@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="includes/styles.css" />
   <script src="includes/color.js"></script>
   <script src="includes/formatters.js"></script>
+  <script src="includes/downtime.js"></script>
   <link id="dynamic-favicon" rel="icon" type="image/svg+xml">
   <script src="includes/favicon.js" defer></script>
 
@@ -338,34 +339,16 @@
 
     // Fetch planes at the configured refresh rate
     fetchPlanes();
+    
     function getCurrentRefreshRate() {
-      if (CONFIG.use_downtime) {
-      const now = new Date();
-      console.log(now);
-      const hour = now.getHours();
-      const start = CONFIG.downtime_start;
-      const end = CONFIG.downtime_end;
-      // Handles overnight downtime (e.g., 22 to 6)
-      const inDowntime = start < end
-        ? hour >= start && hour < end
-        : hour >= start || hour < end;
-      if (inDowntime) {
-        return CONFIG.downtime_refresh;
-      }
+      // During downtime when awake, use normal refresh rate
+      if (CONFIG.use_downtime && typeof downtimeState !== 'undefined' && downtimeState.isAwake) {
+        return CONFIG.refreshRate;
       }
       return CONFIG.refreshRate;
     }
 
     let refreshInterval = setInterval(fetchPlanes, getCurrentRefreshRate());
-
-    // Optionally, update interval if downtime status changes
-    setInterval(() => {
-      const newRate = getCurrentRefreshRate();
-      if (refreshInterval && refreshInterval._idleTimeout !== newRate) {
-      clearInterval(refreshInterval);
-      refreshInterval = setInterval(fetchPlanes, newRate);
-      }
-    }, 60 * 1000); // Check every minute
 
     // Add event listener for the move-json button at the end of the script
   document.getElementById('move-json-btn').addEventListener('click', async function() {
