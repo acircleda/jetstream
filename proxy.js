@@ -95,6 +95,89 @@ function setCachedData(key, data) {
   cache.set(key, { data, timestamp: Date.now() });
 }
 
+// Disk space management for Raspberry Pi
+async function getDirectorySize(dirPath) {
+  try {
+    const files = await fs.readdir(dirPath);
+    let totalSize = 0;
+    
+    for (const file of files) {
+      const filePath = path.join(dirPath, file);
+      const stats = await fs.stat(filePath);
+      if (stats.isFile()) {
+        totalSize += stats.size;
+      }
+    }
+    
+    return totalSize;
+  } catch (error) {
+    console.error('Error calculating directory size:', error);
+    return 0;
+  }
+}
+
+async function cleanupOldFlights() {
+  if (!CONFIG.cleanup_enabled) return;
+  
+  try {
+    const flightsDir = path.join(__dirname, 'includes', 'flights');
+    const currentSize = await getDirectorySize(flightsDir);
+    const maxSizeBytes = CONFIG.max_flights_dir_size_mb * 1024 * 1024;
+    
+    console.log(`Flights directory size: ${(currentSize / 1024 / 1024).toFixed(2)}MB / ${CONFIG.max_flights_dir_size_mb}MB`);
+    
+    if (currentSize <= maxSizeBytes) {
+      return; // No cleanup needed
+    }
+    
+    console.log('Disk space limit exceeded, starting cleanup...');
+    
+    // Get all flight files with their modification times
+    const files = await fs.readdir(flightsDir);
+    const flightFiles = [];
+    
+    for (const file of files) {
+      if (file.endsWith('.json') && !file.startsWith('_') && !file.includes('flagged') && !file.includes('reviewed')) {
+        const filePath = path.join(flightsDir, file);
+        const stats = await fs.stat(filePath);
+        flightFiles.push({
+          name: file,
+          path: filePath,
+          mtime: stats.mtime,
+          size: stats.size
+        });
+      }
+    }
+    
+    // Sort by modification time (oldest first)
+    flightFiles.sort((a, b) => a.mtime - b.mtime);
+    
+    // Remove oldest files in batches
+    const filesToRemove = flightFiles.slice(0, CONFIG.cleanup_batch_size);
+    let removedSize = 0;
+    let removedCount = 0;
+    
+    for (const file of filesToRemove) {
+      try {
+        await fs.unlink(file.path);
+        removedSize += file.size;
+        removedCount++;
+        console.log(`Removed old flight file: ${file.name}`);
+      } catch (error) {
+        console.error(`Error removing file ${file.name}:`, error);
+      }
+    }
+    
+    console.log(`Cleanup completed: Removed ${removedCount} files, freed ${(removedSize / 1024 / 1024).toFixed(2)}MB`);
+    
+  } catch (error) {
+    console.error('Error during cleanup:', error);
+  }
+}
+
+// Track last cleanup check to avoid excessive checking
+let lastCleanupCheck = 0;
+
 app.get('/planes', async (req, res) => {
   const { lat, lon, dist } = req.query;
   const url = `https://api.adsb.lol/v2/lat/${lat}/lon/${lon}/dist/${dist}`;
@@ -349,6 +432,15 @@ app.get('/flightinfo', async (req, res) => {
     // 6.  If the data exists, save the data
     console.log('Saving data to file:', filePath);
     await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
+    
+    // Trigger cleanup check after saving new flight data
+    const now = Date.now();
+    const checkInterval = CONFIG.cleanup_check_interval_minutes * 60 * 1000;
+    if (now - lastCleanupCheck > checkInterval) {
+      lastCleanupCheck = now;
+      // Run cleanup in background without blocking response
+      cleanupOldFlights().catch(err => console.error('Background cleanup error:', err));
+    }
 
     // 7. If the data exists, run a logic check on the route
     console.log('Route logic check for flight:', callsign);
@@ -596,5 +688,15 @@ app.use((err, req, res, next) => {
   console.error('Express error handler:', err && (err.stack || err.message || err));
   res.status(500).json({ error: 'Internal server error' });
 });
+
+// Periodic cleanup check
+if (CONFIG.cleanup_enabled) {
+  const cleanupInterval = CONFIG.cleanup_check_interval_minutes * 60 * 1000;
+  setInterval(() => {
+    cleanupOldFlights().catch(err => console.error('Periodic cleanup error:', err));
+  }, cleanupInterval);
+  
+  console.log(`Disk cleanup enabled: max ${CONFIG.max_flights_dir_size_mb}MB, checking every ${CONFIG.cleanup_check_interval_minutes} minutes`);
+}
 
 app.listen(3000, () => console.log('Proxy running on http://localhost:3000'));
