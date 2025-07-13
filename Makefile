@@ -15,7 +15,7 @@ setup:
 	npm install
 	@echo "Setup complete!"
 
-CONFIG_FILE=includes/config2.js
+CONFIG_FILE=includes/config.js
 GITIGNORE_FILE=.gitignore
 
 config:
