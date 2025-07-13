@@ -164,6 +164,10 @@ async function format_flightaware_live(dataArray) {
   console.log('Dest:', destination);
   console.log('Origin:', origin);
 
+  if (!origin.name || !destination.name) {
+    return { response: 'unknown callsign' };
+  }
+
   const depIcao = origin?.code_icao;
   const arrIcao = origin?.code_icao;
   const depInfo = await getAirportInfo(depIcao);

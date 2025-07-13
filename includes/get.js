@@ -210,6 +210,10 @@ async function get_flightera(callsign, key, threshold) {
     const data = await response.json();
     console.log('Flightera Data:', data);
 
+    if (data && data.message && data.message.includes('exceeded the MONTHLY quota')) {
+      return { error: 'Flightera API limit reached' };
+    }
+
     // Or use test data (for development/testing)
     //const testFile = path.join(__dirname, 'flightera_example.json');
     //const data = JSON.parse(await fs.readFile(testFile, 'utf8'));

@@ -391,7 +391,7 @@ app.get('/flightinfo', async (req, res) => {
 
     // 4.1 - Flightera
       console.log('Fetching Flightera data for flight:', callsign);
-      data = await get_flightera(callsign, CONFIG.flightera_api_key, threshold = 200);
+      data = await get_flightera(callsign, CONFIG.flightera_api_key, threshold = 50);
       console.log('Fetched Flightera data:', data);
 
     // 4.2 - Aviation Stack
