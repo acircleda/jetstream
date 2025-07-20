@@ -180,3 +180,11 @@ All server activity is logged to `proxy.log` including:
 ## License
 
 This project is for educational and personal use. Ensure compliance with all API terms of service.
+
+## TODO
+To reach v5:
+- Larger icons and text maximized for tablet
+- Sound notifications for new flights
+- Icon when flight may be inaccurate
+  - Flag based on cross track distance or source reliability
+- Claude code review

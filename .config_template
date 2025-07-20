@@ -1,0 +1,48 @@
+const CONFIG = {
+   // key settings
+  city_name: 'San Francisco', // This will become part of the page title - Jetstream: city_name
+  highlight_color: '#FF8200',
+  maxZoom: 15,
+  initialZoom: 12, // Zoom level for the map
+  distance: 5, // Distance in miles to fetch planes from the center of the map
+  lat: 37.77697315135698, // lat of the center of the ADSB radius
+  lon: -122.41922177136804, // lon of the center of the ADSB radius
+  center_lat: 37.77697315135698, // lat of the center of the map
+  center_lon: -122.41922177136804, // lon of the center of the map
+  use_bbox: true, // Use bounding box for plane fetching: https://boundingbox.klokantech.com/
+  show_bbox: true, // Show bounding box on the map
+  // begin bounding box
+  south_edge: 37.727872,
+  north_edge: 37.854693,
+  west_edge: -122.554781, 
+  east_edge: 122.281458,
+  // begin night bounding box
+  use_night_bbox: false, // set this to true if you want to use a different bounding box for night time (e.g., if you can see planes further out at night)
+  night_begin_hour: 22, // hour of the day when the night bounding box starts (0-23)
+  night_end_hour: 5, // hour of the day when the night bounding box ends
+  night_south_edge: null,
+  night_north_edge: null,
+  night_west_edge: null, 
+  night_east_edge: null,
+  // Refresh rate and downtime settings
+  refreshRate: 10000, // Refresh rate in milliseconds
+  use_downtime: true,
+  downtime_start: 22,
+  downtime_end: 6,
+  downtime_wake_duration_minutes: 2,
+  // Disk space management
+  cleanup_enabled: true,
+  max_flights_dir_size_mb: 100, // Maximum size for includes/flights directory in MB
+  cleanup_batch_size: 50, // Number of oldest files to remove in each cleanup
+  cleanup_check_interval_minutes: 600, // Check disk usage every 600 minutes
+  // API keys for various services
+  aviationstack_api_key: null,
+  flightera_api_key: null,
+  flightaware_api_key: null,
+    //other_settings
+  route_check_threshold: 200 // Threshold to determine if a plane's origin and departure airports (as reported by adsbdb (and hexdb.io) are logical, in km
+};
+
+module.exports = {
+  CONFIG
+};
