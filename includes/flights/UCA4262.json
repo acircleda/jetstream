@@ -1,0 +1,27 @@
+{
+  "callsign": "UCA4262",
+  "callsign_icao": "UCA4262",
+  "callsign_iata": "C54262",
+  "airline_name": "UCA",
+  "origin": {
+    "name": "Washington Dulles Intl",
+    "city": "Washington",
+    "country": "US",
+    "iata": "IAD",
+    "icao": "KIAD",
+    "lat": 38.9445,
+    "lon": -77.455803
+  },
+  "destination": {
+    "name": "Huntsville Intl",
+    "city": "Huntsville",
+    "country": "US",
+    "iata": "HSV",
+    "icao": "KHSV",
+    "lat": 38.9445,
+    "lon": -77.455803
+  },
+  "created_at": "2025-07-20T14:09:28.891Z",
+  "timestamp": 1753020568891,
+  "api_source": "flightaware"
+}

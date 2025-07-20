@@ -1,0 +1,27 @@
+{
+  "callsign": "UAL1324",
+  "callsign_icao": "UAL1324",
+  "callsign_iata": "UA1324",
+  "airline_name": "UAL",
+  "origin": {
+    "name": "Newark Liberty Intl",
+    "city": "Newark",
+    "country": "US",
+    "iata": "EWR",
+    "icao": "KEWR",
+    "lat": 40.692501,
+    "lon": -74.168701
+  },
+  "destination": {
+    "name": "Dallas-Fort Worth Intl",
+    "city": "Dallas-Fort Worth",
+    "country": "US",
+    "iata": "DFW",
+    "icao": "KDFW",
+    "lat": 40.692501,
+    "lon": -74.168701
+  },
+  "created_at": "2025-07-20T14:41:51.282Z",
+  "timestamp": 1753022511282,
+  "api_source": "flightaware"
+}

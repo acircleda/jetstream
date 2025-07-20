@@ -1,0 +1,27 @@
+{
+  "callsign": "UAL247",
+  "callsign_icao": "UAL247",
+  "callsign_iata": "UA247",
+  "airline_name": "UAL",
+  "origin": {
+    "name": "Raleigh-Durham Intl",
+    "city": "Raleigh/Durham",
+    "country": "US",
+    "iata": "RDU",
+    "icao": "KRDU",
+    "lat": 35.877602,
+    "lon": -78.787498
+  },
+  "destination": {
+    "name": "Chicago O'Hare Intl",
+    "city": "Chicago",
+    "country": "US",
+    "iata": "ORD",
+    "icao": "KORD",
+    "lat": 35.877602,
+    "lon": -78.787498
+  },
+  "created_at": "2025-07-20T14:22:55.968Z",
+  "timestamp": 1753021375968,
+  "api_source": "flightaware"
+}

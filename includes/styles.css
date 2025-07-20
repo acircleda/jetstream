@@ -154,6 +154,25 @@ a, a:hover, a:active, a:focus, a:visited {
     padding-top: 20px;
     text-align: center;
 }
+
+.invalid-route-flag {
+  color: red;
+  font-size: 0.6em;
+  vertical-align: super;
+  margin-left: 4px;
+}
+
+#flight-counter {
+    position: absolute;
+    bottom: 0;               /* <-- This pins it to the bottom */
+    right: 0;
+    padding-right: 20px;
+    font-size: 1em;
+    text-align: center;
+    color: #a1a1a1;
+    z-index: 2000; /* Ensure it's above other elements */
+}
+
 /*# sourceMappingURL=L.Control.ResetView.min.css.map */
 .leaflet-touch .leaflet-bar a:last-child{
     background-color: rgba(255, 255, 255, 0.1);

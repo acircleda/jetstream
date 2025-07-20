@@ -1,0 +1,27 @@
+{
+  "callsign": "PDT5829",
+  "callsign_icao": "PDT5829",
+  "callsign_iata": "PT5829",
+  "airline_name": "PDT",
+  "origin": {
+    "name": "Philadelphia Intl",
+    "city": "Philadelphia",
+    "country": "US",
+    "iata": "PHL",
+    "icao": "KPHL",
+    "lat": 39.871899,
+    "lon": -75.241096
+  },
+  "destination": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 39.871899,
+    "lon": -75.241096
+  },
+  "created_at": "2025-07-20T14:03:17.715Z",
+  "timestamp": 1753020197715,
+  "api_source": "flightaware"
+}

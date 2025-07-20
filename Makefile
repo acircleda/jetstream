@@ -26,6 +26,7 @@ config:
 	@echo "  center_lat: 37.77697315135698, // lat of the center of the map" >> $(CONFIG_FILE)
 	@echo "  center_lon: -122.41922177136804, // lon of the center of the map" >> $(CONFIG_FILE)
 	@echo "  use_bbox: true, // Use bounding box for plane fetching: https://boundingbox.klokantech.com/" >> $(CONFIG_FILE)
+	@echo "  show_bbox: true, // Show bounding box on the map" >> $(CONFIG_FILE)
 	@echo "  south_edge: 37.7034, // South edge of the bounding box" >> $(CONFIG_FILE)
 	@echo "  north_edge: 37.8125, // North edge of the bounding box" >> $(CONFIG_FILE)
 	@echo "  west_edge: -123.0000, // West edge of the bounding box" >> $(CONFIG_FILE)

@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL1042",
+  "callsign_icao": "AAL1042",
+  "callsign_iata": "AA1042",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Eppley Airfield",
+    "city": "Omaha",
+    "country": "US",
+    "iata": "OMA",
+    "icao": "KOMA",
+    "lat": 41.3032,
+    "lon": -95.894096
+  },
+  "destination": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 41.3032,
+    "lon": -95.894096
+  },
+  "created_at": "2025-07-20T14:14:22.722Z",
+  "timestamp": 1753020862722,
+  "api_source": "flightaware"
+}

@@ -1,0 +1,27 @@
+{
+  "callsign": "SKW4652",
+  "callsign_icao": "SKW4652",
+  "callsign_iata": "OO4652",
+  "airline_name": "SKW",
+  "origin": {
+    "name": "Asheville Rgnl",
+    "city": "Asheville",
+    "country": "US",
+    "iata": "AVL",
+    "icao": "KAVL",
+    "lat": 35.436199,
+    "lon": -82.541801
+  },
+  "destination": {
+    "name": "Chicago O'Hare Intl",
+    "city": "Chicago",
+    "country": "US",
+    "iata": "ORD",
+    "icao": "KORD",
+    "lat": 35.436199,
+    "lon": -82.541801
+  },
+  "created_at": "2025-07-20T15:06:26.118Z",
+  "timestamp": 1753023986118,
+  "api_source": "flightaware"
+}

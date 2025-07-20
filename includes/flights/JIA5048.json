@@ -1,0 +1,27 @@
+{
+  "callsign": "JIA5048",
+  "callsign_icao": "JIA5048",
+  "callsign_iata": "OH5048",
+  "airline_name": "JIA",
+  "origin": {
+    "name": "Nashville Intl",
+    "city": "Nashville",
+    "country": "US",
+    "iata": "BNA",
+    "icao": "KBNA",
+    "lat": 36.1245,
+    "lon": -86.6782
+  },
+  "destination": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 36.1245,
+    "lon": -86.6782
+  },
+  "created_at": "2025-07-20T14:38:33.139Z",
+  "timestamp": 1753022313139,
+  "api_source": "flightaware"
+}

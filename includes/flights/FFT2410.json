@@ -1,0 +1,27 @@
+{
+  "callsign": "FFT2410",
+  "callsign_icao": "FFT2410",
+  "callsign_iata": "F92410",
+  "airline_name": "FFT",
+  "origin": {
+    "name": "Hartsfield-Jackson Intl",
+    "city": "Atlanta",
+    "country": "US",
+    "iata": "ATL",
+    "icao": "KATL",
+    "lat": 33.6367,
+    "lon": -84.428101
+  },
+  "destination": {
+    "name": "Cleveland-Hopkins Intl",
+    "city": "Cleveland",
+    "country": "US",
+    "iata": "CLE",
+    "icao": "KCLE",
+    "lat": 33.6367,
+    "lon": -84.428101
+  },
+  "created_at": "2025-07-20T13:49:22.133Z",
+  "timestamp": 1753019362133,
+  "api_source": "flightaware"
+}

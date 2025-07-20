@@ -1,0 +1,27 @@
+{
+  "callsign": "N770RM",
+  "callsign_icao": null,
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Statesville Rgnl",
+    "city": "Statesville",
+    "country": "US",
+    "iata": "SVH",
+    "icao": "KSVH",
+    "lat": 35.765301,
+    "lon": -80.953903
+  },
+  "destination": {
+    "name": "Nashville Intl",
+    "city": "Nashville",
+    "country": "US",
+    "iata": "BNA",
+    "icao": "KBNA",
+    "lat": 35.765301,
+    "lon": -80.953903
+  },
+  "created_at": "2025-07-20T14:38:23.541Z",
+  "timestamp": 1753022303541,
+  "api_source": "flightaware"
+}

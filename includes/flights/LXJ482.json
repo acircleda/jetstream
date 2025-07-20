@@ -1,0 +1,27 @@
+{
+  "callsign": "LXJ482",
+  "callsign_icao": "LXJ482",
+  "callsign_iata": null,
+  "airline_name": "LXJ",
+  "origin": {
+    "name": "Cleveland-Hopkins Intl",
+    "city": "Cleveland",
+    "country": "US",
+    "iata": "CLE",
+    "icao": "KCLE",
+    "lat": 41.411701,
+    "lon": -81.8498
+  },
+  "destination": {
+    "name": "Naples Muni",
+    "city": "Naples",
+    "country": "US",
+    "iata": "APF",
+    "icao": "KAPF",
+    "lat": 41.411701,
+    "lon": -81.8498
+  },
+  "created_at": "2025-07-20T15:01:15.880Z",
+  "timestamp": 1753023675880,
+  "api_source": "flightaware"
+}

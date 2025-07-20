@@ -1,0 +1,17 @@
+{
+  "response": {
+    "aircraft": {
+      "type": "T-6A Texan II",
+      "icao_type": "TEX2",
+      "manufacturer": "Hawker Beechcraft Corp",
+      "mode_s": "AE1E45",
+      "registration": "07-3869",
+      "registered_owner_country_iso_name": "US",
+      "registered_owner_country_name": "United States",
+      "registered_owner_operator_flag_code": "TEX2",
+      "registered_owner": "United States Air Force",
+      "url_photo": null,
+      "url_photo_thumbnail": null
+    }
+  }
+}

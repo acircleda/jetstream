@@ -1,0 +1,27 @@
+{
+  "callsign": "RPA3532",
+  "callsign_icao": "RPA3532",
+  "callsign_iata": "YX3532",
+  "airline_name": "RPA",
+  "origin": {
+    "name": "Greenville/Spartanburg Intl",
+    "city": "Greer",
+    "country": "US",
+    "iata": "GSP",
+    "icao": "KGSP",
+    "lat": 34.895699,
+    "lon": -82.218903
+  },
+  "destination": {
+    "name": "Chicago O'Hare Intl",
+    "city": "Chicago",
+    "country": "US",
+    "iata": "ORD",
+    "icao": "KORD",
+    "lat": 34.895699,
+    "lon": -82.218903
+  },
+  "created_at": "2025-07-20T14:55:07.584Z",
+  "timestamp": 1753023307584,
+  "api_source": "flightaware"
+}

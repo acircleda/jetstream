@@ -1,0 +1,17 @@
+{
+  "response": {
+    "aircraft": {
+      "type": "PC-12/47E",
+      "icao_type": "PC12",
+      "manufacturer": "Pilatus",
+      "mode_s": "A32919",
+      "registration": "N3020A",
+      "registered_owner_country_iso_name": "US",
+      "registered_owner_country_name": "United States",
+      "registered_owner_operator_flag_code": null,
+      "registered_owner": "MIDATLANTIC AIRTRANSPORT LLC",
+      "url_photo": null,
+      "url_photo_thumbnail": null
+    }
+  }
+}

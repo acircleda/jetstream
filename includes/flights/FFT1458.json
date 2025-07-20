@@ -1,0 +1,27 @@
+{
+  "callsign": "FFT1458",
+  "callsign_icao": "FFT1458",
+  "callsign_iata": "F91458",
+  "airline_name": "FFT",
+  "origin": {
+    "name": "Chicago Midway Intl",
+    "city": "Chicago",
+    "country": "US",
+    "iata": "MDW",
+    "icao": "KMDW",
+    "lat": 41.785999,
+    "lon": -87.752403
+  },
+  "destination": {
+    "name": "Orlando Intl",
+    "city": "Orlando",
+    "country": "US",
+    "iata": "MCO",
+    "icao": "KMCO",
+    "lat": 41.785999,
+    "lon": -87.752403
+  },
+  "created_at": "2025-07-20T15:06:04.407Z",
+  "timestamp": 1753023964407,
+  "api_source": "flightaware"
+}

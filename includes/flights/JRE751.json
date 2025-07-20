@@ -1,0 +1,27 @@
+{
+  "callsign": "JRE751",
+  "callsign_icao": "JRE751",
+  "callsign_iata": null,
+  "airline_name": "JRE",
+  "origin": {
+    "name": "Akron-Canton Rgnl",
+    "city": "Akron",
+    "country": "US",
+    "iata": "CAK",
+    "icao": "KCAK",
+    "lat": 40.91609954833984,
+    "lon": -81.44219970703125
+  },
+  "destination": {
+    "name": "Dekalb-Peachtree",
+    "city": "Atlanta",
+    "country": "US",
+    "iata": "PDK",
+    "icao": "KPDK",
+    "lat": 40.91609954833984,
+    "lon": -81.44219970703125
+  },
+  "created_at": "2025-07-20T14:51:26.394Z",
+  "timestamp": 1753023086394,
+  "api_source": "flightaware"
+}

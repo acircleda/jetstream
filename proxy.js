@@ -8,8 +8,10 @@ const { route_logic_check, route_logic_check2, heading_check, heading_check2, si
 const { get_adsbdb, get_aviationstack, get_adsblol_route, get_flightaware, get_flightera } = require('./includes/get.js');
 const { addUnknownCallsign, clean_field } = require('./includes/formatters.js');
 const morgan = require('morgan');
+const { update_flight_counter } = require('./includes/flight_counter');
 
 const app = express();
+app.use(express.json())
 app.use(cors()); // 👈 this must come BEFORE any routes
 thirtyDaysMs = 30 * 24 * 60 * 60 * 1000
 
@@ -220,7 +222,7 @@ app.get('/planes2', async (req, res) => {
       );
     }
 
-    console.log('Found', aircraftList.length, "planes in bounding box");
+    if (use_bbox === 'true') { console.log('Found', aircraftList.length, "planes in bounding box"); }
     res.json({ ...data, ac: aircraftList });
   } catch (e) {
     console.error(e && (e.stack || e.message || e));
@@ -455,15 +457,10 @@ app.get('/flightinfo', async (req, res) => {
         route_is_valid = false;
     }
 
-    // 8. If the logic check fails, copy file to flagged
+    // append the route logic check result to the data
+    data.valid = route_is_valid;
     if (!route_is_valid) {
         console.log('Route logic check failed for flight:', callsign, 'Flagging for review');
-        const flaggedDir = path.join(__dirname, 'includes', 'flights', 'flagged');
-        if (!fsSync.existsSync(flaggedDir)) {
-          fsSync.mkdirSync(flaggedDir, { recursive: true });
-        }
-        const flaggedPath = path.join(flaggedDir, `${callsign}.json`);
-        await fs.copyFile(filePath, flaggedPath);
       }
 
 
@@ -501,54 +498,6 @@ app.get('/flightinfo', async (req, res) => {
     }
 });
 
-app.post('/move_for_review', express.json(), async (req, res) => {
-  let callsign = req.query.callsign;
-  if (!callsign) {
-    res.status(400).json({ error: 'Missing callsign parameter' });
-    return;
-  }
-  callsign = callsign.trim();
-  const srcPath = path.join(FLIGHTS_DIR, `${callsign}.json`);
-  const reviewDir = path.join(__dirname, 'includes', 'flights', 'flagged');
-  const destPath = path.join(reviewDir, `${callsign}.json`);
-  try {
-    if (!fsSync.existsSync(srcPath)) {
-      console.error('Source file not found:', srcPath);
-      res.status(404).json({ error: 'File not found' });
-      return;
-    }
-    if (!fsSync.existsSync(reviewDir)) {
-      fsSync.mkdirSync(reviewDir, { recursive: true });
-    }
-    await fs.copyFile(srcPath, destPath);
-    console.log(res.json
-      
-    );
-
-    res.json({ success: true });
-  } catch (e) {
-    console.error('Error moving file for review:', e);
-    res.status(500).json({ error: 'Failed to move file for review' });
-  }
-});
-
-// List flagged files
-app.get('/flagged_files', (req, res) => {
-  const flaggedDir = path.join(__dirname, 'includes', 'flights', 'flagged');
-  if (!fsSync.existsSync(flaggedDir)) return res.json([]);
-  const files = fsSync.readdirSync(flaggedDir).filter(f => f.endsWith('.json'));
-  res.json(files);
-});
-
-// Get a single flagged file's contents
-app.get('/flagged_file', (req, res) => {
-  const file = req.query.file;
-  if (!file) return res.status(400).send('Missing file');
-  const flaggedDir = path.join(__dirname, 'includes', 'flights', 'flagged');
-  const filePath = path.join(flaggedDir, file);
-  if (!fsSync.existsSync(filePath)) return res.status(404).send('Not found');
-  res.type('application/json').send(fsSync.readFileSync(filePath, 'utf8'));
-});
 
 // API: get_adsblol_route
 app.get('/api_adsblol', async (req, res) => {
@@ -576,88 +525,6 @@ app.get('/api_aviationstack', async (req, res) => {
   }
 });
 
-// Approve: overwrite flagged file and move to flights
-app.post('/approve_flagged', express.json({limit: '2mb'}), (req, res) => {
-  const file = req.query.file;
-  const reviewSource = req.body && req.body.api_source ? req.body.api_source : (req.body && req.body.review_source ? req.body.review_source : 'unknown');
-  if (!file) return res.status(400).json({ error: 'Missing file' });
-  const flaggedDir = path.join(__dirname, 'includes', 'flights', 'flagged');
-  const flightsDir = path.join(__dirname, 'includes', 'flights');
-  const reviewedDir = path.join(__dirname, 'includes', 'flights', 'reviewed');
-  const flaggedPath = path.join(flaggedDir, file);
-  const destPath = path.join(flightsDir, file);
-  const reviewedPath = path.join(reviewedDir, file);
-  try {
-    // Ensure reviewed folder exists
-    if (!fsSync.existsSync(reviewedDir)) {
-      fsSync.mkdirSync(reviewedDir, { recursive: true });
-    }
-    // Add reviewed fields
-    let data = req.body;
-    data.reviewed = true;
-    data.review_source = reviewSource;
-    // Write to reviewed first
-    fsSync.writeFileSync(reviewedPath, JSON.stringify(data, null, 2), 'utf8');
-    // Write to flights (overwrite or create)
-    fsSync.writeFileSync(destPath, JSON.stringify(data, null, 2), 'utf8');
-    // Remove from flagged if it exists
-    if (fsSync.existsSync(flaggedPath)) {
-      fsSync.unlinkSync(flaggedPath);
-    }
-    res.json({ success: true });
-  } catch (e) {
-    console.error('Approve flagged error:', e && (e.stack || e.message || e));
-    res.status(500).json({ error: 'Failed to approve' });
-  }
-});
-
-// Remove from flagged only
-app.post('/remove_flagged', (req, res) => {
-  const file = req.query.file;
-  if (!file) return res.status(400).json({ error: 'Missing file' });
-  const flaggedDir = path.join(__dirname, 'includes', 'flights', 'flagged');
-  const flaggedPath = path.join(flaggedDir, file);
-  try {
-    if (fsSync.existsSync(flaggedPath)) {
-      fsSync.unlinkSync(flaggedPath);
-      res.json({ success: true });
-    } else {
-      res.status(404).json({ error: 'Flagged file not found' });
-    }
-  } catch (e) {
-    console.error('Remove flagged error:', e && (e.stack || e.message || e));
-    res.status(500).json({ error: 'Failed to remove from flagged' });
-  }
-});
-
-// Delete from flagged and flights
-app.post('/delete_everywhere', (req, res) => {
-  const file = req.query.file;
-  if (!file) return res.status(400).json({ error: 'Missing file' });
-  const flaggedDir = path.join(__dirname, 'includes', 'flights', 'flagged');
-  const flightsDir = path.join(__dirname, 'includes', 'flights');
-  const flaggedPath = path.join(flaggedDir, file);
-  const flightsPath = path.join(flightsDir, file);
-  let deleted = false;
-  try {
-    if (fsSync.existsSync(flaggedPath)) {
-      fsSync.unlinkSync(flaggedPath);
-      deleted = true;
-    }
-    if (fsSync.existsSync(flightsPath)) {
-      fsSync.unlinkSync(flightsPath);
-      deleted = true;
-    }
-    if (deleted) {
-      res.json({ success: true });
-    } else {
-      res.status(404).json({ error: 'File not found in flagged or flights' });
-    }
-  } catch (e) {
-    console.error('Delete everywhere error:', e && (e.stack || e.message || e));
-    res.status(500).json({ error: 'Failed to delete' });
-  }
-});
 
 app.get('/api_flightaware', async (req, res) => {
   const { callsign } = req.query;
@@ -680,6 +547,36 @@ app.get('/api_flightera', async (req, res) => {
   } catch (e) {
     console.error('get_flightera error:', e && (e.stack || e.message || e));
     res.status(500).json({ error: 'Failed to fetch from Flightera' });
+  }
+});
+
+app.post('/log-flight', async (req, res) => {
+  const { flightId } = req.body;
+  if (!flightId) {
+    return res.status(400).json({ error: 'Missing flightId' });
+  }
+  try {
+    await update_flight_counter(flightId);
+    console.log(`Flight ${flightId} logged successfully.`);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET endpoint to return today's flight count
+app.get('/flight-count', async (req, res) => {
+  try {
+    const today = new Date().toISOString().split('T')[0];
+    const filePath = path.join(__dirname, 'includes', 'flight_counters.json');
+    let counters = {};
+    if (fsSync.existsSync(filePath)) {
+      counters = JSON.parse(fsSync.readFileSync(filePath, 'utf8'));
+    }
+    const count = Array.isArray(counters[today]) ? counters[today].length : 0;
+    res.json({ count });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 

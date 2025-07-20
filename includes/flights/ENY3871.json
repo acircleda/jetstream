@@ -1,0 +1,27 @@
+{
+  "callsign": "ENY3871",
+  "callsign_icao": "ENY3871",
+  "callsign_iata": "MQ3871",
+  "airline_name": "ENY",
+  "origin": {
+    "name": "Northwest Arkansas Ntl",
+    "city": "Fayetteville/Springdale/Rogers",
+    "country": "US",
+    "iata": "XNA",
+    "icao": "KXNA",
+    "lat": 36.281898,
+    "lon": -94.306801
+  },
+  "destination": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 36.281898,
+    "lon": -94.306801
+  },
+  "created_at": "2025-07-20T15:18:31.059Z",
+  "timestamp": 1753024711059,
+  "api_source": "flightaware"
+}

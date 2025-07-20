@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL3009",
+  "callsign_icao": "AAL3009",
+  "callsign_iata": "AA3009",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Phoenix Sky Harbor Intl",
+    "city": "Phoenix",
+    "country": "US",
+    "iata": "PHX",
+    "icao": "KPHX",
+    "lat": 33.435302,
+    "lon": -112.005905
+  },
+  "destination": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 33.435302,
+    "lon": -112.005905
+  },
+  "created_at": "2025-07-20T15:08:56.894Z",
+  "timestamp": 1753024136894,
+  "api_source": "flightaware"
+}

@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL3125",
+  "callsign_icao": "AAL3125",
+  "callsign_iata": "AA3125",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 35.2140007019043,
+    "lon": -80.94309997558594
+  },
+  "destination": {
+    "name": "Bozeman Yellowstone Intl",
+    "city": "Bozeman",
+    "country": "US",
+    "iata": "BZN",
+    "icao": "KBZN",
+    "lat": 35.2140007019043,
+    "lon": -80.94309997558594
+  },
+  "created_at": "2025-07-20T14:07:15.333Z",
+  "timestamp": 1753020435333,
+  "api_source": "flightaware"
+}

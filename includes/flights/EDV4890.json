@@ -1,0 +1,27 @@
+{
+  "callsign": "EDV4890",
+  "callsign_icao": "EDV4890",
+  "callsign_iata": "9E4890",
+  "airline_name": "EDV",
+  "origin": {
+    "name": "Lovell Fld",
+    "city": "Chattanooga",
+    "country": "US",
+    "iata": "CHA",
+    "icao": "KCHA",
+    "lat": 35.035301,
+    "lon": -85.203796
+  },
+  "destination": {
+    "name": "LaGuardia",
+    "city": "New York",
+    "country": "US",
+    "iata": "LGA",
+    "icao": "KLGA",
+    "lat": 35.035301,
+    "lon": -85.203796
+  },
+  "created_at": "2025-07-20T14:20:38.858Z",
+  "timestamp": 1753021238858,
+  "api_source": "flightaware"
+}

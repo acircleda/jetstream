@@ -1,0 +1,27 @@
+{
+  "callsign": "EJA588",
+  "callsign_icao": "EJA588",
+  "callsign_iata": "1I588",
+  "airline_name": "EJA",
+  "origin": {
+    "name": "Youngstown/Warren Rgnl",
+    "city": "Youngstown/Warren",
+    "country": "US",
+    "iata": "YNG",
+    "icao": "KYNG",
+    "lat": 41.26070023,
+    "lon": -80.67910004
+  },
+  "destination": {
+    "name": "Naples Muni",
+    "city": "Naples",
+    "country": "US",
+    "iata": "APF",
+    "icao": "KAPF",
+    "lat": 41.26070023,
+    "lon": -80.67910004
+  },
+  "created_at": "2025-07-20T14:51:27.212Z",
+  "timestamp": 1753023087212,
+  "api_source": "flightaware"
+}

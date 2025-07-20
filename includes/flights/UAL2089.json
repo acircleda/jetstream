@@ -1,0 +1,27 @@
+{
+  "callsign": "UAL2089",
+  "callsign_icao": "UAL2089",
+  "callsign_iata": "UA2089",
+  "airline_name": "UAL",
+  "origin": {
+    "name": "Luis Munoz Marin Intl",
+    "city": "San Juan",
+    "country": "PR",
+    "iata": "SJU",
+    "icao": "TJSJ",
+    "lat": 18.4394,
+    "lon": -66.001801
+  },
+  "destination": {
+    "name": "Chicago O'Hare Intl",
+    "city": "Chicago",
+    "country": "PR",
+    "iata": "ORD",
+    "icao": "KORD",
+    "lat": 18.4394,
+    "lon": -66.001801
+  },
+  "created_at": "2025-07-20T15:05:55.116Z",
+  "timestamp": 1753023955116,
+  "api_source": "flightaware"
+}

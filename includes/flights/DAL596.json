@@ -1,0 +1,27 @@
+{
+  "callsign": "DAL596",
+  "callsign_icao": "DAL596",
+  "callsign_iata": "DL596",
+  "airline_name": "DAL",
+  "origin": {
+    "name": "Detroit Metro Wayne Co",
+    "city": "Detroit",
+    "country": "US",
+    "iata": "DTW",
+    "icao": "KDTW",
+    "lat": 42.21377,
+    "lon": -83.353786
+  },
+  "destination": {
+    "name": "Tampa Intl",
+    "city": "Tampa",
+    "country": "US",
+    "iata": "TPA",
+    "icao": "KTPA",
+    "lat": 42.21377,
+    "lon": -83.353786
+  },
+  "created_at": "2025-07-20T15:09:26.972Z",
+  "timestamp": 1753024166972,
+  "api_source": "flightaware"
+}
