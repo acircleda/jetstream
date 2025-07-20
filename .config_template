@@ -9,7 +9,7 @@ const CONFIG = {
   lon: -122.41922177136804, // lon of the center of the ADSB radius
   center_lat: 37.77697315135698, // lat of the center of the map
   center_lon: -122.41922177136804, // lon of the center of the map
-  use_bbox: true, // Use bounding box for plane fetching: https://boundingbox.klokantech.com/
+  use_bbox: true, // Use bounding box for plane fetching: https://boundingbox.klokantech.com/ - use DublinCore format for ease of copy/paste
   show_bbox: true, // Show bounding box on the map
   // begin bounding box
   south_edge: 37.727872,
