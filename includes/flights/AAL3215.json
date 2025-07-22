@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL3215",
+  "callsign_icao": "AAL3215",
+  "callsign_iata": "AA3215",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Eppley Airfield",
+    "city": "Omaha",
+    "country": "US",
+    "iata": "OMA",
+    "icao": "KOMA",
+    "lat": 41.3032,
+    "lon": -95.894096
+  },
+  "destination": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 41.3032,
+    "lon": -95.894096
+  },
+  "created_at": "2025-07-20T20:25:29.944Z",
+  "timestamp": 1753043129944,
+  "api_source": "flightaware"
+}

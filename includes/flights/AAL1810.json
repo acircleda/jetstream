@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL1810",
+  "callsign_icao": "AAL1810",
+  "callsign_iata": "AA1810",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Milwaukee Mitchell Intl Airport",
+    "city": "Milwaukee",
+    "country": "US",
+    "iata": "MKE",
+    "icao": "KMKE",
+    "lat": 42.947201,
+    "lon": -87.896599
+  },
+  "destination": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 42.947201,
+    "lon": -87.896599
+  },
+  "created_at": "2025-07-20T20:27:43.876Z",
+  "timestamp": 1753043263876,
+  "api_source": "flightaware"
+}

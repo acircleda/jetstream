@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL2275",
+  "callsign_icao": "AAL2275",
+  "callsign_iata": "AA2275",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 35.2140007019043,
+    "lon": -80.94309997558594
+  },
+  "destination": {
+    "name": "Eppley Airfield",
+    "city": "Omaha",
+    "country": "US",
+    "iata": "OMA",
+    "icao": "KOMA",
+    "lat": 35.2140007019043,
+    "lon": -80.94309997558594
+  },
+  "created_at": "2025-07-20T16:03:07.206Z",
+  "timestamp": 1753027387206,
+  "api_source": "flightaware"
+}

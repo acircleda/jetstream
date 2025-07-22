@@ -198,6 +198,7 @@ app.get('/planes2', async (req, res) => {
   const { lat, lon, dist, use_bbox, minLat, maxLat, minLon, maxLon } = req.query;
 
   const url = `https://api.adsb.lol/v2/lat/${lat}/lon/${lon}/dist/${dist}`;
+  console.log('Fetching planes from:', url);
   
   try {
     const response = await fetch(url);

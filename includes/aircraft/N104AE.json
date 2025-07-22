@@ -1,0 +1,17 @@
+{
+  "response": {
+    "aircraft": {
+      "type": "407 GX",
+      "icao_type": "B407",
+      "manufacturer": "Bell",
+      "mode_s": "A01395",
+      "registration": "N104AE",
+      "registered_owner_country_iso_name": "US",
+      "registered_owner_country_name": "United States",
+      "registered_owner_operator_flag_code": "B407",
+      "registered_owner": "Air Evac EMS",
+      "url_photo": null,
+      "url_photo_thumbnail": null
+    }
+  }
+}

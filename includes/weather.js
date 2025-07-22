@@ -14,7 +14,8 @@ async function fetchCurrentWeather() {
   
   try {
     // Use Open-Meteo API - completely free, no API key required
-    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${CONFIG.center_lat}&longitude=${CONFIG.center_lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,wind_direction_10m&temperature_unit=fahrenheit&wind_speed_unit=mph`;
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${CONFIG.center_lat}&longitude=${CONFIG.center_lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,wind_direction_10m&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
+
     const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${CONFIG.city_name}&count=1&language=en&format=json`;
     
     const [weatherResponse, geoResponse] = await Promise.all([
@@ -30,8 +31,17 @@ async function fetchCurrentWeather() {
     const geoData = await geoResponse.json();
     
     const current = weatherData.current;
+    const daily = weatherData.daily;
+
+    const nowDate = new Date().toISOString().split('T')[0]; // e.g., "2025-07-20"
+    const sunrise = new Date(daily.sunrise[0]);
+    const sunset = new Date(daily.sunset[0]);
+    const now = new Date();
+
+    const isNight = now < sunrise || now > sunset;
+
     const cityName = geoData.results?.[0]?.name || CONFIG.city_name;
-    
+
     weatherCache.data = {
       temperature: Math.round(current.temperature_2m),
       description: getWeatherDescription(current.weather_code),
@@ -39,8 +49,10 @@ async function fetchCurrentWeather() {
       humidity: current.relative_humidity_2m,
       windSpeed: Math.round(current.wind_speed_10m),
       windDirection: current.wind_direction_10m,
-      cityName: cityName
+      cityName: cityName,
+      isNight: isNight
     };
+    
     weatherCache.lastFetch = now;
     
     return weatherCache.data;
@@ -86,7 +98,10 @@ function getWeatherDescription(weatherCode) {
   return weatherCodes[weatherCode] || 'Unknown';
 }
 
-function getWeatherIconPath(weatherCode) {
+function getWeatherIconPath(weatherCode, isNight = false) {
+  if (isNight && (weatherCode === 0 || weatherCode === 1)) {
+    return 'moon.svg';
+  }
   // Map weather codes to local SVG icons
   const weatherIcons = {
     0: 'sun.svg',              // Clear sky

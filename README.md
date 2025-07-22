@@ -183,6 +183,11 @@ This project is for educational and personal use. Ensure compliance with all API
 
 ## TODO
 To reach v5:
+- Info card
+   - Format numbers to commas
+   - Remove country from name if in the US
+   - For flights with origin/destination, add arrow and new layout, icon rotation
+   - For flights without origin/destination, remove destination text and add unrotated icon
 - Larger icons and text maximized for tablet
 - Sound notifications for new flights
 - Icon when flight may be inaccurate

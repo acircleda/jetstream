@@ -1,0 +1,27 @@
+{
+  "callsign": "AAY3179",
+  "callsign_icao": "AAY3179",
+  "callsign_iata": "G43179",
+  "airline_name": "AAY",
+  "origin": {
+    "name": "Bishop Intl",
+    "city": "Flint",
+    "country": "US",
+    "iata": "FNT",
+    "icao": "KFNT",
+    "lat": 42.96540069580078,
+    "lon": -83.74359893798828
+  },
+  "destination": {
+    "name": "Sarasota/Bradenton Intl",
+    "city": "Sarasota/Bradenton",
+    "country": "US",
+    "iata": "SRQ",
+    "icao": "KSRQ",
+    "lat": 42.96540069580078,
+    "lon": -83.74359893798828
+  },
+  "created_at": "2025-07-20T20:22:19.701Z",
+  "timestamp": 1753042939701,
+  "api_source": "flightaware"
+}

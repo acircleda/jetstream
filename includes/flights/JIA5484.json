@@ -1,0 +1,27 @@
+{
+  "callsign": "JIA5484",
+  "callsign_icao": "JIA5484",
+  "callsign_iata": "OH5484",
+  "airline_name": "JIA",
+  "origin": {
+    "name": "Reagan National",
+    "city": "Washington",
+    "country": "US",
+    "iata": "DCA",
+    "icao": "KDCA",
+    "lat": 38.8521,
+    "lon": -77.037697
+  },
+  "destination": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 38.8521,
+    "lon": -77.037697
+  },
+  "created_at": "2025-07-22T01:34:41.073Z",
+  "timestamp": 1753148081073,
+  "api_source": "flightaware"
+}

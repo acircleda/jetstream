@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL1589",
+  "callsign_icao": "AAL1589",
+  "callsign_iata": "AA1589",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Indianapolis Intl",
+    "city": "Indianapolis",
+    "country": "US",
+    "iata": "IND",
+    "icao": "KIND",
+    "lat": 39.7173,
+    "lon": -86.294403
+  },
+  "destination": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 39.7173,
+    "lon": -86.294403
+  },
+  "created_at": "2025-07-20T20:08:57.209Z",
+  "timestamp": 1753042137209,
+  "api_source": "flightaware"
+}

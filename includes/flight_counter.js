@@ -17,9 +17,7 @@ async function update_flight_counter(flightId) {
   if (!counters[today].includes(flightId.trim())) {
     counters[today].push(flightId.trim());
     fs.writeFileSync(filePath, JSON.stringify(counters, null, 2));
-    console.log(`Added flight ${flightId} to ${today}.`);
   } else {
-    console.log(`Flight ${flightId} already logged for ${today}.`);
   }
 }
 

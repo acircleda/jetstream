@@ -1,0 +1,27 @@
+{
+  "callsign": "N562JL",
+  "callsign_icao": null,
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Dekalb-Peachtree",
+    "city": "Atlanta",
+    "country": "US",
+    "iata": "PDK",
+    "icao": "KPDK",
+    "lat": 33.87633,
+    "lon": -84.30213
+  },
+  "destination": {
+    "name": "Tri-Cities",
+    "city": "Bristol/Johnson/Kingsport",
+    "country": "US",
+    "iata": "TRI",
+    "icao": "KTRI",
+    "lat": 33.87633,
+    "lon": -84.30213
+  },
+  "created_at": "2025-07-20T20:08:59.368Z",
+  "timestamp": 1753042139368,
+  "api_source": "flightaware"
+}

@@ -1,0 +1,27 @@
+{
+  "callsign": "GTI7481",
+  "callsign_icao": "GTI7481",
+  "callsign_iata": "5Y7481",
+  "airline_name": "GTI",
+  "origin": {
+    "name": "Birmingham-Shuttlesworth Intl",
+    "city": "Birmingham",
+    "country": "US",
+    "iata": "BHM",
+    "icao": "KBHM",
+    "lat": 33.562901,
+    "lon": -86.753502
+  },
+  "destination": {
+    "name": "Liege",
+    "city": "Liege",
+    "country": "US",
+    "iata": "LGG",
+    "icao": "EBLG",
+    "lat": 33.562901,
+    "lon": -86.753502
+  },
+  "created_at": "2025-07-21T03:08:20.959Z",
+  "timestamp": 1753067300959,
+  "api_source": "flightaware"
+}

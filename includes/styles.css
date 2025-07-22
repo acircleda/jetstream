@@ -3,7 +3,7 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 400;
     background-color: #000000;
     color: #ffffff;
@@ -106,15 +106,15 @@ a, a:hover, a:active, a:focus, a:visited {
     font-size: 2.5em;
     padding-top: 0px;
     margin-bottom: -30px;
-    color: rgba(var(--highlight-color), .7);
+    color: #a1a1a1;
 }
 
 #sidebar-info h2 a {
-    color: rgba(var(--highlight-color), .7) !important;
+    color: #a1a1a1 !important;
 }
 
 #sidebar-info p {
-    font-size: 1em;
+    font-size: 1.6em;
     color: #a1a1a1;
     margin-top: 24px;
     margin-bottom: 20px;
@@ -131,28 +131,53 @@ a, a:hover, a:active, a:focus, a:visited {
 
 .sb-route h1 {
     color: #a1a1a1 !important;
-    font-size: 1.2em !important;
-    margin-bottom: -30px !important;
-    padding-top:30px !important;
+    font-size: 1.6em !important;
+    
 }
 
 .sb-route h2 {
-    color: #e0e0e0 !important;
-    font-size: 2em !important;
-    margin-bottom: -15px !important;
+    color: rgba(var(--highlight-color), 1) !important;
+    font-size: 4em !important;
+    margin-bottom: -25px !important;
 }
-
 
 .sb-route h3 {
     color: #a1a1a1 !important;
-    font-size: 14px !important;
-
-
+    font-size: 25px !important;
 }
 
 .sb-flight-info {
     padding-top: 20px;
     text-align: center;
+    color: #a1a1a1 !important;
+    font-size: 30px !important;
+}
+
+.sb-flight-info a {
+    font-size: 20px !important;
+}
+
+.sb-icon-with-line {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  margin-bottom: -50px;
+}
+
+.center-line {
+  position: absolute;
+  height: 100%;
+  width: 2px;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(var(--highlight-color), 0.5),
+    rgba(var(--highlight-color), 0.5) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  z-index: 0;
 }
 
 .invalid-route-flag {
@@ -227,7 +252,7 @@ a, a:hover, a:active, a:focus, a:visited {
 }
 
 #weather-widget {
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     color: #ffffff;
 }
@@ -246,8 +271,8 @@ a, a:hover, a:active, a:focus, a:visited {
 }
 
 .weather-icon {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     margin-bottom: 10px;
     display: flex;
     align-items: center;
@@ -260,14 +285,14 @@ a, a:hover, a:active, a:focus, a:visited {
 }
 
 .weather-temp {
-    font-size: 5em;
+    font-size: 6em;
     font-weight: bold;
     color: #e0e0e0;
     margin-bottom: 10px;
 }
 
 .weather-description {
-    font-size: 1.5em;
+    font-size: 1.8em;
     color: #a1a1a1;
     margin-bottom: 20px;
     text-transform: capitalize;

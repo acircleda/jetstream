@@ -1,0 +1,17 @@
+{
+  "response": {
+    "aircraft": {
+      "type": "429",
+      "icao_type": "B429",
+      "manufacturer": "Bell",
+      "mode_s": "A51D42",
+      "registration": "N429CB",
+      "registered_owner_country_iso_name": "US",
+      "registered_owner_country_name": "United States",
+      "registered_owner_operator_flag_code": null,
+      "registered_owner": "LINA 1 LLC",
+      "url_photo": null,
+      "url_photo_thumbnail": null
+    }
+  }
+}

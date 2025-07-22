@@ -1,0 +1,27 @@
+{
+  "callsign": "JZA8706",
+  "callsign_icao": "JZA8706",
+  "callsign_iata": "QK8706",
+  "airline_name": "JZA",
+  "origin": {
+    "name": "Chicago O'Hare Intl",
+    "city": "Chicago",
+    "country": "US",
+    "iata": "ORD",
+    "icao": "KORD",
+    "lat": 41.9786,
+    "lon": -87.9048
+  },
+  "destination": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 41.9786,
+    "lon": -87.9048
+  },
+  "created_at": "2025-07-21T02:40:49.022Z",
+  "timestamp": 1753065649022,
+  "api_source": "flightaware"
+}

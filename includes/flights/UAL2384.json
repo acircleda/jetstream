@@ -1,0 +1,27 @@
+{
+  "callsign": "UAL2384",
+  "callsign_icao": "UAL2384",
+  "callsign_iata": "UA2384",
+  "airline_name": "UAL",
+  "origin": {
+    "name": "Baltimore/Washington Intl",
+    "city": "Baltimore",
+    "country": "US",
+    "iata": "BWI",
+    "icao": "KBWI",
+    "lat": 39.1754,
+    "lon": -76.668297
+  },
+  "destination": {
+    "name": "Houston Bush Int'ctl",
+    "city": "Houston",
+    "country": "US",
+    "iata": "IAH",
+    "icao": "KIAH",
+    "lat": 39.1754,
+    "lon": -76.668297
+  },
+  "created_at": "2025-07-20T20:08:58.385Z",
+  "timestamp": 1753042138385,
+  "api_source": "flightaware"
+}

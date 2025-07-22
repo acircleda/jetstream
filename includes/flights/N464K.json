@@ -1,0 +1,27 @@
+{
+  "callsign": "N464K",
+  "callsign_icao": null,
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "Valdosta Rgnl",
+    "city": "Valdosta",
+    "country": "US",
+    "iata": "VLD",
+    "icao": "KVLD",
+    "lat": 30.782499313354492,
+    "lon": -83.27670288085938
+  },
+  "destination": {
+    "name": "New Tazewell Muni",
+    "city": "Tazewell",
+    "country": "US",
+    "iata": "",
+    "icao": "",
+    "lat": 30.782499313354492,
+    "lon": -83.27670288085938
+  },
+  "created_at": "2025-07-22T01:28:00.152Z",
+  "timestamp": 1753147680152,
+  "api_source": "flightaware"
+}

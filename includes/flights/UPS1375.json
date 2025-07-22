@@ -1,0 +1,27 @@
+{
+  "callsign": "UPS1375",
+  "callsign_icao": "UPS1375",
+  "callsign_iata": "5X1375",
+  "airline_name": "UPS",
+  "origin": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "destination": {
+    "name": "Muhammad Ali Intl",
+    "city": "Louisville",
+    "country": "US",
+    "iata": "SDF",
+    "icao": "KSDF",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "created_at": "2025-07-22T01:45:55.776Z",
+  "timestamp": 1753148755776,
+  "api_source": "flightaware"
+}

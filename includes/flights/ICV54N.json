@@ -1,0 +1,27 @@
+{
+  "callsign": "CGX5911",
+  "callsign_icao": "CGX5911",
+  "callsign_iata": "C85911",
+  "airline_name": "CGX",
+  "origin": {
+    "name": "Anchorage Intl",
+    "city": "Anchorage",
+    "country": "US",
+    "iata": "ANC",
+    "icao": "PANC",
+    "lat": 61.179004,
+    "lon": -149.992561
+  },
+  "destination": {
+    "name": "Miami Intl",
+    "city": "Miami",
+    "country": "US",
+    "iata": "MIA",
+    "icao": "KMIA",
+    "lat": 61.179004,
+    "lon": -149.992561
+  },
+  "created_at": "2025-07-22T01:27:48.498Z",
+  "timestamp": 1753147668498,
+  "api_source": "flightaware"
+}

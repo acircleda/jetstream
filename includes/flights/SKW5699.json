@@ -1,0 +1,27 @@
+{
+  "callsign": "SKW5699",
+  "callsign_icao": "SKW5699",
+  "callsign_iata": "OO5699",
+  "airline_name": "SKW",
+  "origin": {
+    "name": "Chicago O'Hare Intl",
+    "city": "Chicago",
+    "country": "US",
+    "iata": "ORD",
+    "icao": "KORD",
+    "lat": 41.9786,
+    "lon": -87.9048
+  },
+  "destination": {
+    "name": "Savannah/Hilton Head Intl",
+    "city": "Savannah",
+    "country": "US",
+    "iata": "SAV",
+    "icao": "KSAV",
+    "lat": 41.9786,
+    "lon": -87.9048
+  },
+  "created_at": "2025-07-22T01:34:39.994Z",
+  "timestamp": 1753148079994,
+  "api_source": "flightaware"
+}

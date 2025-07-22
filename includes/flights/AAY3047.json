@@ -1,0 +1,27 @@
+{
+  "callsign": "AAY3047",
+  "callsign_icao": "AAY3047",
+  "callsign_iata": "G43047",
+  "airline_name": "AAY",
+  "origin": {
+    "name": "Clearwater Intl",
+    "city": "St Petersburg-Clearwater",
+    "country": "US",
+    "iata": "PIE",
+    "icao": "KPIE",
+    "lat": 27.9102,
+    "lon": -82.687401
+  },
+  "destination": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 27.9102,
+    "lon": -82.687401
+  },
+  "created_at": "2025-07-21T03:07:11.173Z",
+  "timestamp": 1753067231173,
+  "api_source": "flightaware"
+}

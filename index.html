@@ -19,13 +19,6 @@
     const locationDiv = document.getElementById("title");
     locationDiv.innerHTML = `Jetstream: ${CONFIG.city_name} <span class="version">v5.0</span>`;
 
-    // Attach refresh button handler after DOM is fully loaded
-    const refreshBtn = document.getElementById('refresh-page-btn');
-    if (refreshBtn) {
-      refreshBtn.addEventListener('click', () => {
-        location.reload();
-      });
-    }
   });
 
     // Auto-refresh every 30 minutes
@@ -37,7 +30,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet"> 
   
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@drustack/leaflet.resetview/dist/L.Control.ResetView.min.js"></script>
@@ -244,10 +239,10 @@
           const opacity = plane.alt_baro ? Math.max(0.3, Math.min(1, plane.alt_baro / 1000)) : 1;
           selected_marker = select_marker(plane.t, plane.category)
           const icon = L.divIcon({
-          html: `<div style="display: flex; justify-content: center; align-items: center; width: 60px; height: 60px;">
+          html: `<div style="display: flex; justify-content: center; align-items: center; width: 70px; height: 70px;">
             <div style="
-              width: 48px;
-              height: 48px;
+              width: 70px;
+              height: 70px;
               background-color: ${CONFIG.highlight_color};
               mask: url(${selected_marker}) center/contain no-repeat;
               -webkit-mask: url(${selected_marker}) center/contain no-repeat;
@@ -257,8 +252,8 @@
 
           
             className: 'plane-icon',
-            iconSize: [60, 60],
-            iconAnchor: [30, 30]
+            iconSize: [70, 70],
+            iconAnchor: [35, 35] // half of the iconSize
           });
 
           // Fetch additional flight info
@@ -310,6 +305,7 @@
             <div>
               <strong>Flight ${plane.flight || 'N/A'}</strong><br>
               <strong>${flight_name}</strong><br><br>
+              
 
               ${format_name(origin) !== '' ? `Origin: ${format_name(origin)}<br><small>${clean_field(origin.name)}</small><br><br>` : ''}
               ${format_name(destination) !== '' ? `Destination: ${format_name(destination)}<br><small>${clean_field(destination.name)}</small><br><br>` : ''}
@@ -354,37 +350,88 @@
           fill: false, // No fill at all
           weight: 1 // Optional: makes the circle outline a bit more visible
           }).addTo(map);
+          
+        const has_origin = closestOrigin && Object.keys(closestOrigin).length > 0;
+        console.log(`has origin: ${has_origin}`);
+
+        const baseMarkerStyle = `
+          display: inline-block;
+          vertical-align: middle;
+          width: 75px;
+          height: 75px;
+          background-color: ${CONFIG.highlight_color};
+          mask: url(${select_marker(closestPlane.t, closestPlane.category)}) center/contain no-repeat;
+          -webkit-mask: url(${select_marker(closestPlane.t, closestPlane.category)}) center/contain no-repeat;
+          transform: rotate(0deg);
+        `;
+          
+        const rotatedMarkerStyle = baseMarkerStyle.replace(`0deg`, '180deg');
+
+        let htmlContent = '';
 
           // Update info div
-          document.getElementById('info').innerHTML = `
-          
-          <div id='sidebar-info'">
-            <h2>
-              <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">
-                ${closestPlane.flight || 'N/A'}
-              </a>
-              <!-- ${closestOrigin && !closestRoute_is_valid ? '<sup class="invalid-route-flag">!</sup>' : ''} -->
-            </h2>
-            <p>${closestFlightName || ''}</p>
-            <div class="sb-route">
-              <h1>Origin</h1>
-              <h2>${closestOriginName}</h1>
-              <h3>${closestOrigin['name'] || ''}<h3>
-            </div>
-            <div class="sb-route">
-              <h1>Destination</h2>
-              <h2>${closestDestinationName}</h1>
-              <h3>${closestDestination['name'] || ''}<h3>
-            </div>
-            <div class="sb-flight-info">
-              <strong> ${closestAircraft || closestPlane.t || ''}</strong><br>
-              <strong>Altitude:</strong> ${closestPlane.alt_baro || ''} ft<br>
-              <strong>Speed:</strong> ${closestPlane.gs ? `${closestPlane.gs} knots` : ''}<br><br>
-              <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">View on FlightAware</a>
-            </div>
-          </div>
-          `;
-        } else {
+          if (has_origin) {
+    htmlContent = `
+      <div id='sidebar-info'>
+        <h2>
+          <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">
+            ${closestPlane.flight || 'N/A'}
+          </a>
+        </h2>
+        <p>${closestFlightName || ''}</p>
+        <div class="sb-route">
+          <h2>${closestOriginName}</h2>
+          <h3>${closestOrigin['name'] || ''}</h3>
+        </div>
+
+        <div class="sb-icon-with-line">
+          <div class="center-line"></div>
+          <span style="${rotatedMarkerStyle}"></span>
+        </div>
+
+        <div class="sb-route">
+          <h2>${closestDestinationName}</h2>
+          <h3>${closestDestination['name'] || ''}</h3>
+        </div>
+
+        <div class="sb-flight-info">
+          <strong>${closestAircraft || closestPlane.t || ''}</strong><br>
+          <span style="color: white;">
+            ${closestPlane.alt_baro || ''} ft  |  ${closestPlane.gs ? `${closestPlane.gs} knots` : ''}
+          </span>
+          <br><br>
+          <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">View on FlightAware</a>
+        </div>
+      </div>
+    `;
+  } else {
+    htmlContent = `
+      <div id='sidebar-info'>
+        <h2>
+          <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">
+            ${closestPlane.flight || 'N/A'}
+          </a>
+        </h2>
+        <p>${closestFlightName || ''}</p>
+
+        <div class="sb-icon-with-line">
+          <span style="${baseMarkerStyle}"></span>
+        </div>
+
+        <div class="sb-flight-info">
+          <strong>${closestAircraft || closestPlane.t || ''}</strong><br>
+          <span style="color: white;">
+            ${closestPlane.alt_baro || ''} ft  |  ${closestPlane.gs ? `${closestPlane.gs} knots` : ''}
+          </span>
+          <br><br>
+          <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">View on FlightAware</a>
+        </div>
+      </div>
+    `;
+  }
+
+  document.getElementById('info').innerHTML = htmlContent;
+} else {
           // No planes found, show weather widget
           const weatherHTML = await displayWeatherWidget();
           document.getElementById('info').innerHTML = weatherHTML;

@@ -1,0 +1,27 @@
+{
+  "callsign": "JRE810",
+  "callsign_icao": "JRE810",
+  "callsign_iata": null,
+  "airline_name": "JRE",
+  "origin": {
+    "name": "General Downing - Peoria Intl",
+    "city": "Peoria",
+    "country": "US",
+    "iata": "PIA",
+    "icao": "KPIA",
+    "lat": 40.6642,
+    "lon": -89.693298
+  },
+  "destination": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 40.6642,
+    "lon": -89.693298
+  },
+  "created_at": "2025-07-20T16:09:31.378Z",
+  "timestamp": 1753027771378,
+  "api_source": "flightaware"
+}

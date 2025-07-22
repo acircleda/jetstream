@@ -1,0 +1,17 @@
+{
+  "response": {
+    "aircraft": {
+      "type": "747 8R7F",
+      "icao_type": "B748",
+      "manufacturer": "Boeing",
+      "mode_s": "4D0105",
+      "registration": "LX-VCE",
+      "registered_owner_country_iso_name": "LU",
+      "registered_owner_country_name": "Luxembourg",
+      "registered_owner_operator_flag_code": "CLX",
+      "registered_owner": "Cargolux Airlines International",
+      "url_photo": "https://airport-data.com/images/aircraft/001/668/001668122.jpg",
+      "url_photo_thumbnail": "https://airport-data.com/images/aircraft/thumbnails/001/668/001668122.jpg"
+    }
+  }
+}

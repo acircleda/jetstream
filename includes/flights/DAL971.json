@@ -1,10 +1,10 @@
 {
   "callsign": "DAL971",
   "callsign_icao": "DAL971",
-  "callsign_iata": null,
-  "airline_name": null,
+  "callsign_iata": "DL971",
+  "airline_name": "DAL",
   "origin": {
-    "name": "Hartsfield Jackson Atlanta International Airport",
+    "name": "Hartsfield-Jackson Intl",
     "city": "Atlanta",
     "country": "US",
     "iata": "ATL",
@@ -13,15 +13,15 @@
     "lon": -84.428101
   },
   "destination": {
-    "name": "Cleveland Hopkins International Airport",
+    "name": "Cleveland-Hopkins Intl",
     "city": "Cleveland",
     "country": "US",
     "iata": "CLE",
     "icao": "KCLE",
-    "lat": 41.411701,
-    "lon": -81.8498
+    "lat": 33.6367,
+    "lon": -84.428101
   },
-  "created_at": "2025-05-31T02:23:24.870Z",
-  "timestamp": 1748658204870,
-  "api_source": "adsb.lol"
+  "created_at": "2025-07-21T02:28:59.437Z",
+  "timestamp": 1753064939437,
+  "api_source": "flightaware"
 }
