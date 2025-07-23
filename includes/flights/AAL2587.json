@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL2587",
+  "callsign_icao": "AAL2587",
+  "callsign_iata": "AA2587",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Dallas-Fort Worth Intl",
+    "city": "Dallas-Fort Worth",
+    "country": "US",
+    "iata": "DFW",
+    "icao": "KDFW",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "destination": {
+    "name": "Norfolk Intl",
+    "city": "Norfolk",
+    "country": "US",
+    "iata": "ORF",
+    "icao": "KORF",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "created_at": "2025-07-23T01:18:16.687Z",
+  "timestamp": 1753233496687,
+  "api_source": "flightaware"
+}

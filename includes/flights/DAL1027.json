@@ -1,7 +1,7 @@
 {
-  "callsign": "DAL1478",
-  "callsign_icao": "DAL1478",
-  "callsign_iata": "DL1478",
+  "callsign": "DAL1027",
+  "callsign_icao": "DAL1027",
+  "callsign_iata": "DL1027",
   "airline_name": "DAL",
   "origin": {
     "name": "Hartsfield-Jackson Intl",
@@ -13,15 +13,15 @@
     "lon": -84.428101
   },
   "destination": {
-    "name": "Detroit Metro Wayne Co",
-    "city": "Detroit",
+    "name": "Patrick Leahy Burlington Intl",
+    "city": "Burlington",
     "country": "US",
-    "iata": "DTW",
-    "icao": "KDTW",
+    "iata": "BTV",
+    "icao": "KBTV",
     "lat": 33.6367,
     "lon": -84.428101
   },
-  "created_at": "2025-07-23T00:55:57.106Z",
-  "timestamp": 1753232157106,
+  "created_at": "2025-07-23T01:24:40.970Z",
+  "timestamp": 1753233880970,
   "api_source": "flightaware"
 }

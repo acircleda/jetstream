@@ -2,6 +2,7 @@ const CONFIG = {
    // key settings
   city_name: 'San Francisco', // This will become part of the page title - Jetstream: city_name
   highlight_color: '#FF8200',
+  play_sound: true, // Play sound when a plane is first detected
   maxZoom: 15,
   initialZoom: 12, // Zoom level for the map
   distance: 5, // Distance in miles to fetch planes from the center of the map

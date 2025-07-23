@@ -42,6 +42,7 @@
 
 
 <body>
+  <audio id="plane-sound" src="includes/sound.wav" preload="auto" style="display:none"></audio>
   <button id="refresh-page-btn" title="Refresh the page">&#8634;</button>
     <div id="main"> 
       <div id="map"></div>
@@ -167,6 +168,9 @@
     let planeMarkers = {};
     // Track unique flights for the day
 
+    // Track if last info shown was weather (no planes)
+    let wasShowingWeather = false;
+
     async function fetchPlanes() {
       // Remove previous circle if exists (always, even on error)
       if (window.closestPlaneCircle) {
@@ -202,12 +206,13 @@
         let closestOrigin = 'N/A';
         let closestDestination = 'N/A';
 
-        // Check if no aircraft data or empty array
-        if (!data.ac || data.ac.length === 0) {
-          const weatherHTML = await displayWeatherWidget();
-          document.getElementById('info').innerHTML = weatherHTML;
-          return;
-        }
+      // Check if no aircraft data or empty array
+      if (!data.ac || data.ac.length === 0) {
+        const weatherHTML = await displayWeatherWidget();
+        document.getElementById('info').innerHTML = weatherHTML;
+        wasShowingWeather = true;
+        return;
+      }
 
         for (let plane of data.ac) {
           if (plane.flight) {
@@ -350,6 +355,15 @@
           map.removeLayer(window.closestPlaneCircle);
         }
         if (closestPlane && closestMarker) {
+          // Play sound if switching from weather to plane
+          if (wasShowingWeather) {
+            const audio = document.getElementById('plane-sound');
+            if (audio && CONFIG.play_sound) {
+              audio.currentTime = 0;
+              audio.play();
+            }
+          }
+          wasShowingWeather = false;
           window.closestPlaneCircle = L.circle([closestPlane.lat, closestPlane.lon], {
           radius: 800, // meters
           color: CONFIG.highlight_color,
@@ -422,7 +436,7 @@
 
         <div class="sb-icon-with-line">
           <span style="${baseMarkerStyle}"></span>
-        </div>
+        </div><br/><br/>
 
         <div class="sb-flight-info">
           <strong>${closestAircraft || closestPlane.t || ''}</strong><br>
@@ -437,10 +451,11 @@
   }
 
   document.getElementById('info').innerHTML = htmlContent;
-} else {
+        } else {
           // No planes found, show weather widget
           const weatherHTML = await displayWeatherWidget();
           document.getElementById('info').innerHTML = weatherHTML;
+          wasShowingWeather = true;
         }
       } catch (err) {
         console.error('Error fetching aircraft:', err);
