@@ -118,7 +118,13 @@
       const city = location.city;
       const country = location.country;
       if (city && city !== 'N/A') {
-      return country ? `${city}, ${country}` : city;
+        if (country === 'US') {
+          return city;
+        } else if (country) {
+          return `${city}, ${country}`;
+        } else {
+          return city;
+        }
       }
       return country || '';
     }
@@ -397,7 +403,7 @@
         <div class="sb-flight-info">
           <strong>${closestAircraft || closestPlane.t || ''}</strong><br>
           <span style="color: white;">
-            ${closestPlane.alt_baro || ''} ft  |  ${closestPlane.gs ? `${closestPlane.gs} knots` : ''}
+            ${closestPlane.alt_baro ? closestPlane.alt_baro.toLocaleString() : ''} ft ${closestPlane.gs ? `| ${closestPlane.gs.toLocaleString()} knots` : ''}
           </span>
           <br><br>
           <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">View on FlightAware</a>
@@ -421,7 +427,7 @@
         <div class="sb-flight-info">
           <strong>${closestAircraft || closestPlane.t || ''}</strong><br>
           <span style="color: white;">
-            ${closestPlane.alt_baro || ''} ft  |  ${closestPlane.gs ? `${closestPlane.gs} knots` : ''}
+            ${closestPlane.alt_baro ? closestPlane.alt_baro.toLocaleString() : ''} ft ${closestPlane.gs ? `| ${closestPlane.gs.toLocaleString()} knots` : ''}
           </span>
           <br><br>
           <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">View on FlightAware</a>

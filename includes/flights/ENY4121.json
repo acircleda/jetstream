@@ -1,0 +1,27 @@
+{
+  "callsign": "ENY4121",
+  "callsign_icao": "ENY4121",
+  "callsign_iata": "MQ4121",
+  "airline_name": "ENY",
+  "origin": {
+    "name": "Clinton National",
+    "city": "Little Rock",
+    "country": "US",
+    "iata": "LIT",
+    "icao": "KLIT",
+    "lat": 34.729582,
+    "lon": -92.223728
+  },
+  "destination": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 34.729582,
+    "lon": -92.223728
+  },
+  "created_at": "2025-07-23T00:51:54.497Z",
+  "timestamp": 1753231914497,
+  "api_source": "flightaware"
+}

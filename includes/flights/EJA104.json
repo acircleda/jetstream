@@ -1,0 +1,27 @@
+{
+  "callsign": "EJA104",
+  "callsign_icao": "EJA104",
+  "callsign_iata": "1I104",
+  "airline_name": "EJA",
+  "origin": {
+    "name": "Wichita Eisenhower",
+    "city": "Wichita",
+    "country": "US",
+    "iata": "ICT",
+    "icao": "KICT",
+    "lat": 37.649899,
+    "lon": -97.433098
+  },
+  "destination": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 37.649899,
+    "lon": -97.433098
+  },
+  "created_at": "2025-07-23T00:48:45.906Z",
+  "timestamp": 1753231725906,
+  "api_source": "flightaware"
+}

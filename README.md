@@ -186,9 +186,7 @@ To reach v5:
 - Info card
    - Format numbers to commas
    - Remove country from name if in the US
-   - For flights with origin/destination, add arrow and new layout, icon rotation
-   - For flights without origin/destination, remove destination text and add unrotated icon
-- Larger icons and text maximized for tablet
+- Ensure unknown aircraft use the airliner.svg icon. Example: OTIS48
 - Sound notifications for new flights
 - Icon when flight may be inaccurate
   - Flag based on cross track distance or source reliability
