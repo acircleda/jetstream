@@ -1,0 +1,27 @@
+{
+  "callsign": "PDT5805",
+  "callsign_icao": "PDT5805",
+  "callsign_iata": "PT5805",
+  "airline_name": "PDT",
+  "origin": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 35.2140007019043,
+    "lon": -80.94309997558594
+  },
+  "destination": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 35.2140007019043,
+    "lon": -80.94309997558594
+  },
+  "created_at": "2025-07-30T02:26:57.847Z",
+  "timestamp": 1753842417847,
+  "api_source": "flightaware"
+}

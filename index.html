@@ -387,15 +387,18 @@
         const baseMarkerStyle = `
           display: inline-block;
           vertical-align: middle;
-          width: 150px;
-          height: 150px;
+          width: 200px;
+          height: 200px;
           background-color: ${CONFIG.highlight_color};
           mask: url(${select_marker(closestPlane.t, closestPlane.category)}) center/contain no-repeat;
           -webkit-mask: url(${select_marker(closestPlane.t, closestPlane.category)}) center/contain no-repeat;
           transform: rotate(0deg);
         `;
           
-        const rotatedMarkerStyle = baseMarkerStyle.replace(`0deg`, '180deg');
+        const rotatedMarkerStyle = baseMarkerStyle
+          .replace(`0deg`, '180deg')
+          .replace(/width:\s*\d+px;/, 'width: 100px;')
+          .replace(/height:\s*\d+px;/, 'height: 100px;');
 
         let htmlContent = '';
 
@@ -403,25 +406,25 @@
           if (has_origin) {
     htmlContent = `
       <div id='sidebar-info'>
-        <h2>
+        <div id='flight-number'>
           <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">
             ${closestPlane.flight || 'N/A'}
           </a>
-        </h2>
-        <p>${closestFlightName || ''}</p>
+        </div>
+        <div id='flight-name'>${closestFlightName || ''}</div>
         <div class="sb-route">
-          <h2>${closestOriginName}</h2>
-          <h3>${closestOrigin['name'] || ''}</h3>
+          <div id="sb-origin">${closestOriginName}</div>
+          <div class="sb-route-airport">${closestOrigin['name'] || ''}</div>
         </div>
 
-        <div class="sb-icon-with-line">
+        <div class="sb-icon-with-line-route">
           <div class="center-line"></div>
           <span style="${rotatedMarkerStyle}"></span>
         </div>
 
         <div class="sb-route">
-          <h2>${closestDestinationName}</h2>
-          <h3>${closestDestination['name'] || ''}</h3>
+          <div id="sb-destination">${closestDestinationName}</div>
+          <div class="sb-route-airport">${closestDestination['name'] || ''}</div>
         </div>
 
         <div class="sb-flight-info">
@@ -429,7 +432,7 @@
           <span style="color: white;">
             ${closestPlane.alt_baro ? closestPlane.alt_baro.toLocaleString() : ''} ft ${closestPlane.gs ? `| ${closestPlane.gs.toLocaleString()} knots` : ''}
           </span>
-          <br><br>
+          <br>
           <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">View on FlightAware</a>
         </div>
       </div>
@@ -437,12 +440,12 @@
   } else {
     htmlContent = `
       <div id='sidebar-info'>
-        <h2>
+                <div id='flight-number'>
           <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">
             ${closestPlane.flight || 'N/A'}
           </a>
-        </h2>
-        <p>${closestFlightName || ''}</p>
+        </div>
+        <div id='flight-name'>${closestFlightName || ''}</div>
 
         <div class="sb-icon-with-line">
           <span style="${baseMarkerStyle}"></span>
@@ -453,7 +456,7 @@
           <span style="color: white;">
             ${closestPlane.alt_baro ? closestPlane.alt_baro.toLocaleString() : ''} ft ${closestPlane.gs ? `| ${closestPlane.gs.toLocaleString()} knots` : ''}
           </span>
-          <br><br>
+          <br>
           <a href="https://www.flightaware.com/live/flight/${closestPlane.flight}" target="_blank">View on FlightAware</a>
         </div>
       </div>

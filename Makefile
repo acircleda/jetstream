@@ -75,28 +75,5 @@ cleanup_flights:
 		fi \
 	fi
 
-APP_DIR = /home/pi/jetstream
-
-setup-pi:
-	@echo "Setting up Raspberry Pi environment..."
-	cd $(APP_DIR)
-	@echo "Installing Pi dependencies"
-	sudo apt install -y make curl git xdotool unclutter lightdm
-	@echo "Installing Chromium"
-	sudo apt install -y chromium-browser
-	@echo "Installing pm2 for process management..."
-	sudo npm install -g pm2
-	@echo "Installing Node.js and npm..."
-	sudo apt-get update
-	sudo apt-get install -y nodejs npm
-	@echo "Installing required packages..."
-	npm install
-	@echo "Raspberry Pi setup complete!"
-	@echo "Creating app directory at $(APP_DIR)..."
-	cd $(APP_DIR) && pm2 start npm --name jetstream -- run dev
-	pm2 save
-	pm2 startup systemd -u pi --hp /home/pi
-	@echo "Setting up kiosk autostart..."
-	mkdir -p /home/pi/.config/lxsession/LXDE-pi
-	echo '@chromium-browser --noerrdialogs --kiosk http://localhost:5000' > /home/pi/.config/lxsession/LXDE-pi/autostart
-	echo '@unclutter -idle 3' >> /home/pi/.config/lxsession/LXDE-pi/autostart
+copy_config:
+	@scp -P 8022 includes/config.js u0_a159@10.0.0.89:jetstream/includes/config.js

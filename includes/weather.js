@@ -100,6 +100,7 @@ function getWeatherDescription(weatherCode) {
 }
 
 function getWeatherIconPath(weatherCode, isNight = false) {
+  console.log(`Getting weather icon for code: ${weatherCode}, isNight: ${isNight}`);
   if (isNight && (weatherCode === 0 || weatherCode === 1)) {
     return 'moon.svg';
   }
@@ -138,8 +139,8 @@ function getWeatherIconPath(weatherCode, isNight = false) {
   return weatherIcons[weatherCode] || 'sun.svg';
 }
 
-async function getStyledWeatherIcon(weatherCode) {
-  const iconPath = getWeatherIconPath(weatherCode);
+async function getStyledWeatherIcon(weatherCode, isNight = false) {
+  const iconPath = getWeatherIconPath(weatherCode, isNight);
   const rgb = getComputedStyle(document.documentElement)
                 .getPropertyValue('--highlight-color')
                 .trim();
@@ -169,7 +170,7 @@ async function generateWeatherHTML(weatherData) {
     `;
   }
   
-  const weatherIcon = await getStyledWeatherIcon(weatherData.weatherCode);
+  const weatherIcon = await getStyledWeatherIcon(weatherData.weatherCode, weatherData.isNight);
   
   return `
     <div id="weather-widget">

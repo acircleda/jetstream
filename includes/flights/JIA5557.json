@@ -1,7 +1,7 @@
 {
-  "callsign": "JIA5230",
-  "callsign_icao": "JIA5230",
-  "callsign_iata": "OH5230",
+  "callsign": "JIA5557",
+  "callsign_icao": "JIA5557",
+  "callsign_iata": "OH5557",
   "airline_name": "JIA",
   "origin": {
     "name": "Reagan National",
@@ -13,15 +13,15 @@
     "lon": -77.037697
   },
   "destination": {
-    "name": "Baton Rouge Metro",
-    "city": "Baton Rouge",
+    "name": "Huntsville Intl",
+    "city": "Huntsville",
     "country": "US",
-    "iata": "BTR",
-    "icao": "KBTR",
+    "iata": "HSV",
+    "icao": "KHSV",
     "lat": 38.8521,
     "lon": -77.037697
   },
-  "created_at": "2025-07-30T01:32:07.335Z",
-  "timestamp": 1753839127335,
+  "created_at": "2025-07-30T02:04:09.027Z",
+  "timestamp": 1753841049027,
   "api_source": "flightaware"
 }

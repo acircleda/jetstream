@@ -1,7 +1,7 @@
 {
-  "callsign": "DAL1501",
-  "callsign_icao": "DAL1501",
-  "callsign_iata": "DL1501",
+  "callsign": "DAL74",
+  "callsign_icao": "DAL74",
+  "callsign_iata": "DL74",
   "airline_name": "DAL",
   "origin": {
     "name": "Hartsfield-Jackson Intl",
@@ -13,15 +13,15 @@
     "lon": -84.428101
   },
   "destination": {
-    "name": "John Glenn Columbus Intl Airport",
-    "city": "Columbus",
+    "name": "Amsterdam Schiphol",
+    "city": "Amsterdam",
     "country": "US",
-    "iata": "CMH",
-    "icao": "KCMH",
+    "iata": "AMS",
+    "icao": "EHAM",
     "lat": 33.6367,
     "lon": -84.428101
   },
-  "created_at": "2025-07-30T02:07:00.111Z",
-  "timestamp": 1753841220111,
+  "created_at": "2025-07-30T02:12:22.495Z",
+  "timestamp": 1753841542495,
   "api_source": "flightaware"
 }

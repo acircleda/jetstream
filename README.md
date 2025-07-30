@@ -183,9 +183,12 @@ This project is for educational and personal use. Ensure compliance with all API
 
 ## TODO
 To reach v5:
-- Fix refresh button
-- Test size change of sidebar
-- If name has /, include a space for wrapping
+- Add conditional divs with these names:
+   - flight name
+   - origin*
+   - airport*
+   - destination*
+   - flight metrics
 - Shrink text if overflow? Don't allow horizontal overflow
 - Ensure unknown aircraft use the airliner.svg icon. Example: OTIS48
 - Icon when flight may be inaccurate

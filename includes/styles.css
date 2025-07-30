@@ -101,6 +101,26 @@ a, a:hover, a:active, a:focus, a:visited {
     padding:10px;
 }
 
+#flight-number {
+    text-align: center;
+    font-size: 2em;
+    padding-top: 0px;
+    margin-bottom: -30px;
+    color: #a1a1a1 !important;
+}
+
+#flight-number a {
+    color: #a1a1a1 !important;
+}
+
+#flight-name {
+    font-size: 1.8em;
+    color: #a1a1a1;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
 #sidebar-info h2 {
     text-align: center;
     font-size: 2.5em;
@@ -114,10 +134,10 @@ a, a:hover, a:active, a:focus, a:visited {
 }
 
 #sidebar-info p {
-    font-size: 3em;
+    font-size: 2em;
     color: #a1a1a1;
     margin-top: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
@@ -129,15 +149,35 @@ a, a:hover, a:active, a:focus, a:visited {
     text-align: center;
 }
 
+#sb-origin {
+    color: rgba(var(--highlight-color), 1) !important;
+    font-size: 6em !important;
+    padding-bottom: 15px;
+    line-height: .8em;
+}
+
+#sb-destination {
+    color: rgba(var(--highlight-color), 1) !important;
+    font-size: 6em !important;
+    line-height: .8em;
+    padding-bottom: 15px;
+    padding-top: 20px;
+}
+
+.sb-route-airport {
+    color: #a1a1a1 !important;
+    font-size: 25px !important;
+}
+
 .sb-route h1 {
     color: #a1a1a1 !important;
-    font-size: 3em !important;
+    font-size: 2em !important;
     
 }
 
 .sb-route h2 {
     color: rgba(var(--highlight-color), 1) !important;
-    font-size: 7.5em !important;
+    font-size: 6em !important;
     margin-bottom: -30px !important;
 }
 
@@ -150,10 +190,11 @@ a, a:hover, a:active, a:focus, a:visited {
     padding-top: 20px;
     text-align: center;
     color: #a1a1a1 !important;
-    font-size: 3em !important;
+    font-size: 2em !important;
 }
 
 .sb-flight-info a {
+    margin-top: -20px;
     font-size: .5em !important;
 }
 
@@ -163,7 +204,17 @@ a, a:hover, a:active, a:focus, a:visited {
   justify-content: center;
   align-items: center;
   height: 200px;
-  margin-bottom: -100px;
+  margin-bottom: -50px;
+}
+
+.sb-icon-with-line-route {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  margin-bottom: 5px;
+  margin-top: 20px;
 }
 
 .center-line {

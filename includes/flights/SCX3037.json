@@ -1,0 +1,27 @@
+{
+  "callsign": "SCX3037",
+  "callsign_icao": "SCX3037",
+  "callsign_iata": "SY3037",
+  "airline_name": "SCX",
+  "origin": {
+    "name": "Lakeland Linder Intl",
+    "city": "Lakeland",
+    "country": "US",
+    "iata": "LAL",
+    "icao": "KLAL",
+    "lat": 27.987656,
+    "lon": -82.018776
+  },
+  "destination": {
+    "name": "Eugene F Kranz Toledo Express",
+    "city": "Toledo",
+    "country": "US",
+    "iata": "TOL",
+    "icao": "KTOL",
+    "lat": 27.987656,
+    "lon": -82.018776
+  },
+  "created_at": "2025-07-30T02:02:29.589Z",
+  "timestamp": 1753840949589,
+  "api_source": "flightaware"
+}

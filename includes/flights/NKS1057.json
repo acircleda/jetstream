@@ -1,0 +1,27 @@
+{
+  "callsign": "NKS1057",
+  "callsign_icao": "NKS1057",
+  "callsign_iata": "NK1057",
+  "airline_name": "NKS",
+  "origin": {
+    "name": "Detroit Metro Wayne Co",
+    "city": "Detroit",
+    "country": "US",
+    "iata": "DTW",
+    "icao": "KDTW",
+    "lat": 42.21377,
+    "lon": -83.353786
+  },
+  "destination": {
+    "name": "Tampa Intl",
+    "city": "Tampa",
+    "country": "US",
+    "iata": "TPA",
+    "icao": "KTPA",
+    "lat": 42.21377,
+    "lon": -83.353786
+  },
+  "created_at": "2025-07-30T02:16:53.027Z",
+  "timestamp": 1753841813027,
+  "api_source": "flightaware"
+}

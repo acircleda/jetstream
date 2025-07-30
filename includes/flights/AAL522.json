@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL522",
+  "callsign_icao": "AAL522",
+  "callsign_iata": "AA522",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Dallas-Fort Worth Intl",
+    "city": "Dallas-Fort Worth",
+    "country": "US",
+    "iata": "DFW",
+    "icao": "KDFW",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "destination": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "created_at": "2025-07-30T02:16:32.992Z",
+  "timestamp": 1753841792992,
+  "api_source": "flightaware"
+}

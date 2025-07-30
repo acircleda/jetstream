@@ -1,0 +1,27 @@
+{
+  "callsign": "FDX1285",
+  "callsign_icao": "FDX1285",
+  "callsign_iata": "FX1285",
+  "airline_name": "FDX",
+  "origin": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "destination": {
+    "name": "Memphis Intl",
+    "city": "Memphis",
+    "country": "US",
+    "iata": "MEM",
+    "icao": "KMEM",
+    "lat": 35.811001,
+    "lon": -83.994003
+  },
+  "created_at": "2025-07-30T02:31:07.855Z",
+  "timestamp": 1753842667855,
+  "api_source": "flightaware"
+}
