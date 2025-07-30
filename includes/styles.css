@@ -45,7 +45,7 @@ a, a:hover, a:active, a:focus, a:visited {
 }
 
 #map {
-    flex: 2 1 0;
+    flex: 1 1 0;
     height: 100vh;
     background-color: #000000;
 }
@@ -114,7 +114,7 @@ a, a:hover, a:active, a:focus, a:visited {
 }
 
 #sidebar-info p {
-    font-size: 1.6em;
+    font-size: 3em;
     color: #a1a1a1;
     margin-top: 24px;
     margin-bottom: 20px;
@@ -131,14 +131,14 @@ a, a:hover, a:active, a:focus, a:visited {
 
 .sb-route h1 {
     color: #a1a1a1 !important;
-    font-size: 1.6em !important;
+    font-size: 3em !important;
     
 }
 
 .sb-route h2 {
     color: rgba(var(--highlight-color), 1) !important;
-    font-size: 4em !important;
-    margin-bottom: -25px !important;
+    font-size: 7.5em !important;
+    margin-bottom: -30px !important;
 }
 
 .sb-route h3 {
@@ -150,11 +150,11 @@ a, a:hover, a:active, a:focus, a:visited {
     padding-top: 20px;
     text-align: center;
     color: #a1a1a1 !important;
-    font-size: 30px !important;
+    font-size: 3em !important;
 }
 
 .sb-flight-info a {
-    font-size: 20px !important;
+    font-size: .5em !important;
 }
 
 .sb-icon-with-line {
@@ -162,14 +162,14 @@ a, a:hover, a:active, a:focus, a:visited {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 150px;
-  margin-bottom: -50px;
+  height: 200px;
+  margin-bottom: -100px;
 }
 
 .center-line {
   position: absolute;
   height: 100%;
-  width: 2px;
+  width: 5px;
   background: repeating-linear-gradient(
     to bottom,
     rgba(var(--highlight-color), 0.5),
@@ -258,7 +258,7 @@ a, a:hover, a:active, a:focus, a:visited {
 }
 
 #weather-widget h2 {
-    font-size: 2.5em;
+    font-size: 4em;
     margin-bottom: 20px;
     color: rgba(var(--highlight-color), .7);
 }
@@ -271,8 +271,8 @@ a, a:hover, a:active, a:focus, a:visited {
 }
 
 .weather-icon {
-    width: 150px;
-    height: 150px;
+    width: 250px;
+    height: 250px;
     margin-bottom: 10px;
     display: flex;
     align-items: center;
@@ -285,14 +285,14 @@ a, a:hover, a:active, a:focus, a:visited {
 }
 
 .weather-temp {
-    font-size: 6em;
+    font-size: 8em;
     font-weight: bold;
     color: #e0e0e0;
     margin-bottom: 10px;
 }
 
 .weather-description {
-    font-size: 1.8em;
+    font-size: 3em;
     color: #a1a1a1;
     margin-bottom: 20px;
     text-transform: capitalize;
@@ -300,7 +300,7 @@ a, a:hover, a:active, a:focus, a:visited {
 
 .weather-details {
     text-align: center;
-    font-size: 1.4em;
+    font-size: 2em;
 }
 
 .weather-detail {

@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL192",
+  "callsign_icao": "AAL192",
+  "callsign_iata": "AA192",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Dallas-Fort Worth Intl",
+    "city": "Dallas-Fort Worth",
+    "country": "US",
+    "iata": "DFW",
+    "icao": "KDFW",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "destination": {
+    "name": "Barcelona Int'l",
+    "city": "Barcelona",
+    "country": "US",
+    "iata": "BCN",
+    "icao": "LEBL",
+    "lat": 32.896801,
+    "lon": -97.038002
+  },
+  "created_at": "2025-07-30T00:38:19.507Z",
+  "timestamp": 1753835899507,
+  "api_source": "flightaware"
+}

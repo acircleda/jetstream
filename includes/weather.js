@@ -14,7 +14,7 @@ async function fetchCurrentWeather() {
   
   try {
     // Use Open-Meteo API - completely free, no API key required
-    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${CONFIG.center_lat}&longitude=${CONFIG.center_lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,wind_direction_10m&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${CONFIG.house_lat}&longitude=${CONFIG.house_lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,wind_direction_10m&daily=sunrise,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
 
     const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${CONFIG.city_name}&count=1&language=en&format=json`;
     
@@ -39,6 +39,7 @@ async function fetchCurrentWeather() {
     const now = new Date();
 
     const isNight = now < sunrise || now > sunset;
+    console.log(`Current time: ${now}, Sunrise: ${sunrise}, Sunset: ${sunset}, Is night: ${isNight}`);
 
     const cityName = geoData.results?.[0]?.name || CONFIG.city_name;
 

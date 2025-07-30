@@ -183,11 +183,12 @@ This project is for educational and personal use. Ensure compliance with all API
 
 ## TODO
 To reach v5:
-- Info card
-   - Format numbers to commas
-   - Remove country from name if in the US
+- Fix refresh button
+- Test size change of sidebar
+- If name has /, include a space for wrapping
+- Shrink text if overflow? Don't allow horizontal overflow
 - Ensure unknown aircraft use the airliner.svg icon. Example: OTIS48
-- Sound notifications for new flights
 - Icon when flight may be inaccurate
   - Flag based on cross track distance or source reliability
+  - Cosndier removing cross track and just use source reliability
 - Claude code review

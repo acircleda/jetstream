@@ -1,0 +1,27 @@
+{
+  "callsign": "FFT81",
+  "callsign_icao": "FFT81",
+  "callsign_iata": "F981",
+  "airline_name": "FFT",
+  "origin": {
+    "name": "Punta Cana Int'l",
+    "city": "Punta Cana",
+    "country": "DO",
+    "iata": "PUJ",
+    "icao": "MDPC",
+    "lat": 18.5674,
+    "lon": -68.363403
+  },
+  "destination": {
+    "name": "Chicago O'Hare Intl",
+    "city": "Chicago",
+    "country": "DO",
+    "iata": "ORD",
+    "icao": "KORD",
+    "lat": 18.5674,
+    "lon": -68.363403
+  },
+  "created_at": "2025-07-30T00:57:06.477Z",
+  "timestamp": 1753837026477,
+  "api_source": "flightaware"
+}

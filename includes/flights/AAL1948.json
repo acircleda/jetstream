@@ -1,0 +1,27 @@
+{
+  "callsign": "AAL1948",
+  "callsign_icao": "AAL1948",
+  "callsign_iata": "AA1948",
+  "airline_name": "AAL",
+  "origin": {
+    "name": "Phoenix Sky Harbor Intl",
+    "city": "Phoenix",
+    "country": "US",
+    "iata": "PHX",
+    "icao": "KPHX",
+    "lat": 33.435302,
+    "lon": -112.005905
+  },
+  "destination": {
+    "name": "Charlotte/Douglas Intl",
+    "city": "Charlotte",
+    "country": "US",
+    "iata": "CLT",
+    "icao": "KCLT",
+    "lat": 33.435302,
+    "lon": -112.005905
+  },
+  "created_at": "2025-07-30T00:27:24.965Z",
+  "timestamp": 1753835244965,
+  "api_source": "flightaware"
+}

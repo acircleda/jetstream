@@ -1,0 +1,27 @@
+{
+  "callsign": "SWA1678",
+  "callsign_icao": "SWA1678",
+  "callsign_iata": "WN1678",
+  "airline_name": "SWA",
+  "origin": {
+    "name": "Charleston Intl/AFB",
+    "city": "Charleston",
+    "country": "US",
+    "iata": "CHS",
+    "icao": "KCHS",
+    "lat": 32.898602,
+    "lon": -80.040497
+  },
+  "destination": {
+    "name": "St Louis Lambert Intl",
+    "city": "St Louis",
+    "country": "US",
+    "iata": "STL",
+    "icao": "KSTL",
+    "lat": 32.898602,
+    "lon": -80.040497
+  },
+  "created_at": "2025-07-30T00:44:18.951Z",
+  "timestamp": 1753836258951,
+  "api_source": "flightaware"
+}

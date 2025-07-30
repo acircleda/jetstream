@@ -37,6 +37,9 @@ function wakeFromDowntime() {
   downtimeState.isAwake = true;
   hideDowntimeOverlay();
   
+  // Dispatch event for other scripts to know downtime state changed
+  document.dispatchEvent(new Event('downtimeStateChanged'));
+  
   // Clear any existing wake timeout
   if (downtimeState.wakeTimeout) {
     clearTimeout(downtimeState.wakeTimeout);
@@ -48,6 +51,8 @@ function wakeFromDowntime() {
     downtimeState.isAwake = false;
     if (isInDowntime()) {
       showDowntimeOverlay();
+      // Dispatch event when going back to sleep
+      document.dispatchEvent(new Event('downtimeStateChanged'));
     }
   }, wakeDurationMs);
 }
@@ -55,7 +60,14 @@ function wakeFromDowntime() {
 function checkDowntimeState() {
   if (isInDowntime() && !downtimeState.isAwake) {
     showDowntimeOverlay();
+    // Dispatch event when entering downtime
+    document.dispatchEvent(new Event('downtimeStateChanged'));
   } else if (!isInDowntime()) {
+    // If we were in downtime before, dispatch event when exiting
+    if (downtimeState.isAwake === false && document.getElementById('downtime-overlay').style.display === 'block') {
+      document.dispatchEvent(new Event('downtimeStateChanged'));
+    }
+    
     downtimeState.isAwake = false;
     hideDowntimeOverlay();
     if (downtimeState.wakeTimeout) {

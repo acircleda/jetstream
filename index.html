@@ -19,6 +19,14 @@
     const locationDiv = document.getElementById("title");
     locationDiv.innerHTML = `Jetstream: ${CONFIG.city_name} <span class="version">v5.0</span>`;
 
+        // Attach refresh button handler after DOM is fully loaded
+    const refreshBtn = document.getElementById('refresh-page-btn');
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', () => {
+        location.reload();
+      });
+    }
+
   });
 
     // Auto-refresh every 30 minutes
@@ -62,7 +70,7 @@
       keyboard: false,
       touchZoom: false,
       attributionControl: false
-    }).setView([CONFIG.center_lat, CONFIG.center_lon], CONFIG.initialZoom); // Use CONFIG constants
+    }).setView([CONFIG.lat, CONFIG.lon], CONFIG.initialZoom); // Use CONFIG constants
 
     L.tileLayer('http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: CONFIG.maxZoom,
@@ -71,12 +79,12 @@
     L.control.resetView({
                 position: "topleft",
                 title: "Reset view",
-                latlng: L.latLng([CONFIG.center_lat, CONFIG.center_lon]),
+                latlng: L.latLng([CONFIG.lat, CONFIG.lon]),
                 zoom: CONFIG.initialZoom,
             }).addTo(map);
 
       // Add a custom SVG icon for the house marker
-      const houseMarker = L.circleMarker([CONFIG.center_lat, CONFIG.center_lon], {
+      const houseMarker = L.circleMarker([CONFIG.house_lat, CONFIG.house_lon], {
             radius: 5,
             color: 'black',
             fillColor: 'black',
@@ -116,16 +124,18 @@
 
     function format_name(location) {
       if (!location) return '';
-      const city = location.city;
+      let city = location.city;
       const country = location.country;
       if (city && city !== 'N/A') {
-        if (country === 'US') {
-          return city;
-        } else if (country) {
-          return `${city}, ${country}`;
-        } else {
-          return city;
-        }
+      // Add a space after any slash in the city name
+      city = city.replace(/\//g, ' / ');
+      if (country === 'US') {
+        return city;
+      } else if (country) {
+        return `${city}, ${country}`;
+      } else {
+        return city;
+      }
       }
       return country || '';
     }
@@ -233,8 +243,8 @@
           }
           if (plane.lat && plane.lon) {
           // Calculate distance to center
-          const dLat = (plane.lat - CONFIG.center_lat);
-          const dLon = (plane.lon - CONFIG.center_lon);
+          const dLat = (plane.lat - CONFIG.lat);
+          const dLon = (plane.lon - CONFIG.lon);
           const distance = Math.sqrt(dLat * dLat + dLon * dLon);
 
           if (distance < closestDistance) {
@@ -365,7 +375,7 @@
           }
           wasShowingWeather = false;
           window.closestPlaneCircle = L.circle([closestPlane.lat, closestPlane.lon], {
-          radius: 800, // meters
+          radius: 500, // meters
           color: CONFIG.highlight_color,
           fill: false, // No fill at all
           weight: 1 // Optional: makes the circle outline a bit more visible
@@ -377,8 +387,8 @@
         const baseMarkerStyle = `
           display: inline-block;
           vertical-align: middle;
-          width: 75px;
-          height: 75px;
+          width: 150px;
+          height: 150px;
           background-color: ${CONFIG.highlight_color};
           mask: url(${select_marker(closestPlane.t, closestPlane.category)}) center/contain no-repeat;
           -webkit-mask: url(${select_marker(closestPlane.t, closestPlane.category)}) center/contain no-repeat;
@@ -465,18 +475,76 @@
       }
     }
 
-    // Fetch planes at the configured refresh rate
-    fetchPlanes();
+    // Downtime-aware plane fetching
     
     function getCurrentRefreshRate() {
-      // During downtime when awake, use normal refresh rate
-      if (CONFIG.use_downtime && typeof downtimeState !== 'undefined' && downtimeState.isAwake) {
-        return CONFIG.refreshRate;
-      }
+      // Return the configured refresh rate
       return CONFIG.refreshRate;
     }
 
-    let refreshInterval = setInterval(fetchPlanes, getCurrentRefreshRate());
+    // Make sure isInDowntime function is available
+    function isInDowntime() {
+      if (!CONFIG.use_downtime) return false;
+      
+      const now = new Date();
+      const hour = now.getHours();
+      const start = CONFIG.downtime_start;
+      const end = CONFIG.downtime_end;
+      
+      // Handles overnight downtime (e.g., 21 to 6)
+      return start < end
+        ? hour >= start && hour < end
+        : hour >= start || hour < end;
+    }
+
+    // Downtime-aware plane fetching management
+    let refreshInterval = null;
+
+    function startPlaneFetching() {
+      if (!refreshInterval) {
+        fetchPlanes();
+        refreshInterval = setInterval(fetchPlanes, getCurrentRefreshRate());
+        console.log("Started plane fetching interval");
+      }
+    }
+
+    function stopPlaneFetching() {
+      if (refreshInterval) {
+        clearInterval(refreshInterval);
+        refreshInterval = null;
+        console.log("Stopped plane fetching interval");
+      }
+    }
+
+    function handleDowntimeChange() {
+      if (CONFIG.use_downtime && typeof downtimeState !== 'undefined') {
+        if (downtimeState.isAwake) {
+          console.log("Downtime wake detected - starting plane fetching");
+          startPlaneFetching();
+        } else if (isInDowntime()) {
+          console.log("In downtime and not awake - stopping plane fetching");
+          stopPlaneFetching();
+        } else {
+          console.log("Not in downtime - starting plane fetching");
+          startPlaneFetching();
+        }
+      } else {
+        // If downtime is not enabled, always fetch planes
+        startPlaneFetching();
+      }
+    }
+
+    // Listen for downtime state changes
+    document.addEventListener('downtimeStateChanged', function() {
+      console.log("Downtime state changed - handling change");
+      handleDowntimeChange();
+    });
+
+    // Initial setup - check downtime state once the page is fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Allow time for downtime.js to initialize
+      setTimeout(handleDowntimeChange, 100);
+    });
 
     // Fetch and display today's flight count
 async function updateFlightCounter() {
