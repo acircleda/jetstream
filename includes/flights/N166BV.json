@@ -1,0 +1,27 @@
+{
+  "callsign": "N166BV",
+  "callsign_icao": null,
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "John C Tune",
+    "city": "Nashville",
+    "country": "",
+    "iata": "",
+    "icao": "KJWN",
+    "lat": null,
+    "lon": null
+  },
+  "destination": {
+    "name": "Greenville Downtown",
+    "city": "Greenville",
+    "country": "",
+    "iata": "",
+    "icao": "KGMU",
+    "lat": null,
+    "lon": null
+  },
+  "created_at": "2025-07-31T20:01:44.482Z",
+  "timestamp": 1753992104482,
+  "api_source": "flightaware"
+}

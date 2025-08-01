@@ -1,0 +1,27 @@
+{
+  "callsign": "N909HT",
+  "callsign_icao": null,
+  "callsign_iata": null,
+  "airline_name": null,
+  "origin": {
+    "name": "John C Tune",
+    "city": "Nashville",
+    "country": "",
+    "iata": "",
+    "icao": "KJWN",
+    "lat": null,
+    "lon": null
+  },
+  "destination": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": null,
+    "lon": null
+  },
+  "created_at": "2025-07-31T19:10:51.786Z",
+  "timestamp": 1753989051786,
+  "api_source": "flightaware"
+}

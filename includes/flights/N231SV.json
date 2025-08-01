@@ -1,0 +1,26 @@
+{
+  "callsign": "N231SV",
+  "callsign_icao": null,
+  "callsign_iata": null,
+  "origin": {
+    "name": "Hayward Executive Airport",
+    "city": "Hayward",
+    "country": "US",
+    "iata": "HWD",
+    "icao": "KHWD",
+    "lat": 37.659198761,
+    "lon": -122.122001648
+  },
+  "destination": {
+    "name": "Enid Woodring Regional Airport",
+    "city": "Enid",
+    "country": "US",
+    "iata": "WDG",
+    "icao": "KWDG",
+    "lat": 36.3791999817,
+    "lon": -97.7910995483
+  },
+  "created_at": "2025-07-31T19:10:53.056Z",
+  "timestamp": 1753989053056,
+  "api_source": "adsbdb"
+}

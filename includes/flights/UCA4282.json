@@ -1,0 +1,27 @@
+{
+  "callsign": "UCA4282",
+  "callsign_icao": "UCA4282",
+  "callsign_iata": "C54282",
+  "airline_name": "UCA",
+  "origin": {
+    "name": "Washington Dulles Intl",
+    "city": "Washington",
+    "country": "US",
+    "iata": "IAD",
+    "icao": "KIAD",
+    "lat": 38.9445,
+    "lon": -77.455803
+  },
+  "destination": {
+    "name": "McGhee Tyson",
+    "city": "Knoxville",
+    "country": "US",
+    "iata": "TYS",
+    "icao": "KTYS",
+    "lat": 38.9445,
+    "lon": -77.455803
+  },
+  "created_at": "2025-07-31T18:58:25.181Z",
+  "timestamp": 1753988305181,
+  "api_source": "flightaware"
+}

@@ -9,6 +9,7 @@ const { get_adsbdb, get_aviationstack, get_adsblol_route, get_flightaware, get_f
 const { addUnknownCallsign, clean_field } = require('./includes/formatters.js');
 const morgan = require('morgan');
 const { update_flight_counter } = require('./includes/flight_counter');
+const e = require('express');
 
 const app = express();
 app.use(express.json())
@@ -195,11 +196,11 @@ app.get('/planes', async (req, res) => {
 });
 
 app.get('/planes2', async (req, res) => {
-  const { lat, lon, dist, use_bbox, minLat, maxLat, minLon, maxLon } = req.query;
+  const { lat, lon, dist, use_bbox, minLat, maxLat, minLon, maxLon, return_closest, close_lat, close_lon } = req.query;
 
   const url = `https://api.adsb.lol/v2/lat/${lat}/lon/${lon}/dist/${dist}`;
   console.log('Fetching planes from:', url);
-  
+
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -221,9 +222,40 @@ app.get('/planes2', async (req, res) => {
         ac.lon >= bounds.minLon &&
         ac.lon <= bounds.maxLon
       );
+      console.log('Found', aircraftList.length, "planes in bounding box");
     }
 
-    if (use_bbox === 'true') { console.log('Found', aircraftList.length, "planes in bounding box"); }
+    // Optionally return the closest aircraft if requested and coordinates are provided
+    if (return_closest && close_lat && close_lon) {
+      const clat = parseFloat(close_lat);
+      const clon = parseFloat(close_lon);
+      if (!isNaN(clat) && !isNaN(clon) && aircraftList.length > 0) {
+        // Simple haversine formula for distance
+        function haversine(lat1, lon1, lat2, lon2) {
+          const toRad = x => x * Math.PI / 180;
+          const R = 6371; // km
+          const dLat = toRad(lat2 - lat1);
+          const dLon = toRad(lon2 - lon1);
+          const a = Math.sin(dLat / 2) ** 2 +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+            Math.sin(dLon / 2) ** 2;
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          return R * c;
+        }
+        let closest = aircraftList[0];
+        let minDist = haversine(clat, clon, closest.lat, closest.lon);
+        for (const ac of aircraftList) {
+          const d = haversine(clat, clon, ac.lat, ac.lon);
+          if (d < minDist) {
+            minDist = d;
+            closest = ac;
+          }
+        }
+        console.log('Found', closest.length, "closest aircraft");
+        return res.json({ ...data, ac: [closest] });
+      }
+    }
+
     res.json({ ...data, ac: aircraftList });
   } catch (e) {
     console.error(e && (e.stack || e.message || e));
@@ -581,6 +613,91 @@ app.get('/flight-count', async (req, res) => {
   }
 });
 
+    let categoryLookup = {};
+    let typeLookup = {};
+
+    // Load lookups.json
+    fs.readFile(path.join(__dirname, 'includes/category_lookup.json'), 'utf8')
+      .then(data => {
+        categoryLookup = JSON.parse(data);
+      })
+      .catch(err => {
+        console.error('Error loading category_lookup.json:', err);
+      });
+
+     fs.readFile(path.join(__dirname, 'includes/type_lookup.json'), 'utf8')
+      .then(data => {
+        typeLookup = JSON.parse(data);
+      })
+      .catch(err => {
+        console.error('Error loading type_lookup.json:', err);
+      });
+
+
+
+// Lite endpoint for home assistant
+app.get('/lite', async (req, res) => {
+  const { dist } = req.query;
+
+  
+  // Get closest plane
+  const plane_url = `http://localhost:3000/planes2?lat=${CONFIG.lat}&lon=${CONFIG.lon}&dist=${dist}&${CONFIG.use_bbox}&minLat=${CONFIG.south_edge}&maxLat=${CONFIG.north_edge}&minLon=${CONFIG.west_edge}&maxLon=${CONFIG.east_edge}&return_closest=True&close_lat=${CONFIG.house_lat}&close_lon=${CONFIG.house_lon}`;
+  console.log('Fetching planes from:', plane_url);
+
+  try {
+    let flightInfoData = {};
+
+    const plane_response = await fetch(plane_url);
+    const plane_data = await plane_response.json();
+
+    if(!plane_data.ac || plane_data.ac.length === 0) {
+      return res.status(404).json({ error: 'No aircraft found' });
+    }
+
+    //// Get airfact info
+    const aircraft_url = `http://localhost:3000/aircraft?callsign=${plane_data.ac[0].flight}`;
+    console.log('Fetching aircraft info from:', aircraft_url);
+    const aircraft_response = await fetch(aircraft_url);
+    const aircraft_data = await aircraft_response.json();
+    console.log('Aircraft data:', aircraft_data);
+
+    console.log('aircraft_data.response.aircraft:', aircraft_data.response.aircraft);
+
+    if(aircraft_data.response.aircraft){
+      const plane = plane_data.ac[0];
+      console.log(`Fetching flight info for ${plane.flight}`);
+      const flightInfoRes = await fetch(`http://localhost:3000/flightinfo?callsign=${plane.flight}&heading=${plane.track}&current_lat=${plane.lat}&current_lon=${plane.lon}`);
+      flightInfoData = await flightInfoRes.json();
+      console.log(`Flight info for ${plane.flight}:`, flightInfoData);
+    } else {
+      console.log(`No route data found for ${plane_data.ac[0].flight}`);
+    }
+
+
+    // Get marker
+    let marker = null
+      const plane_type = plane_data.ac[0].t || null;
+      const plane_category = plane_data.ac[0].category || null;
+      const normType = plane_type ? String(plane_type).trim().toUpperCase() : null;
+      const normCategory = plane_category ? String(plane_category).trim().toUpperCase() : null;
+      if (normType && typeLookup[normType]) {
+        marker =  typeLookup[normType];
+      } else if (normCategory && categoryLookup[normCategory]) {
+        marker = categoryLookup[normCategory];
+      }
+      marker = 'icons/airliner.svg';
+      const markerUrl = marker ? `http://localhost:5000/${marker}` : 'http://localhost:5000/icons/airliner.svg';
+
+   res.json({ ac: plane_data.ac[0], aircraft: aircraft_data.response.aircraft || {}, flightInfo: flightInfoData || {}, marker: markerUrl });
+
+  } catch (e) {
+    console.error(e && (e.stack || e.message || e));
+    res.status(500).json({ error: 'Failed to fetch aircraft data' });
+  }
+ 
+
+});
+
 // Global error handler to log all errors
 app.use((err, req, res, next) => {
   console.error('Express error handler:', err && (err.stack || err.message || err));
@@ -597,4 +714,5 @@ if (CONFIG.cleanup_enabled) {
   console.log(`Disk cleanup enabled: max ${CONFIG.max_flights_dir_size_mb}MB, checking every ${CONFIG.cleanup_check_interval_minutes} minutes`);
 }
 
-app.listen(3000, () => console.log('Proxy running on http://localhost:3000'));
+app.listen(3000, '0.0.0.0', () => console.log('Proxy running on http://0.0.0.0:3000'));
+

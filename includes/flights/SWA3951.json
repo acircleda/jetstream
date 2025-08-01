@@ -1,0 +1,27 @@
+{
+  "callsign": "SWA3951",
+  "callsign_icao": "SWA3951",
+  "callsign_iata": "WN3951",
+  "airline_name": "SWA",
+  "origin": {
+    "name": "Raleigh-Durham Intl",
+    "city": "Raleigh/Durham",
+    "country": "US",
+    "iata": "RDU",
+    "icao": "KRDU",
+    "lat": 35.877602,
+    "lon": -78.787498
+  },
+  "destination": {
+    "name": "St Louis Lambert Intl",
+    "city": "St Louis",
+    "country": "US",
+    "iata": "STL",
+    "icao": "KSTL",
+    "lat": 35.877602,
+    "lon": -78.787498
+  },
+  "created_at": "2025-07-31T12:25:34.225Z",
+  "timestamp": 1753964734225,
+  "api_source": "flightaware"
+}
