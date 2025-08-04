@@ -655,13 +655,13 @@ app.get('/lite', async (req, res) => {
     }
 
     //// Get airfact info
-    const aircraft_url = `http://localhost:3000/aircraft?callsign=${plane_data.ac[0].flight}`;
+    const aircraft_url = `http://localhost:3000/aircraft?callsign=${plane_data.ac[0].flight}&reg=${plane_data.ac[0].r}`;
     console.log('Fetching aircraft info from:', aircraft_url);
     const aircraft_response = await fetch(aircraft_url);
     const aircraft_data = await aircraft_response.json();
     console.log('Aircraft data:', aircraft_data);
 
-    console.log('aircraft_data.response.aircraft:', aircraft_data.response.aircraft);
+    console.log('aircraft_data:', aircraft_data);
 
     if(aircraft_data.response.aircraft){
       const plane = plane_data.ac[0];
@@ -684,9 +684,11 @@ app.get('/lite', async (req, res) => {
         marker =  typeLookup[normType];
       } else if (normCategory && categoryLookup[normCategory]) {
         marker = categoryLookup[normCategory];
+      } else {
+        marker = 'icons/airliner.svg';
       }
-      marker = 'icons/airliner.svg';
       const markerUrl = marker ? `http://localhost:5000/${marker}` : 'http://localhost:5000/icons/airliner.svg';
+      console.log('Marker URL:', plane_type, plane_category, markerUrl);
 
    res.json({ ac: plane_data.ac[0], aircraft: aircraft_data.response.aircraft || {}, flightInfo: flightInfoData || {}, marker: markerUrl });
 
